@@ -12,7 +12,7 @@ class OrgaMart extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData(
-          primaryColor: Colors.green[400],
+          primaryColor: Colors.green,
         ),
         home: const HomeScreen());
   }
