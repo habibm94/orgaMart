@@ -17,7 +17,8 @@ dependencies:
 
 
   cupertino_icons: ^1.0.2
-  customizable_space_bar: ^0.2.0
+  new_gradient_app_bar: ^0.2.0
+  get: ^4.6.1
 
 dev_dependencies:
   flutter_test:
@@ -33,7 +34,7 @@ flutter:
 
 
   assets:
-    - assets/images/
+    - assets/images/category/
 
 
 
