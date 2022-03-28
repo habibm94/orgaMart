@@ -17,8 +17,10 @@ dependencies:
 
 
   cupertino_icons: ^1.0.2
-  new_gradient_app_bar: ^0.2.0
   get: ^4.6.1
+  flutter_screenutil: ^5.3.1
+  font_awesome_flutter: ^9.2.0
+  badges: ^2.0.2
 
 dev_dependencies:
   flutter_test:
@@ -35,13 +37,16 @@ flutter:
 
   assets:
     - assets/images/category/
+    - assets/images/products/egg/
+    - assets/images/products/meat/
+    - assets/images/products/milk/
+    - assets/images/products/oil/
+    - assets/images/products/poultry/
+    - assets/images/products/spices/
+    - assets/images/products/vegetable/
+    - assets/images/user/
 
 
 
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+
 

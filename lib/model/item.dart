@@ -2,11 +2,16 @@ class Item {
   String type;
   String name;
   String weightType;
-  int? weight;
+  double? weight;
   String? packOrBottle;
-  int pricePerUnit;
-  int discount;
+  double pricePerUnit;
+  double discount;
   String brand;
+  String imagePath;
+  bool? discounted;
+  int? orderCount = 0;
+  String? productId;
+  double? totalpurchased = 0;
 
   Item(
       {required this.name,
@@ -16,5 +21,9 @@ class Item {
       required this.discount,
       required this.weightType,
       required this.packOrBottle,
-      required this.weight});
+      required this.weight,
+      required this.imagePath,
+      this.discounted,
+      this.orderCount,
+      this.productId});
 }
