@@ -12,6 +12,7 @@ class Item {
   int? orderCount = 0;
   String? productId;
   double? totalpurchased = 0;
+  double? totalPrice;
 
   Item(
       {required this.name,
@@ -25,5 +26,7 @@ class Item {
       required this.imagePath,
       this.discounted,
       this.orderCount,
-      this.productId});
+      this.productId,
+      this.totalPrice,
+      this.totalpurchased});
 }

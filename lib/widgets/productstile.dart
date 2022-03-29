@@ -12,7 +12,7 @@ class ProductsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shoppingController = Get.put(Shopping_controller());
+    final shoppingController = Get.find<Shopping_Controller>();
     List<ProductsTile_products> getProductItems() {
       List<ProductsTile_products> productItems = shoppingController.products
           .map((element) => ProductsTile_products(
@@ -40,14 +40,12 @@ class ProductsTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Container(
-              child: Text(
-                'Products',
-                style: TextStyle(
-                    fontSize: 25.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
+            Text(
+              'Products',
+              style: TextStyle(
+                  fontSize: 25.sp,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
             ),
             Wrap(children: tileProducst),
           ],

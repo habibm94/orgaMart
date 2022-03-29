@@ -13,6 +13,7 @@ import 'package:orgamart/screen/profile_screen.dart';
 import 'package:orgamart/controller/user_controller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:badges/badges.dart';
+import 'package:orgamart/getxBinding.dart';
 
 void main() {
   runApp(const OrgaMart());
@@ -26,14 +27,6 @@ class OrgaMart extends StatefulWidget {
 }
 
 class _OrgaMartState extends State<OrgaMart> {
-  @override
-  void initState() {
-    final shoppingController = Get.put(Shopping_controller());
-    final userController = Get.put(User_Controller());
-    final cartController = Get.put(Cart_Controller());
-    super.initState();
-  }
-
   int _screenIndex = 1;
   final List<Widget> _screenList = <Widget>[
     const CustomDrawer(),
@@ -44,8 +37,9 @@ class _OrgaMartState extends State<OrgaMart> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      builder: () => MaterialApp(
+      builder: () => GetMaterialApp(
         debugShowCheckedModeBanner: false,
+        initialBinding: GetxBinding(),
         theme: ThemeData(
           primaryColor: Colors.green,
         ),
@@ -81,17 +75,17 @@ class _OrgaMartState extends State<OrgaMart> {
                   icon: Badge(
                     child: Icon(
                       Icons.shopping_cart,
-                      size: 25,
+                      size: 25.sp,
                     ),
                     badgeContent: GetX<Cart_Controller>(
                       builder: (controller) {
                         return Text(
                           controller.cartItems.length.toString(),
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(fontSize: 12.sp),
                         );
                       },
                     ),
-                    badgeColor: Colors.redAccent.shade400,
+                    badgeColor: Colors.green,
                   ),
                   label: 'Cart',
                   backgroundColor: Colors.black),

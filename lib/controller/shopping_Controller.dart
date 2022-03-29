@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:orgamart/model/category.dart';
 import 'package:orgamart/model/item.dart';
 
-class Shopping_controller extends GetxController {
+class Shopping_Controller extends GetxController {
   var products = [].obs;
   var trendingproducts = [].obs;
   var allDiscountedProducts = [].obs;
@@ -466,7 +466,7 @@ class Shopping_controller extends GetxController {
           name: 'Ginger',
           brand: 'Farmer',
           type: 'Spices',
-          discount: 0,
+          discount: 20,
           pricePerUnit: 3,
           weight: 100,
           packOrBottle: 'package',
@@ -477,7 +477,7 @@ class Shopping_controller extends GetxController {
           name: 'Salt',
           brand: 'Farmer',
           type: 'Spices',
-          discount: 0,
+          discount: 20,
           pricePerUnit: 5,
           weight: 500,
           packOrBottle: 'package',
@@ -488,7 +488,7 @@ class Shopping_controller extends GetxController {
           name: 'Turmeric Powder',
           brand: 'Farmer',
           type: 'Spices',
-          discount: 0,
+          discount: 10,
           pricePerUnit: 3,
           weight: 100,
           packOrBottle: 'package',
@@ -521,7 +521,7 @@ class Shopping_controller extends GetxController {
           name: 'Ginger',
           brand: 'Farmer',
           type: 'Spices',
-          discount: 0,
+          discount: 50,
           pricePerUnit: 3,
           weight: 100,
           packOrBottle: 'package',
@@ -532,7 +532,7 @@ class Shopping_controller extends GetxController {
           name: 'Salt',
           brand: 'Farmer',
           type: 'Spices',
-          discount: 0,
+          discount: 30,
           pricePerUnit: 5,
           weight: 500,
           packOrBottle: 'package',
@@ -543,7 +543,7 @@ class Shopping_controller extends GetxController {
           name: 'Turmeric Powder',
           brand: 'Farmer',
           type: 'Spices',
-          discount: 0,
+          discount: 30,
           pricePerUnit: 3,
           weight: 100,
           packOrBottle: 'package',

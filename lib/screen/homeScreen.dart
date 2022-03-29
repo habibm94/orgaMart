@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:orgamart/widgets/productstile.dart';
 import 'package:orgamart/widgets/discounted_Producttile.dart';
 import 'package:orgamart/decoration_const.dart';
+import 'package:orgamart/widgets/trendingProductsTile.dart';
 
 ///todo- create alertdialog on clicking products
 class HomeScreen extends StatelessWidget {
@@ -41,15 +42,15 @@ class HomeScreen extends StatelessWidget {
                     fontSize: 25, fontWeight: FontWeight.bold, wordSpacing: 10),
               )),
             ),
-            ProductsTile(),
-            Divider(
+            const ProductsTile(),
+            const Divider(
               color: Colors.black54,
             ),
-            Discounted_ProductsTile(),
-            Divider(
+            const Discounted_ProductsTile(),
+            const Divider(
               color: Colors.black54,
             ),
-            ProductsTile(),
+            const Trending_ProductsTile(),
           ],
         ),
       ),

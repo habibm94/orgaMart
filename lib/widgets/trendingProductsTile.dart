@@ -1,16 +1,13 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:orgamart/controller/cart_controller.dart';
 import 'package:orgamart/controller/shopping_Controller.dart';
+import 'package:orgamart/controller/cart_controller.dart';
+import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:orgamart/decoration_const.dart';
-import 'package:orgamart/model/item.dart';
 
-///todo- add save icon on add cart pop up
-class Discounted_ProductsTile extends StatelessWidget {
-  const Discounted_ProductsTile({
+///todo- add save icon on add to cart pop up
+class Trending_ProductsTile extends StatelessWidget {
+  const Trending_ProductsTile({
     Key? key,
   }) : super(key: key);
 
@@ -20,8 +17,7 @@ class Discounted_ProductsTile extends StatelessWidget {
     final cartController = Get.find<Cart_Controller>();
     return Container(
       padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
-      height:
-          shoppingController.allDiscountedProducts.length / 3.round() * 200.h,
+      height: shoppingController.trendingproducts.length / 3.round() * 200.h,
       decoration: BoxDecoration(
         color: backgroundContainerColor,
       ),
@@ -36,7 +32,7 @@ class Discounted_ProductsTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              'Discounts',
+              'Trending',
               style: TextStyle(
                   fontSize: mainfontSize.sp,
                   fontWeight: FontWeight.bold,
@@ -49,7 +45,7 @@ class Discounted_ProductsTile extends StatelessWidget {
                     physics: const BouncingScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3, childAspectRatio: 0.65.r),
-                    itemCount: controller.allDiscountedProducts.length,
+                    itemCount: controller.trendingproducts.length,
                     itemBuilder: (context, index) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -72,8 +68,9 @@ class Discounted_ProductsTile extends StatelessWidget {
                                   ]),
                               child: ClipOval(
                                 child: Image(
+                                  ///image
                                   image: AssetImage(controller
-                                      .allDiscountedProducts[index].imagePath),
+                                      .trendingproducts[index].imagePath),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -85,7 +82,9 @@ class Discounted_ProductsTile extends StatelessWidget {
                             height: 6.h,
                           ),
                           Text(
-                            controller.allDiscountedProducts[index].name,
+                            controller.trendingproducts[index].name,
+
+                            ///item name
                             style: TextStyle(
                               fontSize: controller.allDiscountedProducts[index]
                                           .name.length >
@@ -97,51 +96,23 @@ class Discounted_ProductsTile extends StatelessWidget {
                             ),
                           ),
                           Center(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  controller
-                                      .allDiscountedProducts[index].pricePerUnit
-                                      .toString(),
-                                  style: TextStyle(
-                                      fontSize: 15.sp,
-                                      color: Colors.red,
-                                      decoration: TextDecoration.lineThrough,
-                                      decorationColor: Colors.black54),
-                                ),
-                                const SizedBox(
-                                  width: 4,
-                                ),
-                                Text(
-                                  ((controller.allDiscountedProducts[index]
-                                                  .pricePerUnit) -
-                                              ((controller
-                                                          .allDiscountedProducts[
-                                                              index]
-                                                          .pricePerUnit) *
-                                                      controller
-                                                          .allDiscountedProducts[
-                                                              index]
-                                                          .discount) /
-                                                  100)
-                                          .toString() +
-                                      ' ' +
-                                      '\$',
-                                  style: TextStyle(
-                                      fontSize: 14.sp,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
+                            child: Text(
+                              ///item price
+                              controller.trendingproducts[index].pricePerUnit
+                                      .toString() +
+                                  ' ' +
+                                  '\$',
+
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: Colors.black54,
+                              ),
                             ),
                           ),
                           ElevatedButton(
                             onPressed: () {
                               cartController.addtoUserClickedItem(
-                                  item:
-                                      controller.allDiscountedProducts[index]);
+                                  item: controller.trendingproducts[index]);
                               showAlertDialog(
                                 context: context,
                               );
@@ -181,7 +152,7 @@ showAlertDialog({
   Widget cartButton = ElevatedButton(
     child: const Text(
       "Add to Cart",
-      style: TextStyle(fontSize: 20),
+      style: TextStyle(fontSize: 18),
     ),
     onPressed: () {
       cartController.addtoCart(item: cartController.userClickedItem);
@@ -202,7 +173,7 @@ showAlertDialog({
     title: Center(
         child: Text(
       'ADD TO CART?',
-      style: TextStyle(fontSize: 20.sp),
+      style: TextStyle(fontSize: 22.sp),
     )),
     content: Container(
       decoration:
@@ -231,44 +202,28 @@ showAlertDialog({
                 fontWeight: FontWeight.bold,
                 overflow: TextOverflow.ellipsis),
           ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                ///regular price
-                cartController.userClickedItem.pricePerUnit.toString(),
-                style: TextStyle(
-                    fontSize: 18.sp,
-                    color: Colors.red,
-                    decoration: TextDecoration.lineThrough,
-                    decorationColor: Colors.black54),
-              ),
-              const SizedBox(
-                width: 6,
-              ),
-              Text(
-                ///discounted price
-                ((cartController.userClickedItem.pricePerUnit) -
-                            ((cartController.userClickedItem.pricePerUnit) *
-                                    cartController.userClickedItem.discount) /
-                                100)
-                        .toString() +
-                    ' ' +
-                    '\$',
-                style: TextStyle(
-                    fontSize: 18.sp,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
+          SizedBox(
+            height: 3.h,
+          ),
+          Text(
+            ///todo- create a row and minimise text size of weght
+            ///regular price
+            cartController.userClickedItem.pricePerUnit.toString() +
+                ' \$ ' +
+                cartController.userClickedItem.weight +
+                ' ' +
+                cartController.userClickedItem.weightType,
+            style: TextStyle(
+              fontSize: 18.sp,
+              color: Colors.black,
+            ),
           ),
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
+                  ///item remove button
                   onPressed: () {
                     cartController.orderoftimes > 1
                         ? cartController.decreaseOrder()
@@ -298,6 +253,8 @@ showAlertDialog({
                             color: Colors.black12)
                       ]),
                   child: Center(
+
+                      ///order count
                       child: GetBuilder<Cart_Controller>(
                     init: Cart_Controller(),
                     builder: (controller) => Text(
@@ -312,6 +269,7 @@ showAlertDialog({
                   )),
                 ),
                 ElevatedButton(
+                  ///item add button
                   onPressed: () {
                     cartController.increaseOrder();
                   },
@@ -330,20 +288,17 @@ showAlertDialog({
             ),
           ),
           Center(
-              child: GetBuilder<Cart_Controller>(
-            init: Cart_Controller(),
-            builder: (controller) => Text('Total: ' +
-                (((((cartController.userClickedItem.pricePerUnit) -
-                            ((cartController.userClickedItem.pricePerUnit) *
-                                    cartController.userClickedItem.discount) /
-                                100)) *
-                        cartController.orderoftimes)
-                    .toString()) +
-
-                ///put manual discounted price
-                ' ' +
-                '\$'),
-          )),
+            child: GetBuilder<Cart_Controller>(
+                init: Cart_Controller(),
+                builder: (controller) => Text(
+                      'Total: ' +
+                          (((((cartController.userClickedItem.pricePerUnit)) *
+                                      cartController.orderoftimes)
+                                  .toString()) +
+                              ' ' +
+                              '\$'),
+                    )),
+          ),
         ],
       ),
     ),
