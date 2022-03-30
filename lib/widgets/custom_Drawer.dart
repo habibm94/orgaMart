@@ -6,7 +6,7 @@ import 'package:orgamart/controller/shopping_Controller.dart';
 import 'package:orgamart/controller/user_controller.dart';
 import 'package:orgamart/screen/profile_screen.dart';
 import 'package:orgamart/screen/cart_screen.dart';
-import 'package:orgamart/screen/offer_Screen.dart';
+import 'package:orgamart/screen/discount_Screen.dart';
 import 'package:orgamart/screen/review_screen.dart';
 import 'package:orgamart/screen/saved_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -79,7 +79,7 @@ class CustomDrawer extends StatelessWidget {
               ),
               DrawerItems(
                 text: 'Offers',
-                screen: const OfferScreen(),
+                screen: const DiscountScreen(),
                 icon: FaIcon(
                   FontAwesomeIcons.tag,
                   size: 25.sp,

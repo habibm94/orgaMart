@@ -155,7 +155,7 @@ showAlertDialog({
       style: TextStyle(fontSize: 18),
     ),
     onPressed: () {
-      cartController.addtoCart(item: cartController.userClickedItem);
+      cartController.addtoCart();
 
       ///todo- create better add cart func with seperate cartitem class
       cartController.reset_orderoftimes();
@@ -210,7 +210,7 @@ showAlertDialog({
             ///regular price
             cartController.userClickedItem.pricePerUnit.toString() +
                 ' \$ ' +
-                cartController.userClickedItem.weight +
+                cartController.userClickedItem.weight.toString() +
                 ' ' +
                 cartController.userClickedItem.weightType,
             style: TextStyle(
@@ -223,7 +223,7 @@ showAlertDialog({
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  ///item remove button
+                  ///decrease order button
                   onPressed: () {
                     cartController.orderoftimes > 1
                         ? cartController.decreaseOrder()
@@ -254,15 +254,13 @@ showAlertDialog({
                       ]),
                   child: Center(
 
-                      ///order count
+                      ///show weight container
                       child: GetBuilder<Cart_Controller>(
                     init: Cart_Controller(),
                     builder: (controller) => Text(
-                      (((cartController.userClickedItem.weight?.toInt())! *
-                                  cartController.orderoftimes)
-                              .toString()) +
+                      (controller.totalweight.toStringAsFixed(2)) +
                           " " +
-                          cartController.userClickedItem.weightType.toString(),
+                          controller.weightType.toString(),
                       style: TextStyle(
                           fontSize: 15.sp, fontWeight: FontWeight.bold),
                     ),
@@ -292,9 +290,7 @@ showAlertDialog({
                 init: Cart_Controller(),
                 builder: (controller) => Text(
                       'Total: ' +
-                          (((((cartController.userClickedItem.pricePerUnit)) *
-                                      cartController.orderoftimes)
-                                  .toString()) +
+                          ((controller.totalPrice.toStringAsFixed(2)) +
                               ' ' +
                               '\$'),
                     )),

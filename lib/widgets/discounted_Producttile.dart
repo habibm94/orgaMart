@@ -35,6 +35,7 @@ class Discounted_ProductsTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            ///todo- make it textbutton
             Text(
               'Discounts',
               style: TextStyle(
@@ -126,7 +127,7 @@ class Discounted_ProductsTile extends StatelessWidget {
                                                               index]
                                                           .discount) /
                                                   100)
-                                          .toString() +
+                                          .toStringAsFixed(2) +
                                       ' ' +
                                       '\$',
                                   style: TextStyle(
@@ -184,7 +185,7 @@ showAlertDialog({
       style: TextStyle(fontSize: 20),
     ),
     onPressed: () {
-      cartController.addtoCart(item: cartController.userClickedItem);
+      cartController.addtoCart();
 
       ///todo- create better add cart func with seperate cartitem class
       cartController.reset_orderoftimes();
@@ -269,6 +270,7 @@ showAlertDialog({
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
+                  ///decrease order button
                   onPressed: () {
                     cartController.orderoftimes > 1
                         ? cartController.decreaseOrder()
@@ -286,6 +288,7 @@ showAlertDialog({
                   ),
                 ),
                 Container(
+                  ///show weight container
                   height: 30.h,
                   width: 100.w,
                   decoration: BoxDecoration(
@@ -301,11 +304,9 @@ showAlertDialog({
                       child: GetBuilder<Cart_Controller>(
                     init: Cart_Controller(),
                     builder: (controller) => Text(
-                      (((cartController.userClickedItem.weight?.toInt())! *
-                                  cartController.orderoftimes)
-                              .toString()) +
+                      (controller.totalweight.toStringAsFixed(2)) +
                           " " +
-                          cartController.userClickedItem.weightType.toString(),
+                          controller.weightType.toString(),
                       style: TextStyle(
                           fontSize: 15.sp, fontWeight: FontWeight.bold),
                     ),
@@ -333,14 +334,7 @@ showAlertDialog({
               child: GetBuilder<Cart_Controller>(
             init: Cart_Controller(),
             builder: (controller) => Text('Total: ' +
-                (((((cartController.userClickedItem.pricePerUnit) -
-                            ((cartController.userClickedItem.pricePerUnit) *
-                                    cartController.userClickedItem.discount) /
-                                100)) *
-                        cartController.orderoftimes)
-                    .toString()) +
-
-                ///put manual discounted price
+                (controller.totalPrice.toStringAsFixed(2)) +
                 ' ' +
                 '\$'),
           )),

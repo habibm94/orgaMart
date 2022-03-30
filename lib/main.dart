@@ -38,7 +38,6 @@ class _OrgaMartState extends State<OrgaMart> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       builder: () => GetMaterialApp(
-        debugShowCheckedModeBanner: false,
         initialBinding: GetxBinding(),
         theme: ThemeData(
           primaryColor: Colors.green,
@@ -85,7 +84,7 @@ class _OrgaMartState extends State<OrgaMart> {
                         );
                       },
                     ),
-                    badgeColor: Colors.green,
+                    badgeColor: Colors.blue.shade300,
                   ),
                   label: 'Cart',
                   backgroundColor: Colors.black),
