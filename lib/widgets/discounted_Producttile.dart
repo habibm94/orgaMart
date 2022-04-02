@@ -179,22 +179,26 @@ showAlertDialog({
   // set up the buttons
   final cartController = Get.find<Cart_Controller>();
 
-  Widget cartButton = ElevatedButton(
-    child: const Text(
-      "Add to Cart",
-      style: TextStyle(fontSize: 20),
-    ),
-    onPressed: () {
-      cartController.addtoCart();
+  Widget cartButton = GetBuilder<Cart_Controller>(
+    init: Cart_Controller(),
+    builder: (cartController) => Center(
+      child: ElevatedButton(
+        child: const Text(
+          "Add to Cart",
+          style: TextStyle(fontSize: 20),
+        ),
+        onPressed: () {
+          cartController.addtoCart();
+          cartController.reset_temp_CartValues();
 
-      ///todo- create better add cart func with seperate cartitem class
-      cartController.reset_orderoftimes();
-      Get.back();
-    },
-    style: ElevatedButton.styleFrom(
-      primary: Colors.green,
-      elevation: 10,
-      minimumSize: Size(35.w, 30.h),
+          Get.back();
+        },
+        style: ElevatedButton.styleFrom(
+          primary: Colors.green,
+          elevation: 10,
+          minimumSize: Size(35.w, 35.h),
+        ),
+      ),
     ),
   );
 
@@ -217,7 +221,7 @@ showAlertDialog({
             ///item image
             child: Image(
               image: AssetImage(
-                cartController.userClickedItem.imagePath,
+                cartController.userClickedItem!.imagePath,
               ),
               fit: BoxFit.cover,
               height: 90.h,
@@ -226,7 +230,7 @@ showAlertDialog({
           ),
           Text(
             ///item name
-            cartController.userClickedItem.name,
+            cartController.userClickedItem!.name,
             style: TextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.bold,
@@ -239,7 +243,7 @@ showAlertDialog({
             children: [
               Text(
                 ///regular price
-                cartController.userClickedItem.pricePerUnit.toString(),
+                cartController.price.toString(),
                 style: TextStyle(
                     fontSize: 18.sp,
                     color: Colors.red,
@@ -251,13 +255,7 @@ showAlertDialog({
               ),
               Text(
                 ///discounted price
-                ((cartController.userClickedItem.pricePerUnit) -
-                            ((cartController.userClickedItem.pricePerUnit) *
-                                    cartController.userClickedItem.discount) /
-                                100)
-                        .toString() +
-                    ' ' +
-                    '\$',
+                ((cartController.discountedPrice).toString() + ' ' + '\$'),
                 style: TextStyle(
                     fontSize: 18.sp,
                     color: Colors.black,
@@ -353,6 +351,6 @@ showAlertDialog({
       return alert;
     },
   ).then((value) {
-    cartController.reset_orderoftimes();
+    cartController.reset_temp_CartValues();
   });
 }

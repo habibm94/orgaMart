@@ -81,21 +81,48 @@ class CartScreen extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        Text(cartItems[index].name),
-                                        Text((cartItems[index].totalWeight)
-                                                .toStringAsFixed(1) +
-                                            ' ' +
-                                            cartItems[index].weightType),
-                                        Text(cartItems[index]
-                                                .totalPrice
-                                                .toStringAsFixed(2) +
-                                            ' ' +
-                                            '\$'),
+                                        SizedBox(
+                                          width: 4.w,
+                                        ),
+                                        Expanded(
+                                            child: Text(
+                                          cartItems[index].name,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                        SizedBox(
+                                          width: 5.w,
+                                        ),
+
+                                        ///cart item name
+                                        Text(
+                                          (cartItems[index].totalWeight)
+                                                  .toStringAsFixed(1) +
+                                              ' ' +
+                                              cartItems[index].weightType,
+                                          style: TextStyle(fontSize: 12.sp),
+                                        ),
+                                        SizedBox(
+                                          width: 8.w,
+                                        ),
+                                        Text(
+                                          cartItems[index]
+                                                  .totalPrice
+                                                  .toStringAsFixed(2) +
+                                              ' ' +
+                                              '\$',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        SizedBox(
+                                          width: 7.w,
+                                        ),
                                         Container(
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                               shape: BoxShape.circle,
                                               color: containerColor,
-                                              boxShadow: const [
+                                              boxShadow: [
                                                 BoxShadow(
                                                   color: shadowColor,
                                                   blurRadius: shadowBlurRadius,
@@ -103,14 +130,16 @@ class CartScreen extends StatelessWidget {
                                                 )
                                               ]),
                                           child: IconButton(
+                                            ///remove cart item button
                                             icon: Icon(
                                               Icons.delete,
                                               size: 25.sp,
                                             ),
                                             onPressed: () {
-                                              print(index);
-                                              cartController.cartItems
-                                                  .removeAt(index);
+                                              cartController
+                                                  .removeFromCart(index);
+                                              print(
+                                                  'cart remove button got pressed');
                                             },
                                           ),
                                         )
@@ -121,9 +150,25 @@ class CartScreen extends StatelessWidget {
 
               ///price and delivery info section
               Container(
-                color: containerColor,
-                height: 100,
-              ),
+                  color: containerColor,
+                  height: 100,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(
+                        Icons.shopping_cart,
+                        size: 20.sp,
+                        color: Colors.green,
+                      ),
+                      GetBuilder<Cart_Controller>(
+                        init: Cart_Controller(),
+                        builder: (cartController) => Text('Total: ' +
+                            cartController.total_priceofCartItems
+                                .toStringAsFixed(2) +
+                            ' \$'),
+                      )
+                    ],
+                  )),
             ],
           ),
         ),

@@ -117,8 +117,6 @@ class Trending_ProductsTile extends StatelessWidget {
                                 context: context,
                               );
                             },
-
-                            ///todo- add to cart function
                             style: ElevatedButton.styleFrom(
                               primary: Colors.green,
                               elevation: 10,
@@ -149,22 +147,26 @@ showAlertDialog({
   // set up the buttons
   final cartController = Get.find<Cart_Controller>();
 
-  Widget cartButton = ElevatedButton(
-    child: const Text(
-      "Add to Cart",
-      style: TextStyle(fontSize: 18),
-    ),
-    onPressed: () {
-      cartController.addtoCart();
+  Widget cartButton = GetBuilder<Cart_Controller>(
+    init: Cart_Controller(),
+    builder: (cartController) => Center(
+      child: ElevatedButton(
+        child: const Text(
+          "Add to Cart",
+          style: TextStyle(fontSize: 20),
+        ),
+        onPressed: () {
+          cartController.addtoCart();
+          cartController.reset_temp_CartValues();
 
-      ///todo- create better add cart func with seperate cartitem class
-      cartController.reset_orderoftimes();
-      Get.back();
-    },
-    style: ElevatedButton.styleFrom(
-      primary: Colors.green,
-      elevation: 10,
-      minimumSize: Size(35.w, 30.h),
+          Get.back();
+        },
+        style: ElevatedButton.styleFrom(
+          primary: Colors.green,
+          elevation: 10,
+          minimumSize: Size(35.w, 35.h),
+        ),
+      ),
     ),
   );
 
@@ -187,7 +189,7 @@ showAlertDialog({
             ///item image
             child: Image(
               image: AssetImage(
-                cartController.userClickedItem.imagePath,
+                cartController.itemImage,
               ),
               fit: BoxFit.cover,
               height: 90.h,
@@ -196,7 +198,7 @@ showAlertDialog({
           ),
           Text(
             ///item name
-            cartController.userClickedItem.name,
+            cartController.userClickedItem!.name,
             style: TextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.bold,
@@ -206,13 +208,8 @@ showAlertDialog({
             height: 3.h,
           ),
           Text(
-            ///todo- create a row and minimise text size of weght
             ///regular price
-            cartController.userClickedItem.pricePerUnit.toString() +
-                ' \$ ' +
-                cartController.userClickedItem.weight.toString() +
-                ' ' +
-                cartController.userClickedItem.weightType,
+            cartController.price.toString() + ' \$ ',
             style: TextStyle(
               fontSize: 18.sp,
               color: Colors.black,
@@ -310,6 +307,6 @@ showAlertDialog({
       return alert;
     },
   ).then((value) {
-    cartController.reset_orderoftimes();
+    cartController.reset_temp_CartValues();
   });
 }

@@ -1,4 +1,5 @@
 class Item {
+  ///todo-remove product id
   String? type;
   String name;
   String weightType;
