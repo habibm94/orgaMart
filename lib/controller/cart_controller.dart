@@ -5,7 +5,7 @@ import 'package:collection/collection.dart';
 
 class Cart_Controller extends GetxController {
   var cartItems = [].obs;
-
+  double cartItemPrice = 0.0;
   late Item? userClickedItem;
   var orderoftimes = 1;
   var totalPrice = 0.0;
@@ -17,6 +17,8 @@ class Cart_Controller extends GetxController {
   late String itemImage;
 
   var total_priceofCartItems = 0.0;
+
+  ///importsnt- current value of all cart items
 
   ///use it in ui
   ///add the product in the screen
@@ -30,6 +32,7 @@ class Cart_Controller extends GetxController {
       userClickedItem?.totalItemcount += orderoftimes;
       userClickedItem?.totalPrice += totalPrice;
       userClickedItem?.totalWeight += totalweight;
+      userClickedItem?.itemPrice_incart = cartItemPrice;
       cartItems.add(userClickedItem);
     }
     ;
@@ -37,18 +40,40 @@ class Cart_Controller extends GetxController {
     update();
   }
 
+  ///edit ordercount
+  void edit_increaseorder({required int index}) {
+    cartItems[index].totalItemcount += 1;
+    cartItems[index].totalWeight =
+        (cartItems[index].weight * cartItems[index].totalItemcount).toDouble();
+    cartItems[index].totalPrice =
+        cartItems[index].totalItemcount * cartItems[index].itemPrice_incart;
+
+    counttotalCartValue();
+
+    update();
+  }
+
+  void edit_decreaseorder({required int index}) {
+    cartItems[index].totalItemcount == 1
+        ? null
+        : cartItems[index].totalItemcount -= 1;
+    cartItems[index].totalWeight =
+        (cartItems[index].weight * cartItems[index].totalItemcount).toDouble();
+    cartItems[index].totalPrice =
+        cartItems[index].totalItemcount * cartItems[index].itemPrice_incart;
+    counttotalCartValue();
+    update();
+  }
+
   void counttotalCartValue() {
     List pricevalues = cartItems.map((item) => item.totalPrice).toList();
-    print('${pricevalues}' + ' from beginning');
+
     var cartsum = 0.0;
     pricevalues.forEach((e) {
       cartsum += e;
     });
-    print(cartsum);
-    print('total price' + '$totalPrice');
     total_priceofCartItems = cartsum;
 
-    print('total cart value from count funct' + '${total_priceofCartItems}');
     update();
   }
 
@@ -63,10 +88,11 @@ class Cart_Controller extends GetxController {
     userClickedItem = item;
     productweight = item.weight;
     weightType = item.weightType;
-    price = item.pricePerUnit;
-    discountedPrice = item.discounted == true
-        ? (((item.pricePerUnit) - ((item.pricePerUnit) * item.discount) / 100))
-        : item.pricePerUnit;
+    price = item.initial_pricePerUnit;
+    discountedPrice = (item.discounted == true
+        ? (((price)! - ((price)! * item.discount) / 100))
+        : price)!;
+    cartItemPrice = discountedPrice;
     totalPrice = price;
     totalweight = item.weight;
     itemImage = item.imagePath;

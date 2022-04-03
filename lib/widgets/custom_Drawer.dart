@@ -11,6 +11,8 @@ import 'package:orgamart/screen/review_screen.dart';
 import 'package:orgamart/screen/saved_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../controller/cart_controller.dart';
+
 ///todo- optimise this shit
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({
@@ -19,45 +21,51 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final userController =Get.put(User_Controller());
+    final userController = Get.find<User_Controller>();
+    final cartController = Get.find<Cart_Controller>();
     return Drawer(
       child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 10.w,
-            vertical: 25.h,
+            vertical: 45.h,
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              GetX<User_Controller>(builder: (controller) {
-                return SizedBox(
-                  height: 200.h,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 120.h,
-                        width: 120.w,
-                        child: ClipOval(
-                          child: Image(
-                            image: AssetImage(
-                              controller.userimage.toString(),
+              GetBuilder<User_Controller>(
+                  init: User_Controller(),
+                  builder: (controller) {
+                    return SizedBox(
+                      height: 150.h,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 120.h,
+                            width: 120.w,
+                            child: ClipOval(
+                              child: Image(
+                                image: AssetImage(
+                                  controller.userimage.toString(),
+                                ),
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                            fit: BoxFit.cover,
                           ),
-                        ),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          Expanded(
+                            child: Text(
+                              controller.username.toString(),
+                              style: TextStyle(
+                                  fontSize: 22.sp, wordSpacing: 10.sp),
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: 8.h,
-                      ),
-                      Expanded(
-                        child: Text(
-                          controller.username.toString(),
-                          style: TextStyle(fontSize: 22.sp, wordSpacing: 10.sp),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }),
+                    );
+                  }),
               SizedBox(
                 height: 20.h,
               ),
@@ -69,14 +77,20 @@ class CustomDrawer extends StatelessWidget {
                   size: 25.sp,
                 ),
               ),
-              DrawerItems(
-                text: 'Cart',
-                screen: const CartScreen(),
-                icon: FaIcon(
-                  FontAwesomeIcons.shoppingCart,
-                  size: 25.sp,
+              const Expanded(child: Divider()),
+              GetBuilder<Cart_Controller>(
+                init: Cart_Controller(),
+                builder: (controller) => DrawerItems(
+                  text:
+                      'Cart          ${cartController.cartItems.length} items',
+                  screen: const CartScreen(),
+                  icon: FaIcon(
+                    FontAwesomeIcons.shoppingCart,
+                    size: 25.sp,
+                  ),
                 ),
               ),
+              const Expanded(child: Divider()),
               DrawerItems(
                 text: 'Offers',
                 screen: const DiscountScreen(),
@@ -85,6 +99,7 @@ class CustomDrawer extends StatelessWidget {
                   size: 25.sp,
                 ),
               ),
+              const Expanded(child: Divider()),
               DrawerItems(
                 text: 'My Reviews',
                 screen: const ReviewScreen(),
@@ -93,6 +108,7 @@ class CustomDrawer extends StatelessWidget {
                   size: 25.sp,
                 ),
               ),
+              const Expanded(child: Divider()),
               DrawerItems(
                 text: 'Saved',
                 screen: const Saved_screen(),

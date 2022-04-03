@@ -1,95 +1,106 @@
 import 'package:get/get.dart';
 import 'package:orgamart/model/item.dart';
+import 'package:orgamart/model/purchases.dart';
+
+import '../model/purchases.dart';
 
 class User_Controller extends GetxController {
-  RxString? userimage = 'assets/images/user/user.jpg'.obs;
-  RxString? username = 'Waifu'.obs;
-  var recentPurchases = [].obs;
-  @override
-  void onInit() {
-    var userPurchase = [
-      Item(
-          name: 'Brocolli',
-          brand: 'Farmer',
-          type: 'Vegetable',
-          discount: 0,
-          pricePerUnit: 3,
-          weight: 250,
-          packOrBottle: 'package',
-          weightType: 'gm',
-          imagePath: 'assets/images/products/vegetable/brocolli.jpg'),
-      Item(
-          name: 'Milk Liquid',
-          brand: 'Farmer',
-          type: 'Milk',
-          discount: 0,
-          pricePerUnit: 5,
-          weight: 500,
-          packOrBottle: 'package',
-          weightType: 'ml',
-          imagePath: 'assets/images/products/milk/liquid milk.jpg'),
-      Item(
-          name: 'Milk Non-Fat',
-          brand: 'Farmer',
-          type: 'Milk',
-          discount: 0,
-          pricePerUnit: 14.5,
-          weight: 500,
-          packOrBottle: 'package',
-          weightType: 'gm',
-          imagePath: 'assets/images/products/milk/cheese.jpg'),
-      Item(
-          name: 'Beef',
-          brand: 'Butcher',
-          type: 'Vegetable',
-          discount: 0,
-          pricePerUnit: 4,
-          weight: 500,
-          packOrBottle: 'package',
-          weightType: 'gm',
-          imagePath: 'assets/images/products/meat/beef.jpg'),
-      Item(
-          name: 'Chicken',
-          brand: 'Farmer',
-          type: 'Egg',
-          discount: 0,
-          pricePerUnit: 4.5,
-          weight: 1,
-          packOrBottle: 'Box',
-          weightType: 'box(12)',
-          imagePath: 'assets/images/products/egg/chicken egg.jpg'),
-      Item(
-          name: 'Black pepper',
-          brand: 'Farmer',
-          type: 'Spices',
-          discount: 0,
-          pricePerUnit: 10,
-          weight: 100,
-          packOrBottle: 'package',
-          weightType: 'gm',
-          imagePath: 'assets/images/products/spices/black pepper.jpg'),
-      Item(
-          name: 'Olive Oil',
-          brand: 'Farmer',
-          type: 'Oil',
-          discount: 0,
-          pricePerUnit: 14.5,
-          weight: 500,
-          packOrBottle: 'package',
-          weightType: 'gm',
-          imagePath: 'assets/images/products/oil/olive oil.jpg'),
-      Item(
-          name: 'Soybean Oil',
-          brand: 'Farmer',
-          type: 'Oil',
-          discount: 0,
-          pricePerUnit: 3.5,
-          weight: 100,
-          packOrBottle: 'package',
-          weightType: 'gm',
-          imagePath: 'assets/images/products/oil/soybean oil.jpg'),
-    ];
-    recentPurchases.value = userPurchase;
-    super.onInit();
+  String? userimage = 'assets/images/user/user.jpg';
+  String? username = 'Waifu';
+  String? password = 'orgamart';
+  bool isloggedin = false;
+  var recentPurchases = [];
+  double? appliedCoupon;
+  bool couponapplied = false;
+  var totalPrice = 0.0;
+  var deliveryfee = 10.0;
+  var amounttoPay = 0.0;
+  List<Item> checkoutcartItems = [];
+  late String address;
+
+  ///map of coupons
+  Map<String, double> coupons = {
+    '20%': 20.0,
+    'welcome': 30.0,
+    'champion30': 30
+  };
+
+  ///takes all products from cart item
+  void addCartItemsinCheckout(List<Item> cartItems) {
+    checkoutcartItems.addAll(cartItems);
+    update();
+  }
+
+  ///calculates total price of cart
+  void calculateTotalCartPrice() {
+    List pricevalues =
+        checkoutcartItems.map((item) => item.totalPrice).toList();
+
+    var cartsum = 0.0;
+    pricevalues.forEach((e) {
+      cartsum += e;
+    });
+    totalPrice = cartsum;
+    update();
+  }
+
+  ///calculates total amount to pay
+  void calculate_amounttopay() {
+    amounttoPay = totalPrice + deliveryfee;
+    update();
+  }
+
+  ///to verify coupon
+  void checkCoupon_fromUser(String couponcode) {
+    if (coupons.containsKey(couponcode)) {
+      appliedCoupon = coupons[couponcode];
+      couponapplied = true;
+      updateTotalPrice_bycoupon();
+      coupons.remove(couponcode);
+      update();
+    } else
+      return;
+  }
+
+  ///update total price by coupon
+  void updateTotalPrice_bycoupon() {
+    var price = totalPrice;
+    var updatedPrice = (price / 100) * appliedCoupon!;
+    totalPrice = updatedPrice;
+    calculate_amounttopay();
+    update();
+  }
+
+  void login({username, password}) {
+    if (username == this.username && password == this.password) {
+      isloggedin = true;
+      update();
+      print('user logged in succesfully');
+    }
+  }
+
+  void signout() {
+    isloggedin = false;
+    update();
+    print('user signed out  succesfully');
+  }
+
+  void resetCheckout(Item item) {
+    couponapplied = false;
+    totalPrice = 0.0;
+    appliedCoupon = null;
+    amounttoPay = 0.0;
+    update();
+  }
+
+  void addtorecentPurchases() {
+    Purchase liveItems = Purchase(
+        dateTime: DateTime.now(),
+        purchaseValue: totalPrice,
+        totalValue: amounttoPay,
+        purchasedItem: checkoutcartItems,
+        adress: address);
+    recentPurchases.add(liveItems);
+    update();
   }
 }

@@ -42,7 +42,6 @@ class Trending_ProductsTile extends StatelessWidget {
               child: GetX<Shopping_Controller>(
                 builder: (controller) {
                   return GridView.builder(
-                    physics: const BouncingScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3, childAspectRatio: 0.65.r),
                     itemCount: controller.trendingproducts.length,
@@ -52,30 +51,39 @@ class Trending_ProductsTile extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Colors.black12,
-                                    width: containerBorderwidth.w,
+                            child: GestureDetector(
+                              onTap: () {
+                                cartController.addtoUserClickedItem(
+                                    item: controller.trendingproducts[index]);
+                                showAlertDialog(
+                                  context: context,
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors.black12,
+                                      width: containerBorderwidth.w,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: shadowColor,
+                                        blurRadius: shadowBlurRadius.r,
+                                        offset: const Offset(0, 2),
+                                      )
+                                    ]),
+                                child: ClipOval(
+                                  child: Image(
+                                    ///image
+                                    image: AssetImage(controller
+                                        .trendingproducts[index].imagePath),
+                                    fit: BoxFit.cover,
                                   ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: shadowColor,
-                                      blurRadius: shadowBlurRadius.r,
-                                      offset: const Offset(0, 2),
-                                    )
-                                  ]),
-                              child: ClipOval(
-                                child: Image(
-                                  ///image
-                                  image: AssetImage(controller
-                                      .trendingproducts[index].imagePath),
-                                  fit: BoxFit.cover,
                                 ),
+                                height: homepage_productHeight.h,
+                                width: homePage_ProductWidth.w,
                               ),
-                              height: homepage_productHeight.h,
-                              width: homePage_ProductWidth.w,
                             ),
                           ),
                           SizedBox(
@@ -98,7 +106,8 @@ class Trending_ProductsTile extends StatelessWidget {
                           Center(
                             child: Text(
                               ///item price
-                              controller.trendingproducts[index].pricePerUnit
+                              controller.trendingproducts[index]
+                                      .initial_pricePerUnit
                                       .toString() +
                                   ' ' +
                                   '\$',

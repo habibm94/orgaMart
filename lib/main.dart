@@ -6,14 +6,12 @@ import 'package:orgamart/screen/homeScreen.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:orgamart/widgets/custom_Drawer.dart';
-import 'controller/shopping_Controller.dart';
 
 import 'package:orgamart/screen/cart_screen.dart';
-import 'package:orgamart/screen/profile_screen.dart';
-import 'package:orgamart/controller/user_controller.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:badges/badges.dart';
 import 'package:orgamart/getxBinding.dart';
+import 'package:orgamart/decoration_const.dart';
 
 void main() {
   runApp(const OrgaMart());
@@ -43,12 +41,11 @@ class _OrgaMartState extends State<OrgaMart> {
           primaryColor: Colors.green,
         ),
         home: Scaffold(
-          //drawer: CustomDrawer(),
           bottomNavigationBar: BottomNavigationBar(
-            selectedFontSize: 16,
-            iconSize: 25,
-            selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-            selectedItemColor: Colors.green,
+            selectedFontSize: 16.sp,
+            iconSize: 25.sp,
+            selectedLabelStyle: bottomBarTextStyle,
+            selectedItemColor: bottomBarIconColor,
             currentIndex: _screenIndex,
             onTap: (index) {
               setState(() {
@@ -71,29 +68,26 @@ class _OrgaMartState extends State<OrgaMart> {
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                  icon: Badge(
-                    child: Icon(
-                      Icons.shopping_cart,
-                      size: 25.sp,
-                    ),
-                    badgeContent: GetX<Cart_Controller>(
-                      builder: (controller) {
-                        return Text(
-                          controller.cartItems.length.toString(),
-                          style: TextStyle(fontSize: 12.sp),
-                        );
-                      },
-                    ),
-                    badgeColor: Colors.blue.shade300,
+                icon: Badge(
+                  child: Icon(
+                    Icons.shopping_cart,
+                    size: 25.sp,
                   ),
-                  label: 'Cart',
-                  backgroundColor: Colors.black),
+                  badgeContent: GetX<Cart_Controller>(
+                    builder: (controller) {
+                      return Text(
+                        controller.cartItems.length.toString(),
+                        style: TextStyle(fontSize: 12.sp),
+                      );
+                    },
+                  ),
+                  badgeColor: bottomBar_badgeColor.shade300,
+                ),
+                label: 'Cart',
+              ),
             ],
             // selectedItemColor: Colors.green[300],
-            unselectedItemColor: Colors.black,
-            //height: 50.h,
-            //  elevation: 20,
-            //backgroundColor: Colors.white,
+            unselectedItemColor: unselected_bottomBarIconColor,
           ),
           body: _screenList.elementAt(_screenIndex),
         ),
