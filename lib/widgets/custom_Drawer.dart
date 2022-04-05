@@ -7,11 +7,11 @@ import 'package:orgamart/controller/user_controller.dart';
 import 'package:orgamart/screen/profile_screen.dart';
 import 'package:orgamart/screen/cart_screen.dart';
 import 'package:orgamart/screen/discount_Screen.dart';
-import 'package:orgamart/screen/review_screen.dart';
+
 import 'package:orgamart/screen/saved_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../controller/cart_controller.dart';
+import 'package:orgamart/controller/cart_controller.dart';
 
 ///todo- optimise this shit
 class CustomDrawer extends StatelessWidget {
@@ -69,52 +69,51 @@ class CustomDrawer extends StatelessWidget {
               SizedBox(
                 height: 20.h,
               ),
-              DrawerItems(
-                text: 'Account',
-                screen: const ProfileScreen(),
-                icon: FaIcon(
-                  FontAwesomeIcons.userCircle,
-                  size: 25.sp,
-                ),
-              ),
-              const Expanded(child: Divider()),
-              GetBuilder<Cart_Controller>(
-                init: Cart_Controller(),
-                builder: (controller) => DrawerItems(
-                  text:
-                      'Cart          ${cartController.cartItems.length} items',
-                  screen: const CartScreen(),
+              Expanded(
+                child: DrawerItems(
+                  text: 'Account',
+                  screen: const ProfileScreen(),
                   icon: FaIcon(
-                    FontAwesomeIcons.shoppingCart,
+                    FontAwesomeIcons.userCircle,
                     size: 25.sp,
                   ),
                 ),
               ),
-              const Expanded(child: Divider()),
-              DrawerItems(
-                text: 'Offers',
-                screen: const DiscountScreen(),
-                icon: FaIcon(
-                  FontAwesomeIcons.tag,
-                  size: 25.sp,
+              Divider(),
+              Expanded(
+                child: GetBuilder<Cart_Controller>(
+                  init: Cart_Controller(),
+                  builder: (controller) => DrawerItems(
+                    text:
+                        'Cart          ${cartController.cartItems.length} items',
+                    screen: const CartScreen(),
+                    icon: FaIcon(
+                      FontAwesomeIcons.shoppingCart,
+                      size: 25.sp,
+                    ),
+                  ),
                 ),
               ),
-              const Expanded(child: Divider()),
-              DrawerItems(
-                text: 'My Reviews',
-                screen: const ReviewScreen(),
-                icon: FaIcon(
-                  Icons.rate_review,
-                  size: 25.sp,
+              Divider(),
+              Expanded(
+                child: DrawerItems(
+                  text: 'Offers',
+                  screen: const DiscountScreen(),
+                  icon: FaIcon(
+                    FontAwesomeIcons.tag,
+                    size: 25.sp,
+                  ),
                 ),
               ),
-              const Expanded(child: Divider()),
-              DrawerItems(
-                text: 'Saved',
-                screen: const Saved_screen(),
-                icon: FaIcon(
-                  FontAwesomeIcons.heart,
-                  size: 25.sp,
+              Divider(),
+              Expanded(
+                child: DrawerItems(
+                  text: 'Saved',
+                  screen: const Saved_screen(),
+                  icon: FaIcon(
+                    FontAwesomeIcons.heart,
+                    size: 25.sp,
+                  ),
                 ),
               ),
             ],

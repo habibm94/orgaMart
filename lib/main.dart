@@ -73,7 +73,8 @@ class _OrgaMartState extends State<OrgaMart> {
                     Icons.shopping_cart,
                     size: 25.sp,
                   ),
-                  badgeContent: GetX<Cart_Controller>(
+                  badgeContent: GetBuilder<Cart_Controller>(
+                    init: Cart_Controller(),
                     builder: (controller) {
                       return Text(
                         controller.cartItems.length.toString(),
@@ -81,7 +82,7 @@ class _OrgaMartState extends State<OrgaMart> {
                       );
                     },
                   ),
-                  badgeColor: bottomBar_badgeColor.shade300,
+                  badgeColor: bottomBar_badgeColor,
                 ),
                 label: 'Cart',
               ),

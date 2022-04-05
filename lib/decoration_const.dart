@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ///color
 const Color shadowColor = Colors.black12;
-Color backgroundContainerColor = Colors.grey.shade200;
+Color backgroundContainerColor = Colors.grey.shade100;
 const containerColor = Colors.white;
 const borderColor = Colors.black12;
 const double shadowBlurRadius = 6.0;
-const appBarColor = Colors.green;
-const bottomBarIconColor = Colors.green;
+Color appBarColor = Colors.green.shade300;
+Color bottomBarIconColor = Colors.green.shade500;
 const unselected_bottomBarIconColor = Colors.black;
-const bottomBar_badgeColor = Colors.blue;
+Color bottomBar_badgeColor = Colors.blue.shade600;
+Color iconColor = Colors.blue.shade700;
+
+///app bar color
 
 ///height-width
-const containerBorderwidth = 2;
-const homepage_productHeight = 80;
-const homePage_ProductWidth = 88;
+var containerBorderwidth = 2.w;
+var homepage_productHeight = 80.h;
+var homePage_ProductWidth = 88.w;
 
 ///fonts
-const mainfontSize = 25;
+var mainfontSize = 25.sp;
 const bottomBarTextStyle = TextStyle(fontWeight: FontWeight.bold);
+var checkoutScreenTextstyle = TextStyle(
+  fontSize: 18.sp,
+  wordSpacing: 10.sp,
+);

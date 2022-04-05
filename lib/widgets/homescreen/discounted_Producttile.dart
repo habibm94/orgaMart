@@ -263,7 +263,9 @@ showAlertDialog({
               ),
               Text(
                 ///discounted price
-                ((cartController.discountedPrice).toString() + ' ' + '\$'),
+                ((cartController.price_aftercheckingDiscount).toString() +
+                    ' ' +
+                    '\$'),
                 style: TextStyle(
                     fontSize: 18.sp,
                     color: Colors.black,

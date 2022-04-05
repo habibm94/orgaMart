@@ -4,12 +4,12 @@ import 'package:orgamart/model/item.dart';
 import 'package:collection/collection.dart';
 
 class Cart_Controller extends GetxController {
-  var cartItems = [].obs;
+  List<Item> cartItems = [];
   double cartItemPrice = 0.0;
   late Item? userClickedItem;
   var orderoftimes = 1;
   var totalPrice = 0.0;
-  var discountedPrice = 0.0;
+  var price_aftercheckingDiscount = 0.0;
   var productweight;
   var totalweight = 0;
   var weightType;
@@ -26,14 +26,14 @@ class Cart_Controller extends GetxController {
     if (cartItems.contains(userClickedItem)) {
       var index = cartItems.indexWhere((element) => element == userClickedItem);
       cartItems[index].totalItemcount += orderoftimes;
-      cartItems[index]?.totalPrice += totalPrice;
-      cartItems[index]?.totalWeight += totalweight;
+      cartItems[index].totalPrice += totalPrice;
+      cartItems[index].totalWeight += totalweight;
     } else {
       userClickedItem?.totalItemcount += orderoftimes;
       userClickedItem?.totalPrice += totalPrice;
       userClickedItem?.totalWeight += totalweight;
       userClickedItem?.itemPrice_incart = cartItemPrice;
-      cartItems.add(userClickedItem);
+      cartItems.add(userClickedItem!);
     }
     ;
     counttotalCartValue();
@@ -46,7 +46,7 @@ class Cart_Controller extends GetxController {
     cartItems[index].totalWeight =
         (cartItems[index].weight * cartItems[index].totalItemcount).toDouble();
     cartItems[index].totalPrice =
-        cartItems[index].totalItemcount * cartItems[index].itemPrice_incart;
+        (cartItems[index].totalItemcount * cartItems[index].itemPrice_incart!);
 
     counttotalCartValue();
 
@@ -60,7 +60,7 @@ class Cart_Controller extends GetxController {
     cartItems[index].totalWeight =
         (cartItems[index].weight * cartItems[index].totalItemcount).toDouble();
     cartItems[index].totalPrice =
-        cartItems[index].totalItemcount * cartItems[index].itemPrice_incart;
+        cartItems[index].totalItemcount * cartItems[index].itemPrice_incart!;
     counttotalCartValue();
     update();
   }
@@ -89,11 +89,11 @@ class Cart_Controller extends GetxController {
     productweight = item.weight;
     weightType = item.weightType;
     price = item.initial_pricePerUnit;
-    discountedPrice = (item.discounted == true
+    price_aftercheckingDiscount = (item.discount > 0
         ? (((price)! - ((price)! * item.discount) / 100))
         : price)!;
-    cartItemPrice = discountedPrice;
-    totalPrice = price;
+    cartItemPrice = price_aftercheckingDiscount;
+    totalPrice = price_aftercheckingDiscount;
     totalweight = item.weight;
     itemImage = item.imagePath;
   }
@@ -102,7 +102,7 @@ class Cart_Controller extends GetxController {
   void increaseOrder() {
     orderoftimes += 1;
     totalweight = productweight * orderoftimes;
-    totalPrice = price * orderoftimes;
+    totalPrice = price_aftercheckingDiscount * orderoftimes;
     update();
   }
 
@@ -110,7 +110,7 @@ class Cart_Controller extends GetxController {
   void decreaseOrder() {
     orderoftimes -= 1;
     totalweight = productweight * orderoftimes;
-    totalPrice = price * orderoftimes;
+    totalPrice = price_aftercheckingDiscount * orderoftimes;
     update();
   }
 
@@ -132,7 +132,7 @@ class Cart_Controller extends GetxController {
   ///totally reset the cart
   void resetCart() {
     total_priceofCartItems = 0;
-    cartItems.value = [];
+    cartItems = [];
     update();
   }
 }

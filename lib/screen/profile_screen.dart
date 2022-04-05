@@ -9,7 +9,7 @@ import 'package:orgamart/controller/user_controller.dart';
 import 'package:orgamart/screen/profile_screen.dart';
 import 'package:orgamart/screen/cart_screen.dart';
 import 'package:orgamart/screen/discount_Screen.dart';
-import 'package:orgamart/screen/review_screen.dart';
+
 import 'package:orgamart/screen/saved_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -34,46 +34,48 @@ class ProfileScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  GetX<User_Controller>(builder: (controller) {
-                    return SizedBox(
-                      height: 170.h,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 100.h,
-                            width: 100.w,
-                            child: ClipOval(
-                              child: Image(
-                                image: AssetImage(
-                                  controller.userimage.toString(),
+                  GetBuilder<User_Controller>(
+                      init: User_Controller(),
+                      builder: (controller) {
+                        return SizedBox(
+                          height: 170.h,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 100.h,
+                                width: 100.w,
+                                child: ClipOval(
+                                  child: Image(
+                                    image: AssetImage(
+                                      controller.userimage.toString(),
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                                fit: BoxFit.cover,
                               ),
-                            ),
+                              SizedBox(
+                                height: 8.h,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  controller.username.toString(),
+                                  style: TextStyle(
+                                      fontSize: 20.sp,
+                                      wordSpacing: 10.sp,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Rising Star',
+                                  style: TextStyle(
+                                      fontSize: 18.sp, color: Colors.blue),
+                                ),
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            height: 8.h,
-                          ),
-                          Expanded(
-                            child: Text(
-                              controller.username.toString(),
-                              style: TextStyle(
-                                  fontSize: 20.sp,
-                                  wordSpacing: 10.sp,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              'Rising Star',
-                              style: TextStyle(
-                                  fontSize: 18.sp, color: Colors.blue),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
+                        );
+                      }),
                   SizedBox(
                     height: 10.h,
                   ),

@@ -2,12 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:orgamart/controller/cart_controller.dart';
+import 'package:orgamart/controller/user_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:orgamart/decoration_const.dart';
 import 'package:orgamart/screen/checkout_screen.dart';
-
-import '../controller/user_controller.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -21,7 +20,7 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         ///appbar
-        title: const Text('My Cart'),
+        title: const Text('My Cart'), backgroundColor: appBarColor,
       ),
       body: Container(
         height: 455.h,
@@ -50,6 +49,8 @@ class cartScreen_infoBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartController = Get.find<Cart_Controller>();
+    final userController = Get.find<User_Controller>();
     return Container(
         padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
         color: containerColor,
@@ -64,8 +65,10 @@ class cartScreen_infoBody extends StatelessWidget {
                 Icon(
                   Icons.shopping_cart,
                   size: 25.sp,
-                  color: Colors.green.shade800,
+                  color: iconColor,
                 ),
+
+                ///total price
                 GetBuilder<Cart_Controller>(
                   init: Cart_Controller(),
                   builder: (cartController) => Text(
@@ -79,17 +82,24 @@ class cartScreen_infoBody extends StatelessWidget {
                 ),
               ],
             ),
-            ElevatedButton(
-              onPressed: () {
-                userController.addCartItemsinCheckout(
-                    cartItems: cartController.cartItems);
-                Get.to(const Checkout_screen());
-              },
-              child: Text(
-                'Checkout',
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
-              ),
-            )
+            Container(
+                child: cartController.cartItems.length != 0
+                    ? ElevatedButton(
+                        onPressed: () {
+                          userController.addCartItemsinCheckout(
+                              cartItems: cartController.cartItems);
+                          Get.to(const Checkout_screen());
+                        },
+                        child: Text(
+                          'Checkout',
+                          style: TextStyle(
+                              fontSize: 20.sp, fontWeight: FontWeight.w500),
+                        ),
+                      )
+                    : Text(
+                        'Please Add Some Items',
+                        style: TextStyle(fontSize: 18.sp),
+                      ))
           ],
         ));
   }
@@ -102,7 +112,7 @@ class Product_ListView extends StatelessWidget {
     required this.cartController,
   }) : super(key: key);
 
-  final RxList cartItems;
+  final List cartItems;
   final Cart_Controller cartController;
 
   @override
@@ -231,6 +241,7 @@ class Product_ListView extends StatelessWidget {
                                       icon: Icon(
                                         Icons.delete,
                                         size: 25.sp,
+                                        color: iconColor,
                                       ),
                                       onPressed: () {
                                         cartController.removeFromCart(index);
@@ -318,7 +329,6 @@ cartScreen_AlertDialog(
                 '\$',
             style: TextStyle(
               fontSize: 18.sp,
-              color: Colors.red,
             ),
           ),
           Center(

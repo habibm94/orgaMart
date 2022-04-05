@@ -2,8 +2,7 @@ import 'package:get/get.dart';
 import 'package:orgamart/model/item.dart';
 import 'package:orgamart/model/purchases.dart';
 
-import '../model/purchases.dart';
-
+///todo- save name, points, image, const in get storage/hive
 class User_Controller extends GetxController {
   String? userimage = 'assets/images/user/user.jpg';
   String? username = 'Waifu';
@@ -26,8 +25,9 @@ class User_Controller extends GetxController {
   };
 
   ///takes all products from cart item
-  void addCartItemsinCheckout(List<Item> cartItems) {
+  void addCartItemsinCheckout({required List<Item> cartItems}) {
     checkoutcartItems.addAll(cartItems);
+    calculateTotalCartPrice();
     update();
   }
 
@@ -41,6 +41,7 @@ class User_Controller extends GetxController {
       cartsum += e;
     });
     totalPrice = cartsum;
+    calculate_amounttopay();
     update();
   }
 
