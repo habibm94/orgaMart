@@ -8,7 +8,6 @@ import 'package:orgamart/controller/shopping_Controller.dart';
 import 'package:orgamart/controller/user_controller.dart';
 import 'package:orgamart/screen/profile_screen.dart';
 import 'package:orgamart/screen/cart_screen.dart';
-import 'package:orgamart/screen/discount_Screen.dart';
 
 import 'package:orgamart/screen/saved_screen.dart';
 

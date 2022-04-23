@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:orgamart/decoration_const.dart';
 import 'package:orgamart/screen/checkout_screen.dart';
+import 'package:badges/badges.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -18,9 +20,24 @@ class CartScreen extends StatelessWidget {
     var cartItems = cartController.cartItems;
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: NewGradientAppBar(
         ///appbar
-        title: const Text('My Cart'), backgroundColor: appBarColor,
+        title: const Text('My Cart'),
+        gradient: LinearGradient(colors: [Colors.teal, Colors.green.shade200]),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 10.w, top: 10.h),
+            child: IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: Badge(
+                  badgeContent:
+                      Text(cartController.cartItems.length.toString()),
+                  child: const Icon(Icons.shopping_cart)),
+            ),
+          ),
+        ],
       ),
       body: Container(
         height: 455.h,

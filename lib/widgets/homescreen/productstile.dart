@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:orgamart/controller/shopping_Controller.dart';
+import 'package:orgamart/model/item.dart';
+import 'package:orgamart/screen/item_screen.dart';
 
 class ProductsTile extends StatelessWidget {
   const ProductsTile({
@@ -16,7 +18,10 @@ class ProductsTile extends StatelessWidget {
     List<ProductsTile_products> getProductItems() {
       List<ProductsTile_products> productItems = shoppingController.products
           .map((element) => ProductsTile_products(
-              imagePath: element.imagePath, name: element.name))
+                imagePath: element.imagePath,
+                name: element.name,
+                products: element.items,
+              ))
           .toList();
 
       return productItems;
@@ -26,7 +31,6 @@ class ProductsTile extends StatelessWidget {
     List<ProductsTile_products> tileProducst = getProductItems();
 
     return Container(
-      height: 420.h,
       decoration: BoxDecoration(
         color: backgroundContainerColor,
       ),
@@ -58,7 +62,12 @@ class ProductsTile extends StatelessWidget {
 class ProductsTile_products extends StatelessWidget {
   String imagePath;
   String name;
-  ProductsTile_products({Key? key, required this.imagePath, required this.name})
+  List<Item> products;
+  ProductsTile_products(
+      {Key? key,
+      required this.imagePath,
+      required this.name,
+      required this.products})
       : super(key: key);
 
   @override
@@ -68,28 +77,33 @@ class ProductsTile_products extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: borderColor,
-                  width: 1.5.w,
+          GestureDetector(
+            onTap: () {
+              Get.to(Item_Screen(name: name, products: products));
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: borderColor,
+                    width: 1.5.w,
+                  ),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: shadowColor,
+                      blurRadius: shadowBlurRadius,
+                      offset: Offset(0, 2),
+                    )
+                  ]),
+              child: ClipOval(
+                child: Image(
+                  image: AssetImage(imagePath),
+                  fit: BoxFit.cover,
                 ),
-                boxShadow: const [
-                  BoxShadow(
-                    color: shadowColor,
-                    blurRadius: shadowBlurRadius,
-                    offset: Offset(0, 2),
-                  )
-                ]),
-            child: ClipOval(
-              child: Image(
-                image: AssetImage(imagePath),
-                fit: BoxFit.cover,
               ),
+              height: 70.h,
+              width: 84.w,
             ),
-            height: 80.h,
-            width: 88.w,
           ),
           SizedBox(
             height: 10.h,

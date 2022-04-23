@@ -4,6 +4,7 @@ import 'package:orgamart/controller/cart_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:orgamart/decoration_const.dart';
+import 'package:orgamart/model/item.dart';
 
 ///todo- add save icon on add to cart pop up
 class Trending_ProductsTile extends StatelessWidget {
@@ -15,21 +16,35 @@ class Trending_ProductsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final shoppingController = Get.find<Shopping_Controller>();
     final cartController = Get.find<Cart_Controller>();
+
+    List<trendingTile_products> getProductItems() {
+      List<trendingTile_products> productItems = shoppingController
+          .trendingproducts
+          .map((element) => trendingTile_products(
+              productImage: element.imagePath,
+              name: element.name,
+              initial_pricePerunit: element.initial_pricePerUnit,
+              trndingItem: element))
+          .toList();
+
+      return productItems;
+    }
+
+    List<trendingTile_products> trendingtile_Products = getProductItems();
+    ;
     return Container(
       padding: EdgeInsets.only(bottom: 10.h, top: 10.h),
-      height: shoppingController.trendingproducts.length / 3.round() * 200.h,
+      width: double.infinity,
       decoration: BoxDecoration(
         color: backgroundContainerColor,
       ),
       child: Padding(
         padding: EdgeInsets.only(
-          left: 10.w,
-          right: 20.w,
+          left: 20.w,
+          right: 10.w,
         ),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
               'Trending',
@@ -38,110 +53,13 @@ class Trending_ProductsTile extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
             ),
-            Expanded(
-              child: GetX<Shopping_Controller>(
-                builder: (controller) {
-                  return GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3, childAspectRatio: 0.65.r),
-                    itemCount: controller.trendingproducts.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                cartController.addtoUserClickedItem(
-                                    item: controller.trendingproducts[index]);
-                                showAlertDialog(
-                                  context: context,
-                                );
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                      width: containerBorderwidth.w,
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: shadowColor,
-                                        blurRadius: shadowBlurRadius.r,
-                                        offset: const Offset(0, 2),
-                                      )
-                                    ]),
-                                child: ClipOval(
-                                  child: Image(
-                                    ///image
-                                    image: AssetImage(controller
-                                        .trendingproducts[index].imagePath),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                height: homepage_productHeight.h,
-                                width: homePage_ProductWidth.w,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 6.h,
-                          ),
-                          Text(
-                            controller.trendingproducts[index].name,
-
-                            ///item name
-                            style: TextStyle(
-                              fontSize: controller.allDiscountedProducts[index]
-                                          .name.length >
-                                      11
-                                  ? 12.sp
-                                  : 14.sp,
-                              color: Colors.black,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Center(
-                            child: Text(
-                              ///item price
-                              controller.trendingproducts[index]
-                                      .initial_pricePerUnit
-                                      .toString() +
-                                  ' ' +
-                                  '\$',
-
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                color: Colors.black54,
-                              ),
-                            ),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              cartController.addtoUserClickedItem(
-                                  item: controller.trendingproducts[index]);
-                              showAlertDialog(
-                                context: context,
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.green,
-                              elevation: 10,
-                              minimumSize: Size(20.w, 32.h),
-                            ),
-                            child: Text(
-                              'ADD TO CART',
-                              style: TextStyle(fontSize: 10.sp),
-                            ),
-                          )
-                        ],
-                      );
-                    },
-                  );
-                },
-              ),
+            GridView(
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 0.62,
+                  mainAxisSpacing: 6.0),
+              children: trendingtile_Products,
             ),
           ],
         ),
@@ -150,7 +68,7 @@ class Trending_ProductsTile extends StatelessWidget {
   }
 }
 
-showAlertDialog({
+showAlertDialog_trendingProducts({
   required BuildContext context,
 }) {
   // set up the buttons
@@ -318,4 +236,107 @@ showAlertDialog({
   ).then((value) {
     cartController.reset_temp_CartValues();
   });
+}
+
+class trendingTile_products extends StatelessWidget {
+  Item trndingItem;
+  String productImage;
+  String name;
+  double initial_pricePerunit;
+  trendingTile_products(
+      {required this.name,
+      required this.initial_pricePerunit,
+      required this.productImage,
+      required this.trndingItem});
+
+  @override
+  Widget build(BuildContext context) {
+    final cartController = Get.find<Cart_Controller>();
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                cartController.addtoUserClickedItem(item: trndingItem);
+                showAlertDialog_trendingProducts(
+                  context: context,
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.black12,
+                      width: containerBorderwidth.w,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: shadowColor,
+                        blurRadius: shadowBlurRadius.r,
+                        offset: const Offset(0, 2),
+                      )
+                    ]),
+                child: ClipOval(
+                  child: Image(
+                    ///image
+                    image: AssetImage(productImage),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                height: homepage_productHeight.h,
+                width: homePage_ProductWidth.w,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 6.h,
+          ),
+          Text(
+            name,
+
+            ///item name
+            style: TextStyle(
+                fontSize: name.length > 11 ? 12.sp : 14.sp,
+                color: Colors.black,
+                overflow: TextOverflow.ellipsis,
+                fontWeight: FontWeight.bold),
+          ),
+          Center(
+            child: Text(
+              ///item price
+              initial_pricePerunit.toString() + ' ' + '\$',
+
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              cartController.addtoUserClickedItem(item: trndingItem);
+              showAlertDialog_trendingProducts(
+                context: context,
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              primary: Colors.green,
+              elevation: 10,
+              minimumSize: Size(20.w, 32.h),
+            ),
+            child: Center(
+              child: Text(
+                'ADD TO CART',
+                style: TextStyle(fontSize: 9.sp),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }

@@ -27,7 +27,7 @@ class Discounted_ProductsTile extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.only(
-          left: 10.w,
+          left: 20.w,
           right: 20.w,
         ),
         child: Column(
@@ -48,7 +48,9 @@ class Discounted_ProductsTile extends StatelessWidget {
                 builder: (controller) {
                   return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3, childAspectRatio: 0.60.r),
+                        crossAxisCount: 3,
+                        childAspectRatio: 0.62.r,
+                        mainAxisSpacing: 10.0),
                     itemCount: controller.allDiscountedProducts.length,
                     itemBuilder: (context, index) {
                       return Column(

@@ -20,26 +20,38 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              height: 24.h,
-              decoration: const BoxDecoration(color: containerColor),
-            ),
-            Container(
-              height: 40.h,
-              decoration: const BoxDecoration(color: Colors.white, boxShadow: [
-                BoxShadow(
-                    offset: Offset(0, 2),
-                    blurRadius: shadowBlurRadius,
-                    color: shadowColor)
-              ]),
-              child: Center(
-                  child: Text(
-                'Orgamart',
-                style: TextStyle(
-                    fontSize: 25.sp,
-                    fontWeight: FontWeight.bold,
-                    wordSpacing: 10.sp),
-              )),
+            Stack(
+              fit: StackFit.passthrough,
+              alignment: Alignment.bottomCenter,
+              children: [
+                Container(
+                  height: 140.h,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [Colors.teal, Colors.green.shade200],
+                    ),
+                  ),
+                  child: Center(
+                      child: Text(
+                    'Orgamart',
+                    style: TextStyle(
+                        fontSize: 30.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        wordSpacing: 10.sp),
+                  )),
+                ),
+                Container(
+                  height: 20.h,
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15))),
+                ),
+              ],
             ),
             const ProductsTile(),
             const Divider(
@@ -49,7 +61,7 @@ class HomeScreen extends StatelessWidget {
             const Divider(
               color: Colors.black54,
             ),
-            const Trending_ProductsTile(),
+            Trending_ProductsTile(),
           ],
         ),
       ),

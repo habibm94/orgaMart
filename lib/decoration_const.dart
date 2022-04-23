@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ///color
 const Color shadowColor = Colors.black12;
-Color backgroundContainerColor = Colors.grey.shade100;
+Color backgroundContainerColor = Colors.white;
 const containerColor = Colors.white;
 const borderColor = Colors.black12;
 const double shadowBlurRadius = 6.0;
@@ -17,8 +17,9 @@ Color iconColor = Colors.blue.shade700;
 
 ///height-width
 var containerBorderwidth = 2.w;
-var homepage_productHeight = 80.h;
+var homepage_productHeight = 72.h;
 var homePage_ProductWidth = 88.w;
+var adressBottomBar_height = 40.h;
 
 ///fonts
 var mainfontSize = 25.sp;

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:orgamart/controller/cart_controller.dart';
+import 'package:orgamart/controller/route_controller.dart';
 import 'package:orgamart/screen/homeScreen.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,40 +18,46 @@ void main() {
   runApp(const OrgaMart());
 }
 
-class OrgaMart extends StatefulWidget {
+class OrgaMart extends StatelessWidget {
   const OrgaMart({Key? key}) : super(key: key);
-
-  @override
-  State<OrgaMart> createState() => _OrgaMartState();
-}
-
-class _OrgaMartState extends State<OrgaMart> {
-  int _screenIndex = 1;
-  final List<Widget> _screenList = <Widget>[
-    const CustomDrawer(),
-    const HomeScreen(),
-    const CartScreen(),
-  ];
 
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       builder: () => GetMaterialApp(
-        initialBinding: GetxBinding(),
-        theme: ThemeData(
-          primaryColor: Colors.green,
-        ),
-        home: Scaffold(
-          bottomNavigationBar: BottomNavigationBar(
+          initialBinding: GetxBinding(),
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primaryColor: Colors.green,
+          ),
+          home: const AppScreen()),
+      designSize: const Size(360, 640),
+      splitScreenMode: true,
+    );
+  }
+}
+
+class AppScreen extends StatelessWidget {
+  const AppScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    final routecontroller = Get.find<Route_Controller>();
+    final cartController = Get.find<Cart_Controller>();
+
+    return Scaffold(
+      bottomNavigationBar: GetBuilder<Route_Controller>(
+        init: Route_Controller(),
+        builder: (controller) {
+          return BottomNavigationBar(
             selectedFontSize: 16.sp,
             iconSize: 25.sp,
             selectedLabelStyle: bottomBarTextStyle,
             selectedItemColor: bottomBarIconColor,
-            currentIndex: _screenIndex,
+            currentIndex: routecontroller.screenIndex,
             onTap: (index) {
-              setState(() {
-                _screenIndex = index;
-              });
+              print('$index got pressed');
+              routecontroller.change_screenIndex(index);
             },
             items: [
               BottomNavigationBarItem(
@@ -77,7 +84,7 @@ class _OrgaMartState extends State<OrgaMart> {
                     init: Cart_Controller(),
                     builder: (controller) {
                       return Text(
-                        controller.cartItems.length.toString(),
+                        cartController.cartItems.length.toString(),
                         style: TextStyle(fontSize: 12.sp),
                       );
                     },
@@ -87,14 +94,17 @@ class _OrgaMartState extends State<OrgaMart> {
                 label: 'Cart',
               ),
             ],
-            // selectedItemColor: Colors.green[300],
             unselectedItemColor: unselected_bottomBarIconColor,
-          ),
-          body: _screenList.elementAt(_screenIndex),
-        ),
+          );
+        },
       ),
-      designSize: const Size(360, 640),
-      splitScreenMode: true,
+
+      ///todo- create a getbuilder here
+      body: GetBuilder<Route_Controller>(
+          init: Route_Controller(),
+          builder: (controller) {
+            return routecontroller.screen;
+          }),
     );
   }
 }

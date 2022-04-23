@@ -43,8 +43,10 @@ class Cart_Controller extends GetxController {
   ///edit ordercount
   void edit_increaseorder({required int index}) {
     cartItems[index].totalItemcount += 1;
+
     cartItems[index].totalWeight =
         (cartItems[index].weight * cartItems[index].totalItemcount).toDouble();
+
     cartItems[index].totalPrice =
         (cartItems[index].totalItemcount * cartItems[index].itemPrice_incart!);
 

@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:orgamart/model/item.dart';
 import 'package:orgamart/model/purchases.dart';
+import 'package:orgamart/model/adress.dart';
 
 ///todo- save name, points, image, const in get storage/hive
 class User_Controller extends GetxController {
@@ -8,14 +10,20 @@ class User_Controller extends GetxController {
   String? username = 'Waifu';
   String? password = 'orgamart';
   bool isloggedin = false;
+
+  Adress? userAdress = Adress(
+      block: '25/a', city: 'Dhaka', house: '33', road: '9', area: 'Savar');
+
   var recentPurchases = [];
-  double? appliedCoupon;
+  double appliedCoupon = 0.0;
+  String couponCode = '';
   bool couponapplied = false;
   var totalPrice = 0.0;
   var deliveryfee = 10.0;
   var amounttoPay = 0.0;
   List<Item> checkoutcartItems = [];
   late String address;
+  bool isCouponValid = true;
 
   ///map of coupons
   Map<String, double> coupons = {
@@ -52,21 +60,26 @@ class User_Controller extends GetxController {
   }
 
   ///to verify coupon
-  void checkCoupon_fromUser(String couponcode) {
+  void checkCoupon_fromUser([value]) {
+    var couponcode = couponEditing_TextController.text;
     if (coupons.containsKey(couponcode)) {
-      appliedCoupon = coupons[couponcode];
+      appliedCoupon = coupons[couponcode]!;
       couponapplied = true;
+      couponCode = couponcode;
       updateTotalPrice_bycoupon();
+      isCouponValid = true;
       coupons.remove(couponcode);
       update();
-    } else
-      return;
+    } else {
+      isCouponValid = false;
+      update();
+    }
   }
 
   ///update total price by coupon
   void updateTotalPrice_bycoupon() {
     var price = totalPrice;
-    var updatedPrice = (price / 100) * appliedCoupon!;
+    var updatedPrice = (price / 100) * appliedCoupon;
     totalPrice = updatedPrice;
     calculate_amounttopay();
     update();
@@ -89,8 +102,10 @@ class User_Controller extends GetxController {
   void resetCheckout(Item item) {
     couponapplied = false;
     totalPrice = 0.0;
-    appliedCoupon = null;
+    appliedCoupon = 0.0;
     amounttoPay = 0.0;
+    couponCode = '';
+    isCouponValid = true;
     update();
   }
 
@@ -103,5 +118,23 @@ class User_Controller extends GetxController {
         adress: address);
     recentPurchases.add(liveItems);
     update();
+  }
+
+  final couponEditing_TextController = TextEditingController();
+
+  final nameEditing_TextController = TextEditingController();
+  final emailEditing_TextController = TextEditingController();
+  final passwordEditing_TextController = TextEditingController();
+
+  final homeAdressEditing_TextController = TextEditingController();
+  final roadAdressEditing_TextController = TextEditingController();
+  final blockAdressEditing_TextController = TextEditingController();
+  final cityAdressEditing_TextController = TextEditingController();
+
+  @override
+  void onClose() {
+    isCouponValid = true;
+    // TODO: implement onClose
+    super.onClose();
   }
 }
