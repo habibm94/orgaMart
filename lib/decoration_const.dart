@@ -28,3 +28,8 @@ var checkoutScreenTextstyle = TextStyle(
   fontSize: 18.sp,
   wordSpacing: 10.sp,
 );
+
+var cashonDelivery_bottomSheet_Textstyle = TextStyle(
+  fontSize: 22.sp,
+  wordSpacing: 10.sp,
+);

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:orgamart/model/item.dart';
+import 'package:orgamart/model/paymentMethod.dart';
 import 'package:orgamart/model/purchases.dart';
 import 'package:orgamart/model/adress.dart';
 
@@ -13,6 +14,8 @@ class User_Controller extends GetxController {
 
   Adress? userAdress;
   String? mobileNumber;
+  late PaymentMethod selectedPaymentMethod;
+  late String paymentmethodName;
 
   var recentPurchases = [];
   double appliedCoupon = 0.0;
@@ -166,7 +169,7 @@ class User_Controller extends GetxController {
   @override
   void onClose() {
     isCouponValid = true;
-    // TODO: implement onClose
+
     super.onClose();
   }
 }

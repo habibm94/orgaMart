@@ -189,8 +189,7 @@ class Checkout_screen extends StatelessWidget {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            print('confirm order buton got pressed');
-                            Get.to(() => PaymentPage());
+                            Get.to(() => const PaymentPage());
                           },
                           child: Text(
                             'Confirm order',
@@ -226,7 +225,7 @@ class _Coupon_bottomSheetState extends State<Coupon_bottomSheet> {
   @override
   void initState() {
     widget.userController.isCouponValid = true;
-    // TODO: implement initState
+
     super.initState();
   }
 
@@ -308,11 +307,6 @@ class _Coupon_bottomSheetState extends State<Coupon_bottomSheet> {
                         }
                       : null;
                   Get.back();
-                  print('coupon apply button got pressed');
-                  print(userController.isCouponValid.toString());
-                  print(userController.couponapplied.toString());
-                  print(userController.appliedCoupon.toString());
-                  print(userController.couponCode);
                 },
                 child: Text(widget.userController.couponapplied == true
                     ? 'Change Coupon'

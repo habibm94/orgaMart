@@ -10,6 +10,9 @@ import 'package:orgamart/controller/user_controller.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:orgamart/widgets/confirmandPayment/cashondelivery_bottomsheet.dart';
+import 'package:orgamart/widgets/confirmandPayment/mobilenumber_bottomSheet.dart';
+import 'package:orgamart/widgets/confirmandPayment/paypal bottomsheet.dart';
 
 class PaymentPage extends StatelessWidget {
   const PaymentPage({Key? key}) : super(key: key);
@@ -111,45 +114,7 @@ class PaymentPage extends StatelessWidget {
                 ),
               ),
 
-              ///payment method chip
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Payment Method',
-                          style: TextStyle(fontSize: 16.sp),
-                        )
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SvgPicture.asset(
-                          'assets/images/svg/money.svg',
-                          height: 40,
-                          width: 40,
-                          color: Colors.green,
-                        ),
-                        SvgPicture.asset(
-                          'assets/images/svg/credit-card-svgrepo-com.svg',
-                          height: 60,
-                          width: 60,
-                        ),
-                        SvgPicture.asset(
-                          'assets/images/svg/paypal-svgrepo-com.svg',
-                          height: 40,
-                          width: 80,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-
-              ///paymet info section
+              ///payment method
               Expanded(
                 child: Container(
                   decoration: const BoxDecoration(
@@ -162,8 +127,49 @@ class PaymentPage extends StatelessWidget {
                           offset: Offset(0, 2)),
                     ],
                   ),
-                  child: const Center(
-                      child: Text('Card/cash on delivery section')),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Payment Method',
+                            style: TextStyle(fontSize: 16.sp),
+                          )
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                            onTap: () => Get.bottomSheet(
+                                const CashonDelivery_BottomSheet()),
+                            child: SvgPicture.asset(
+                              'assets/images/svg/money.svg',
+                              height: 60.h,
+                              width: 60.w,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          SvgPicture.asset(
+                            'assets/images/svg/credit-card-svgrepo-com.svg',
+                            height: 60.h,
+                            width: 60.w,
+                          ),
+                          GestureDetector(
+                            onTap: () =>
+                                Get.bottomSheet(const Paypal_bottomSheet()),
+                            child: SvgPicture.asset(
+                              'assets/images/svg/paypal-svgrepo-com.svg',
+                              height: 40.h,
+                              width: 80.w,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
 
@@ -477,189 +483,5 @@ class _adressBottomsheet_textfieldState
         ],
       ),
     );
-  }
-}
-
-class Mobilenumber_bottomSheet extends StatefulWidget {
-  const Mobilenumber_bottomSheet({Key? key}) : super(key: key);
-
-  @override
-  State<Mobilenumber_bottomSheet> createState() =>
-      _Mobilenumber_bottomSheetState();
-}
-
-class _Mobilenumber_bottomSheetState extends State<Mobilenumber_bottomSheet> {
-  bool hasUser_enteredmobilenumber = true;
-  @override
-  Widget build(BuildContext context) {
-    final userController = Get.find<User_Controller>();
-    return Container(
-        padding:
-            EdgeInsets.only(left: 10.w, right: 20.w, top: 15.h, bottom: 20.h),
-        decoration: BoxDecoration(
-            color: Colors.grey[50],
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15.r),
-                topRight: Radius.circular(15.r))),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ///cross button and title
-                Row(
-                  ///cloase icon
-
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.close,
-                        size: 35.sp,
-                      ),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ],
-                ),
-                Text(
-                  ///title
-                  userController.mobileNumber == null
-                      ? 'Enter Mobile number'
-                      : 'Change Mobile number',
-                  style: TextStyle(fontSize: 26.sp, wordSpacing: 10.sp),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-
-                Container(
-                  padding: EdgeInsets.only(left: 5.w, right: 10.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(
-                            left: 5.w, right: 5.w, top: 5.h, bottom: 5.h),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              'mobile number',
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue.shade400),
-                            ),
-                            SizedBox(
-                              height: 5.w,
-                            ),
-                            Container(
-                                height: adressBottomBar_height,
-                                width: 220,
-                                child: GetBuilder<User_Controller>(
-                                  builder: (userController) {
-                                    return TextField(
-                                      textAlign: TextAlign.center,
-                                      showCursor: true,
-                                      textDirection: TextDirection.ltr,
-
-                                      ///todo- change this text controller
-                                      controller: userController
-                                          .mobilenumberEditing_TextController,
-
-                                      ///decoration
-                                      decoration: InputDecoration(
-
-                                          ///hint  text
-                                          hintText: 'Mobile number',
-                                          hintStyle: TextStyle(
-                                              color: Colors.grey[400]),
-                                          filled: true,
-                                          fillColor: Colors.white,
-
-                                          ///border
-                                          border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(15.r)))),
-                                      onChanged: (value) {
-                                        userController
-                                            .mobilenumberEditing_TextController
-                                            .text = value;
-                                        userController
-                                                .mobilenumberEditing_TextController
-                                                .selection =
-                                            TextSelection(
-                                                baseOffset: value.length,
-                                                extentOffset: value.length);
-                                      },
-                                      onSubmitted: (value) {
-                                        userController
-                                            .mobilenumberEditing_TextController
-                                            .text = value;
-                                        userController
-                                                .mobilenumberEditing_TextController
-                                                .selection =
-                                            TextSelection(
-                                                baseOffset: value.length,
-                                                extentOffset: value.length);
-                                      },
-                                    );
-                                  },
-                                )),
-                            SizedBox(
-                              height: 3.h,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      hasUser_enteredmobilenumber == false
-                          ? 'Please enter a number'
-                          : '',
-                      style: TextStyle(fontSize: 11.sp, color: Colors.red),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 8.w,
-                ),
-                GetBuilder<User_Controller>(
-                  init: User_Controller(),
-                  builder: (_) {
-                    return ElevatedButton(
-                      onPressed: () {
-                        if (userController
-                                .mobilenumberEditing_TextController.text ==
-                            '') {
-                          setState(() {
-                            hasUser_enteredmobilenumber = false;
-                          });
-                        } else {
-                          userController.update_mobilenumber();
-                          setState(() {
-                            hasUser_enteredmobilenumber = true;
-                          });
-                          Navigator.pop(context);
-                        }
-                        ;
-                      },
-                      child: Text(userController.userAdress == null
-                          ? 'Add Adress'
-                          : 'Update Adress'),
-                    );
-                  },
-                )
-              ],
-            ),
-          ),
-        ));
   }
 }

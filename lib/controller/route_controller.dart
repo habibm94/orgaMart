@@ -27,7 +27,6 @@ class Route_Controller extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     screenIndex = 1;
     screen = Route_screenList[screenIndex];
     print('$screenIndex in init ');
@@ -38,8 +37,7 @@ class Route_Controller extends GetxController {
   void onClose() {
     screenIndex = 1;
     screen = Route_screenList[screenIndex];
-    print('$screenIndex in init ');
-    // TODO: implement onClose
+
     super.onClose();
   }
 }
