@@ -1,11 +1,17 @@
-class Card_paymentDetails {
-  String bankName;
-  int cvv;
-  String cardHolderName;
-  String expireDate;
-  Card_paymentDetails(
-      {required this.cardHolderName,
-      required this.bankName,
-      required this.cvv,
-      required this.expireDate});
+abstract class PaymentMethod {
+  late String paymentmethod_name;
+  late String Iconpath;
 }
+
+class Creditcard extends PaymentMethod {
+  late String cvv;
+  late String expiryDate;
+  late String name;
+}
+
+class Paypal extends PaymentMethod {
+  late String email;
+  late String name;
+}
+
+class CashOnDelivery extends PaymentMethod {}

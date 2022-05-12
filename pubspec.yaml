@@ -24,6 +24,7 @@ dependencies:
   flutter_custom_clippers: ^2.0.0
   new_gradient_app_bar: ^0.2.0
   animated_text_kit: ^4.2.1
+  flutter_svg: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -48,6 +49,7 @@ flutter:
     - assets/images/products/spices/
     - assets/images/products/vegetable/
     - assets/images/user/
+    - assets/images/svg/
 
 
 

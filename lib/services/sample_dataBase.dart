@@ -316,7 +316,7 @@ class Sample_DatabaseOfProducts {
             weight: 500,
             packOrBottle: 'package',
             weightType: 'gm',
-            imagePath: 'assets/images/products/milk/cheese.jpg'),
+            imagePath: 'assets/images/products/milk/liquid milk.jpg'),
         Item(
             name: 'Cheese',
             brand: 'Farmer',

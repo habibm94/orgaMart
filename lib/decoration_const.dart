@@ -19,7 +19,7 @@ Color iconColor = Colors.blue.shade700;
 var containerBorderwidth = 2.w;
 var homepage_productHeight = 72.h;
 var homePage_ProductWidth = 88.w;
-var adressBottomBar_height = 40.h;
+var adressBottomBar_height = 35.h;
 
 ///fonts
 var mainfontSize = 25.sp;

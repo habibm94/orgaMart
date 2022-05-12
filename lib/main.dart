@@ -24,7 +24,7 @@ class OrgaMart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      builder: () => GetMaterialApp(
+      builder: (child) => GetMaterialApp(
           initialBinding: GetxBinding(),
           debugShowCheckedModeBanner: false,
           theme: ThemeData(

@@ -8,6 +8,7 @@ import 'package:orgamart/model/item.dart';
 import 'package:orgamart/decoration_const.dart';
 import 'package:badges/badges.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:orgamart/screen/cart_screen.dart';
 
 class Item_Screen extends StatelessWidget {
   String name;
@@ -25,14 +26,19 @@ class Item_Screen extends StatelessWidget {
           ///appbar back button
           Padding(
             padding: EdgeInsets.only(right: 10.w, top: 10.h),
-            child: IconButton(
-              onPressed: () {
-                Get.back();
+            child: GetBuilder<Cart_Controller>(
+              init: Cart_Controller(),
+              builder: (_) {
+                return IconButton(
+                  onPressed: () {
+                    Get.to(() => CartScreen());
+                  },
+                  icon: Badge(
+                      badgeContent:
+                          Text(cartController.cartItems.length.toString()),
+                      child: const Icon(Icons.shopping_cart)),
+                );
               },
-              icon: Badge(
-                  badgeContent:
-                      Text(cartController.cartItems.length.toString()),
-                  child: const Icon(Icons.shopping_cart)),
             ),
           )
         ],
@@ -276,27 +282,14 @@ showAlertDialog({
             children: [
               Text(
                 ///regular price
-                cartController.price.toString(),
+                cartController.price.toString() + ' \$',
                 style: TextStyle(
                     fontSize: 18.sp,
-                    color: Colors.red,
-                    decoration: TextDecoration.lineThrough,
+                    color: Colors.black,
                     decorationColor: Colors.black54),
               ),
               const SizedBox(
                 width: 6,
-              ),
-              Text(
-                ///discounted price
-                cartController.userClickedItem?.discounted == true
-                    ? ((cartController.price_aftercheckingDiscount).toString() +
-                        ' ' +
-                        '\$')
-                    : ' ',
-                style: TextStyle(
-                    fontSize: 18.sp,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
               ),
             ],
           ),

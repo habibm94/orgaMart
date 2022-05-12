@@ -11,8 +11,8 @@ class User_Controller extends GetxController {
   String? password = 'orgamart';
   bool isloggedin = false;
 
-  Adress? userAdress = Adress(
-      block: '25/a', city: 'Dhaka', house: '33', road: '9', area: 'Savar');
+  Adress? userAdress;
+  String? mobileNumber;
 
   var recentPurchases = [];
   double appliedCoupon = 0.0;
@@ -120,16 +120,48 @@ class User_Controller extends GetxController {
     update();
   }
 
+  ///coupon text controller
   final couponEditing_TextController = TextEditingController();
 
+  ///auth text controller
   final nameEditing_TextController = TextEditingController();
   final emailEditing_TextController = TextEditingController();
   final passwordEditing_TextController = TextEditingController();
 
-  final homeAdressEditing_TextController = TextEditingController();
+  ///adress text controller
+  final houseAdressEditing_TextController = TextEditingController();
   final roadAdressEditing_TextController = TextEditingController();
   final blockAdressEditing_TextController = TextEditingController();
   final cityAdressEditing_TextController = TextEditingController();
+  final areaAdressEditing_TextController = TextEditingController();
+
+  ///mobile number editing controller
+  final mobilenumberEditing_TextController = TextEditingController();
+
+  void update_userAdress() {
+    if (userAdress == null) {
+      userAdress = Adress(
+          area: areaAdressEditing_TextController.text,
+          city: cityAdressEditing_TextController.text,
+          block: blockAdressEditing_TextController.text,
+          road: roadAdressEditing_TextController.text,
+          house: houseAdressEditing_TextController.text);
+    } else {
+      userAdress?.block = blockAdressEditing_TextController.text;
+      userAdress?.area = areaAdressEditing_TextController.text;
+      userAdress?.city = cityAdressEditing_TextController.text;
+      userAdress?.road = roadAdressEditing_TextController.text;
+      userAdress?.house = houseAdressEditing_TextController.text;
+    }
+    ;
+
+    update();
+  }
+
+  void update_mobilenumber() {
+    mobileNumber = mobilenumberEditing_TextController.text;
+    update();
+  }
 
   @override
   void onClose() {
