@@ -25,6 +25,8 @@ dependencies:
   new_gradient_app_bar: ^0.2.0
   animated_text_kit: ^4.2.1
   flutter_svg: ^1.0.3
+  date_format: ^2.0.6
+  confetti: ^0.7.0
 
 dev_dependencies:
   flutter_test:

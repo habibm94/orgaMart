@@ -1,15 +1,18 @@
 import 'package:orgamart/model/item.dart';
+import 'package:orgamart/model/paymentMethod.dart';
 
 class Purchase {
-  DateTime dateTime;
+  String dateTime;
   double purchaseValue;
   String adress;
-  double totalValue;
+
   List<Item> purchasedItem;
+  String paymentmentmethodname;
+
   Purchase(
       {required this.dateTime,
       required this.adress,
       required this.purchaseValue,
-      required this.totalValue,
-      required this.purchasedItem});
+      required this.purchasedItem,
+      required this.paymentmentmethodname});
 }

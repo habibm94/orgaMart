@@ -157,12 +157,12 @@ class _Paypal_bottomSheetState extends State<Paypal_bottomSheet> {
             ),
           ),
           SizedBox(
-            height: 3,
+            height: 3.h,
           ),
           Text(hasuserfilledall == false ? '*Please fill all the fields' : '',
               style: TextStyle(fontSize: 11.sp, color: Colors.red)),
           SizedBox(
-            height: 3,
+            height: 3.h,
           ),
           GetBuilder<User_Controller>(
             init: User_Controller(),

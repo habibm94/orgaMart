@@ -8,9 +8,9 @@ class GetxBinding implements Bindings {
 // default dependency
   @override
   void dependencies() {
-    Get.lazyPut(() => Cart_Controller());
-    Get.lazyPut(() => User_Controller());
-    Get.lazyPut(() => Shopping_Controller());
-    Get.lazyPut(() => Route_Controller());
+    Get.lazyPut(() => Cart_Controller(), fenix: true);
+    Get.lazyPut(() => User_Controller(), fenix: true);
+    Get.lazyPut(() => Shopping_Controller(), fenix: true);
+    Get.lazyPut(() => Route_Controller(), fenix: true);
   }
 }

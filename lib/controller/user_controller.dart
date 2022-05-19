@@ -4,19 +4,24 @@ import 'package:orgamart/model/item.dart';
 import 'package:orgamart/model/paymentMethod.dart';
 import 'package:orgamart/model/purchases.dart';
 import 'package:orgamart/model/adress.dart';
+import 'package:date_format/date_format.dart';
 
 ///todo- save name, points, image, const in get storage/hive
 class User_Controller extends GetxController {
+  ///-----------auth variable section---------------
   String? userimage = 'assets/images/user/user.jpg';
   String? username = 'Waifu';
   String? password = 'orgamart';
   bool isloggedin = false;
 
+  ///------------------delivery info variables-----------
   Adress? userAdress;
   String? mobileNumber;
-  late PaymentMethod selectedPaymentMethod;
-  late String paymentmethodName;
+  PaymentMethod? selectedPaymentMethod;
+  String? paymentmethodName;
+  bool hasuserfilled_alldetails = false;
 
+  ///----------------checkout variables-----------
   var recentPurchases = [];
   double appliedCoupon = 0.0;
   String couponCode = '';
@@ -25,7 +30,8 @@ class User_Controller extends GetxController {
   var deliveryfee = 10.0;
   var amounttoPay = 0.0;
   List<Item> checkoutcartItems = [];
-  late String address;
+
+  ///-------------coupon section---------------
   bool isCouponValid = true;
 
   ///map of coupons
@@ -34,6 +40,8 @@ class User_Controller extends GetxController {
     'welcome': 30.0,
     'champion30': 30
   };
+
+  ///---------------cart methods----------
 
   ///takes all products from cart item
   void addCartItemsinCheckout({required List<Item> cartItems}) {
@@ -62,6 +70,8 @@ class User_Controller extends GetxController {
     update();
   }
 
+  ///---------coupon methods------------
+
   ///to verify coupon
   void checkCoupon_fromUser([value]) {
     var couponcode = couponEditing_TextController.text;
@@ -88,6 +98,8 @@ class User_Controller extends GetxController {
     update();
   }
 
+  ///--------login, signup, reset section-----------
+
   void login({username, password}) {
     if (username == this.username && password == this.password) {
       isloggedin = true;
@@ -102,45 +114,43 @@ class User_Controller extends GetxController {
     print('user signed out  succesfully');
   }
 
-  void resetCheckout(Item item) {
+  void resetCheckout() {
     couponapplied = false;
     totalPrice = 0.0;
     appliedCoupon = 0.0;
     amounttoPay = 0.0;
     couponCode = '';
     isCouponValid = true;
+    checkoutcartItems = [];
+    hasuserfilled_alldetails = true;
     update();
   }
+
+  ///-----------------checkout confirm method-----------
 
   void addtorecentPurchases() {
     Purchase liveItems = Purchase(
-        dateTime: DateTime.now(),
-        purchaseValue: totalPrice,
-        totalValue: amounttoPay,
-        purchasedItem: checkoutcartItems,
-        adress: address);
+      dateTime: formatDate(DateTime.now(), [dd, '-', mm, '-', yyyy]),
+      purchaseValue: totalPrice,
+      purchasedItem: checkoutcartItems,
+      adress: ((userAdress?.house)! +
+          ', ' +
+          (userAdress!.block) +
+          ', ' +
+          userAdress!.road +
+          ', ' +
+          userAdress!.area +
+          ', ' +
+          userAdress!.city),
+      paymentmentmethodname: paymentmethodName!,
+    );
     recentPurchases.add(liveItems);
+    resetCheckout();
     update();
   }
 
-  ///coupon text controller
-  final couponEditing_TextController = TextEditingController();
-
-  ///auth text controller
-  final nameEditing_TextController = TextEditingController();
-  final emailEditing_TextController = TextEditingController();
-  final passwordEditing_TextController = TextEditingController();
-
-  ///adress text controller
-  final houseAdressEditing_TextController = TextEditingController();
-  final roadAdressEditing_TextController = TextEditingController();
-  final blockAdressEditing_TextController = TextEditingController();
-  final cityAdressEditing_TextController = TextEditingController();
-  final areaAdressEditing_TextController = TextEditingController();
-
-  ///mobile number editing controller
-  final mobilenumberEditing_TextController = TextEditingController();
-
+  ///-------delivery info methods---------
+  ///
   void update_userAdress() {
     if (userAdress == null) {
       userAdress = Adress(
@@ -166,10 +176,32 @@ class User_Controller extends GetxController {
     update();
   }
 
+  ///------------oninit, onclose methods------------
+
   @override
   void onClose() {
     isCouponValid = true;
 
     super.onClose();
   }
+
+  ///------------textcontroller section------------
+
+  ///coupon text controller
+  final couponEditing_TextController = TextEditingController();
+
+  ///auth text controller
+  final nameEditing_TextController = TextEditingController();
+  final emailEditing_TextController = TextEditingController();
+  final passwordEditing_TextController = TextEditingController();
+
+  ///adress text controller
+  final houseAdressEditing_TextController = TextEditingController();
+  final roadAdressEditing_TextController = TextEditingController();
+  final blockAdressEditing_TextController = TextEditingController();
+  final cityAdressEditing_TextController = TextEditingController();
+  final areaAdressEditing_TextController = TextEditingController();
+
+  ///mobile number editing controller
+  final mobilenumberEditing_TextController = TextEditingController();
 }

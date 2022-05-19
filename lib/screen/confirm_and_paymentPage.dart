@@ -3,16 +3,20 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/parser.dart';
+
 import 'package:get/get.dart';
 import 'package:orgamart/decoration_const.dart';
 import 'package:orgamart/controller/user_controller.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:orgamart/screen/checkout_screen.dart';
 import 'package:orgamart/widgets/confirmandPayment/cashondelivery_bottomsheet.dart';
 import 'package:orgamart/widgets/confirmandPayment/mobilenumber_bottomSheet.dart';
 import 'package:orgamart/widgets/confirmandPayment/paypal bottomsheet.dart';
+import 'package:orgamart/widgets/confirmandPayment/card_bottomsheet.dart';
+import 'package:orgamart/screen/checkoutSucces_Screen.dart';
+import 'package:orgamart/controller/cart_controller.dart';
 
 class PaymentPage extends StatelessWidget {
   const PaymentPage({Key? key}) : super(key: key);
@@ -20,13 +24,8 @@ class PaymentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userController = Get.find<User_Controller>();
-    final SvgParser parser = SvgParser();
-    try {
-      parser.parse('assets/images/svg/cash.svg', warningsAsErrors: true);
-      print('SVG is supported');
-    } catch (e) {
-      print('SVG contains unsupported features');
-    }
+    final cartController = Get.find<Cart_Controller>();
+
     return Scaffold(
       appBar: NewGradientAppBar(
         title: Text(' Confirm and Pay'),
@@ -61,36 +60,43 @@ class PaymentPage extends StatelessWidget {
 
               ///adress container
               Expanded(
-                child: Container(
-                    padding: EdgeInsets.only(
-                        left: 20.w, right: 20.w, top: 15.h, bottom: 15.h),
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                              blurRadius: 5.0,
-                              color: Colors.black26,
-                              offset: Offset(0, 2)),
-                        ],
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    child: GetBuilder<User_Controller>(
-                      init: User_Controller(),
-                      builder: (controller) {
-                        var area = controller.userAdress?.area;
-                        var city = controller.userAdress?.city;
-                        var road = controller.userAdress?.road;
-                        var block = controller.userAdress?.block;
-                        var house = controller.userAdress?.house;
-                        return Text(
-                          userController.userAdress == null
-                              ? 'Please enter your adress'
-                              : 'house: $house, road:$road, block: $block, area: $area, city: $city',
-                          style: TextStyle(
-                              fontSize: 20.sp, overflow: TextOverflow.visible),
-                        );
-                      },
-                    )),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.bottomSheet(ChangeAdress_bottomSheet());
+                  },
+                  child: Container(
+                      padding: EdgeInsets.only(
+                          left: 20.w, right: 20.w, top: 15.h, bottom: 15.h),
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                                blurRadius: 5.0,
+                                color: Colors.black26,
+                                offset: Offset(0, 2)),
+                          ],
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
+                      child: GetBuilder<User_Controller>(
+                        init: User_Controller(),
+                        builder: (controller) {
+                          var area = controller.userAdress?.area;
+                          var city = controller.userAdress?.city;
+                          var road = controller.userAdress?.road;
+                          var block = controller.userAdress?.block;
+                          var house = controller.userAdress?.house;
+                          return Text(
+                            userController.userAdress == null
+                                ? 'Please enter your adress'
+                                : 'house: $house, road:$road, block: $block, area: $area, city: $city',
+                            style: TextStyle(
+                                fontSize: 20.sp,
+                                overflow: TextOverflow.visible),
+                          );
+                        },
+                      )),
+                ),
               ),
               SizedBox(
                 height: 15.h,
@@ -152,10 +158,14 @@ class PaymentPage extends StatelessWidget {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          SvgPicture.asset(
-                            'assets/images/svg/credit-card-svgrepo-com.svg',
-                            height: 60.h,
-                            width: 60.w,
+                          GestureDetector(
+                            onTap: () =>
+                                Get.bottomSheet(const CardBottomSheet()),
+                            child: SvgPicture.asset(
+                              'assets/images/svg/credit-card-svgrepo-com.svg',
+                              height: 60.h,
+                              width: 60.w,
+                            ),
                           ),
                           GestureDetector(
                             onTap: () =>
@@ -178,30 +188,36 @@ class PaymentPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      height: 30.h,
-                      width: 180.w,
-                      padding: EdgeInsets.only(
-                          left: 10.w, right: 10.w, top: 3.h, bottom: 3.h),
+                    GestureDetector(
+                      onTap: () {
+                        Get.bottomSheet(const Mobilenumber_bottomSheet());
+                      },
+                      child: Container(
+                        height: 30.h,
+                        width: 180.w,
+                        padding: EdgeInsets.only(
+                            left: 10.w, right: 10.w, top: 3.h, bottom: 3.h),
 
-                      ///mobile number display contaner
-                      decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          boxShadow: [
-                            BoxShadow(
-                                blurRadius: 6.0,
-                                color: Colors.black26,
-                                offset: Offset(0, 2)),
-                          ]),
-                      child: Center(
-                        child: GetBuilder<User_Controller>(
-                          init: User_Controller(),
-                          builder: (_) {
-                            return Text(userController.mobileNumber == null
-                                ? 'Please add a mobile Number'
-                                : userController.mobileNumber!);
-                          },
+                        ///mobile number display contaner
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 6.0,
+                                  color: Colors.black26,
+                                  offset: Offset(0, 2)),
+                            ]),
+                        child: Center(
+                          child: GetBuilder<User_Controller>(
+                            init: User_Controller(),
+                            builder: (_) {
+                              return Text(userController.mobileNumber == null
+                                  ? 'Please add a mobile Number'
+                                  : userController.mobileNumber!);
+                            },
+                          ),
                         ),
                       ),
                     ),
@@ -230,12 +246,39 @@ class PaymentPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text('Confirm'),
+                    GetBuilder<User_Controller>(
+                      init: User_Controller(),
+                      builder: (_) {
+                        return ElevatedButton(
+                          onPressed: () {
+                            if (userController.userAdress == null ||
+                                userController.mobileNumber == null ||
+                                userController.paymentmethodName == null) {
+                              return;
+                            } else {
+                              userController.addtorecentPurchases();
+                              cartController.resetCart();
+                              Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const CheckoutSuccess()),
+                                (Route<dynamic> route) => false,
+                              );
+                            }
+                            ;
+                          },
+                          child: Text('Confirm'),
+                        );
+                      },
                     )
                   ],
                 ),
+              ),
+              Text(
+                userController.hasuserfilled_alldetails == false
+                    ? '*please fill all the details'
+                    : '',
+                style: TextStyle(fontSize: 11.sp, color: Colors.red),
               )
             ],
           ),

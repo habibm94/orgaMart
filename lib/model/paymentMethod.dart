@@ -3,10 +3,15 @@ abstract class PaymentMethod {
 }
 
 class Creditcard extends PaymentMethod {
-  Creditcard({required this.name, required this.cvv, required this.expiryDate});
-  late String cvv;
-  late String expiryDate;
-  late String name;
+  Creditcard(
+      {required this.name,
+      required this.cvv,
+      required this.expiryDate,
+      required this.cardType});
+  String cvv;
+  String expiryDate;
+  String name;
+  String cardType;
 }
 
 class Paypal extends PaymentMethod {
