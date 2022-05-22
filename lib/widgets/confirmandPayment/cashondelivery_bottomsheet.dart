@@ -30,6 +30,7 @@ class _CashonDelivery_BottomSheetState
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          ///title
           Text(
             'Confirm Cash on Delivery?',
             style: TextStyle(
@@ -37,6 +38,8 @@ class _CashonDelivery_BottomSheetState
                 wordSpacing: 10.sp,
                 fontWeight: FontWeight.bold),
           ),
+
+          ///amount to pay
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -49,6 +52,8 @@ class _CashonDelivery_BottomSheetState
                       fontWeight: FontWeight.bold))
             ],
           ),
+
+          ///confirm button
           GetBuilder<User_Controller>(
             init: User_Controller(),
             builder: (_) => ElevatedButton(
@@ -56,19 +61,19 @@ class _CashonDelivery_BottomSheetState
               onPressed: () {
                 userController.selectedPaymentMethod = CashOnDelivery();
                 userController.paymentmethodName = 'Cash on Delivery';
-                Future.delayed(Duration(milliseconds: 1500));
+                Future.delayed(const Duration(milliseconds: 1500));
                 Navigator.pop(context);
 
                 Get.snackbar(
                   "Success!",
                   "just pay ${userController.amounttoPay.toStringAsFixed(2)} \$ to delivery",
-                  icon: Icon(Icons.check_circle, color: Colors.white),
+                  icon: const Icon(Icons.check_circle, color: Colors.white),
                   snackPosition: SnackPosition.BOTTOM,
                   backgroundColor: Colors.green,
-                  borderRadius: 20,
-                  margin: EdgeInsets.all(15),
+                  borderRadius: 20.r,
+                  margin: EdgeInsets.all(15.sp),
                   colorText: Colors.white,
-                  duration: Duration(seconds: 4),
+                  duration: const Duration(seconds: 2),
                   isDismissible: true,
                   dismissDirection: DismissDirection.horizontal,
                   forwardAnimationCurve: Curves.easeOutBack,

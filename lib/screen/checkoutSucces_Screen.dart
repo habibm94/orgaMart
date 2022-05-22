@@ -35,8 +35,8 @@ class _CheckoutSuccessState extends State<CheckoutSuccess> {
     return Scaffold(
         body: Container(
       padding: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width * 0.20,
-          right: MediaQuery.of(context).size.width * 0.20,
+          left: MediaQuery.of(context).size.width * 0.10,
+          right: MediaQuery.of(context).size.width * 0.10,
           top: 30.h,
           bottom: 30.h),
       height: MediaQuery.of(context).size.height,
@@ -44,47 +44,57 @@ class _CheckoutSuccessState extends State<CheckoutSuccess> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 50.h,
-          ),
-          AnimatedTextKit(
-            animatedTexts: [
-              ColorizeAnimatedText(
-                'Purchase Completed  ',
-                textStyle: TextStyle(
-                    fontSize: 45.sp,
-                    wordSpacing: 10.sp,
-                    fontWeight: FontWeight.bold),
-                colors: colorizeColors,
-              ),
-              ColorizeAnimatedText(
-                'Thank you for shopping with us  ',
-                textStyle: TextStyle(
-                    fontSize: 25.sp,
-                    wordSpacing: 10.sp,
-                    fontStyle: FontStyle.italic),
-                colors: colorizeColors,
-              ),
-            ],
-            totalRepeatCount: 1,
-            displayFullTextOnTap: true,
-            stopPauseOnTap: true,
+          Container(
+            padding: EdgeInsets.only(
+                left: 10.w, right: 10.w, top: 10.h, bottom: 10.w),
+            child: Column(
+              children: [
+                AnimatedTextKit(
+                  animatedTexts: [
+                    ColorizeAnimatedText(
+                      'Purchase Completed  ',
+                      textStyle: TextStyle(
+                          fontSize: 45.sp,
+                          wordSpacing: 10.sp,
+                          fontWeight: FontWeight.bold),
+                      colors: colorizeColors,
+                    ),
+                  ],
+                  totalRepeatCount: 1,
+                  displayFullTextOnTap: true,
+                  stopPauseOnTap: true,
+                ),
+                AnimatedTextKit(
+                  animatedTexts: [
+                    ColorizeAnimatedText(
+                      'Thank you for shopping with us  ',
+                      textStyle: TextStyle(
+                          fontSize: 25.sp,
+                          wordSpacing: 10.sp,
+                          fontStyle: FontStyle.italic),
+                      colors: colorizeColors,
+                    ),
+                  ],
+                  totalRepeatCount: 1,
+                  displayFullTextOnTap: true,
+                  stopPauseOnTap: true,
+                ),
+              ],
+            ),
           ),
           SizedBox(
             height: 50.h,
           ),
           Center(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.green,
-              ),
+            child: IconButton(
+              color: Colors.green,
               onPressed: () {
                 Navigator.pushAndRemoveUntil(context,
                     MaterialPageRoute(builder: (BuildContext context) {
                   return const AppScreen();
                 }), (route) => false);
               },
-              child: Icon(
+              icon: Icon(
                 Icons.home,
                 size: 80.sp,
               ),

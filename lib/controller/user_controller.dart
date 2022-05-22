@@ -130,7 +130,7 @@ class User_Controller extends GetxController {
 
   void addtorecentPurchases() {
     Purchase liveItems = Purchase(
-      dateTime: formatDate(DateTime.now(), [dd, '-', mm, '-', yyyy]),
+      dateTime: formatDate(DateTime.now(), [dd, '-', mm, '-', yyyy]).toString(),
       purchaseValue: totalPrice,
       purchasedItem: checkoutcartItems,
       adress: ((userAdress?.house)! +
@@ -181,7 +181,7 @@ class User_Controller extends GetxController {
   @override
   void onClose() {
     isCouponValid = true;
-
+    print('usercontroller got closed');
     super.onClose();
   }
 

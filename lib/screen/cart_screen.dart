@@ -9,6 +9,7 @@ import 'package:orgamart/decoration_const.dart';
 import 'package:orgamart/screen/checkout_screen.dart';
 import 'package:badges/badges.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:orgamart/screen/mainAppScreen.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -71,7 +72,7 @@ class cartScreen_infoBody extends StatelessWidget {
     return Container(
         padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
         color: containerColor,
-        height: 100,
+        height: 150.h,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -79,6 +80,7 @@ class cartScreen_infoBody extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                ///cart icon
                 Icon(
                   Icons.shopping_cart,
                   size: 25.sp,
@@ -100,6 +102,7 @@ class cartScreen_infoBody extends StatelessWidget {
               ],
             ),
             Container(
+                width: 150.w,
                 child: cartController.cartItems.length != 0
                     ? ElevatedButton(
                         onPressed: () {
@@ -116,7 +119,20 @@ class cartScreen_infoBody extends StatelessWidget {
                     : Text(
                         'Please Add Some Items',
                         style: TextStyle(fontSize: 18.sp),
-                      ))
+                      )),
+            ElevatedButton(
+                onPressed: () {
+                  Get.to(() => const AppScreen());
+                },
+                child: Container(
+                  width: 125.w,
+                  child: Center(
+                    child: Text(
+                      'Buy more',
+                      style: checkoutScreenTextstyle,
+                    ),
+                  ),
+                )),
           ],
         ));
   }

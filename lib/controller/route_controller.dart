@@ -16,7 +16,7 @@ class Route_Controller extends GetxController {
   void change_screenIndex(int index) {
     screenIndex = index;
     screen = Route_screenList[screenIndex];
-    print('$index is $index in controller');
+
     update();
   }
 

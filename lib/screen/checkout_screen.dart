@@ -9,6 +9,7 @@ import 'package:orgamart/controller/cart_controller.dart';
 import 'package:orgamart/controller/user_controller.dart';
 import 'package:orgamart/decoration_const.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:orgamart/screen/mainAppScreen.dart';
 
 class Checkout_screen extends StatelessWidget {
   const Checkout_screen({Key? key}) : super(key: key);
@@ -184,6 +185,8 @@ class Checkout_screen extends StatelessWidget {
                     SizedBox(
                       height: 35.h,
                     ),
+
+                    ///confirm order button
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -191,13 +194,38 @@ class Checkout_screen extends StatelessWidget {
                           onPressed: () {
                             Get.to(() => const PaymentPage());
                           },
-                          child: Text(
-                            'Confirm order',
-                            style: checkoutScreenTextstyle,
+                          child: Container(
+                            width: 125.w,
+                            child: Center(
+                              child: Text(
+                                'Confirm order',
+                                style: checkoutScreenTextstyle,
+                              ),
+                            ),
                           ),
                         )
                       ],
-                    )
+                    ),
+
+                    ///go to home button
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {
+                              Get.to(() => const AppScreen());
+                            },
+                            child: Container(
+                              width: 125.w,
+                              child: Center(
+                                child: Text(
+                                  'Buy More',
+                                  style: checkoutScreenTextstyle,
+                                ),
+                              ),
+                            ))
+                      ],
+                    ),
                   ],
                 ),
               )

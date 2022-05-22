@@ -1,4 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:orgamart/model/item.dart';
 import 'package:orgamart/widgets/custom_Drawer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,8 +13,6 @@ import 'package:orgamart/controller/user_controller.dart';
 import 'package:orgamart/screen/profile_screen.dart';
 import 'package:orgamart/screen/cart_screen.dart';
 
-import 'package:orgamart/screen/saved_screen.dart';
-
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
@@ -18,183 +20,180 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final userController = Get.put(User_Controller());
     return Scaffold(
-      appBar: AppBar(
-        title: Text('My Profile'),
+      appBar: NewGradientAppBar(
+        title: const Text(' My Profile'),
+        gradient: LinearGradient(colors: [Colors.teal, Colors.green.shade200]),
       ),
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Container(
-          //height: MediaQuery.of(context).size.height,
-          color: Colors.white,
-          child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 10.w,
-                vertical: 25.h,
-              ),
-              child: Column(
-                children: [
-                  GetBuilder<User_Controller>(
-                      init: User_Controller(),
-                      builder: (controller) {
-                        return SizedBox(
-                          height: 170.h,
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 100.h,
-                                width: 100.w,
-                                child: ClipOval(
-                                  child: Image(
-                                    image: AssetImage(
-                                      controller.userimage.toString(),
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8.h,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  controller.username.toString(),
-                                  style: TextStyle(
-                                      fontSize: 20.sp,
-                                      wordSpacing: 10.sp,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  'Rising Star',
-                                  style: TextStyle(
-                                      fontSize: 18.sp, color: Colors.blue),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  ListTile(
-                    title: Text(
-                      'Points: 1700 points',
-                      style: TextStyle(fontSize: 18.sp),
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              Container(
+                //height: MediaQuery.of(context).size.height,
+                color: Colors.white,
+                child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 10.w,
+                      vertical: 25.h,
                     ),
-                    leading: const FaIcon(FontAwesomeIcons.coins),
-                  ),
-                  Container(
-                    height:
-                        userController.recentPurchases.length / 3.ceil() * 135,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                    ),
-                    child: Padding(
-                      padding:
-                          EdgeInsets.only(left: 10.w, right: 20.w, top: 10.w),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 10.w,
-                              //top: 10.h,
-                            ),
-                            child: Expanded(
-                              child: Text(
-                                'Recent Purchases',
-                                style: TextStyle(
-                                    fontSize: 20.sp,
-                                    //fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5.h,
-                          ),
-                          Expanded(
-                            child: GetX<User_Controller>(
-                              builder: (controller) {
-                                return GridView.builder(
-                                  shrinkWrap: true,
-                                  physics: const BouncingScrollPhysics(),
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 3,
-                                          childAspectRatio: 0.9),
-                                  itemCount: controller.recentPurchases.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 0.w, vertical: 0.h),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: Border.all(
-                                                  color: Colors.black12,
-                                                  width: 1.w,
-                                                ),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.black12,
-                                                    blurRadius: 6.r,
-                                                    offset: const Offset(0, 2),
-                                                  )
-                                                ]),
-                                            child: ClipOval(
-                                              child: Image(
-                                                image: AssetImage(controller
-                                                    .recentPurchases[index]
-                                                    .imagePath),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                            height: 50.h,
-                                            width: 55.w,
+                    child: Column(
+                      children: [
+                        ///user image
+                        GetBuilder<User_Controller>(
+                            init: User_Controller(),
+                            builder: (controller) {
+                              return SizedBox(
+                                height: 170.h,
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 100.h,
+                                      width: 120.w,
+
+                                      ///image
+                                      child: ClipOval(
+                                        child: Image(
+                                          image: AssetImage(
+                                            controller.userimage.toString(),
                                           ),
-                                          SizedBox(
-                                            height: 10.h,
-                                          ),
-                                          Text(
-                                            controller
-                                                .recentPurchases[index].name,
-                                            style: TextStyle(
-                                                fontSize: 14.sp,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
+                                    ),
+                                    SizedBox(
+                                      height: 8.h,
+                                    ),
+
+                                    ///name
+                                    Expanded(
+                                      child: Text(
+                                        controller.username.toString(),
+                                        style: TextStyle(
+                                            fontSize: 20.sp,
+                                            wordSpacing: 10.sp,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+
+                                    ///level
+                                    Expanded(
+                                      child: Text(
+                                        'Rising Star',
+                                        style: TextStyle(
+                                            fontSize: 18.sp,
+                                            color: Colors.blue),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+
+                        ///points
+                        ListTile(
+                          title: Text(
+                            'Points: 1700 points',
+                            style: TextStyle(fontSize: 18.sp),
                           ),
-                          Align(
-                            child: ElevatedButton(
-                              child: const Text('Log Out'),
-                              onPressed: () {},
-                            ),
-                            alignment: Alignment.bottomCenter,
-                          )
-                        ],
+                          leading: const FaIcon(FontAwesomeIcons.coins),
+                        ),
+                      ],
+                    )),
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+
+              Text(
+                'Purchase history',
+                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+
+              ///recent purchases
+              Container(
+                color: Colors.white,
+                padding: EdgeInsets.only(
+                    left: 10.w, right: 10.w, top: 30.h, bottom: 20.h),
+                child: userController.recentPurchases.isEmpty
+                    ? Center(
+                        child: Text(
+                          'Wow! Such Empty',
+                          style: TextStyle(fontSize: 20.sp),
+                        ),
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GetBuilder<User_Controller>(
+                            init: User_Controller(),
+                            builder: (_) {
+                              return Container(
+                                width: double.infinity,
+                                padding: EdgeInsets.only(
+                                    left: 15.w,
+                                    right: 15.w,
+                                    top: 10.h,
+                                    bottom: 10.h),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10.r),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: const Offset(0, 2),
+                                      blurRadius: 5.r,
+                                      color: Colors.black26,
+                                    ),
+                                  ],
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Date: ${userController.recentPurchases[index].dateTime}',
+                                          style: TextStyle(fontSize: 15.sp),
+                                        ),
+                                        SizedBox(
+                                          width: 50.w,
+                                        ),
+                                        Text(
+                                          ' Total price: ${userController.recentPurchases[index].purchaseValue} \$ ',
+                                          style: TextStyle(fontSize: 15.sp),
+                                        ),
+                                      ],
+                                    ),
+                                    ExpansionTile(
+                                      title: Text(
+                                        'Your Orders',
+                                        style: TextStyle(
+                                          fontSize: 20.sp,
+                                          wordSpacing: 10.sp,
+                                        ),
+                                      ),
+                                      children:
+                                          createexpansionTileWidgets(index),
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        itemCount: userController.recentPurchases.length,
                       ),
-                    ),
-                  ),
-                ],
-              )),
-        ),
-      ),
+                height: 400.h,
+              ),
+            ],
+          )),
     );
   }
 }
@@ -220,4 +219,27 @@ class DrawerItems extends StatelessWidget {
         onTap: () =>
             Navigator.push(context, MaterialPageRoute(builder: (_) => screen)));
   }
+}
+
+List<Widget> createexpansionTileWidgets(int index) {
+  final userController = Get.find<User_Controller>();
+  List<Item> purchaseditemList =
+      userController.recentPurchases[index].purchasedItem;
+  List<Widget> expansionTileWidgets = <Widget>[];
+  purchaseditemList.forEach((element) {
+    Widget itemTile = ListTile(
+      title: Text(element.name),
+      leading: ClipOval(
+        child: Image(
+          image: AssetImage(element.imagePath),
+          height: 20.h,
+          width: 22.w,
+        ),
+      ),
+      subtitle: Text(element.totalWeight.toString() + ' ' + element.weightType),
+      trailing: Text(element.totalPrice.toString() + ' ' + '\$'),
+    );
+    return expansionTileWidgets.add(itemTile);
+  });
+  return expansionTileWidgets;
 }

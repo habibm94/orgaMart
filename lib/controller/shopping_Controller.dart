@@ -26,9 +26,7 @@ class Shopping_Controller extends GetxController {
   }
 
   ///fetch and sav to contrller
-  void fetchFromDatabase() {
-    print('Products fetched from database');
-  }
+  void fetchFromDatabase() {}
 }
 
 ///fetch all products to database

@@ -4,17 +4,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:orgamart/controller/shopping_Controller.dart';
 import 'package:orgamart/controller/user_controller.dart';
+import 'package:orgamart/screen/logIn_screen.dart';
 import 'package:orgamart/screen/profile_screen.dart';
 import 'package:orgamart/screen/cart_screen.dart';
 
 import 'package:orgamart/screen/offer_screen.dart';
-import 'package:orgamart/screen/saved_screen.dart';
+import 'package:orgamart/screen/recentPurchase_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:orgamart/controller/cart_controller.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:badges/badges.dart';
 import 'package:orgamart/decoration_const.dart';
+import 'package:orgamart/screen/signUp_Screen.dart';
 
 ///todo- optimise this shit
 class CustomDrawer extends StatelessWidget {
@@ -29,12 +31,12 @@ class CustomDrawer extends StatelessWidget {
     return Drawer(
       child: Padding(
           padding: EdgeInsets.only(
-            bottom: 120.h,
+            bottom: 20.h,
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              ///top curved portion
               GetBuilder<User_Controller>(
                   init: User_Controller(),
                   builder: (controller) {
@@ -67,6 +69,8 @@ class CustomDrawer extends StatelessWidget {
                             SizedBox(
                               height: 8.h,
                             ),
+
+                            ///user name
                             Text(
                               controller.username.toString(),
                               style: TextStyle(
@@ -86,6 +90,7 @@ class CustomDrawer extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      ///account
                       Expanded(
                         child: DrawerItems(
                           text: 'Account',
@@ -96,11 +101,15 @@ class CustomDrawer extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Divider(),
+                      const Divider(),
+
+                      ///cart
                       Expanded(
                         child: DrawerItem_forCart(),
                       ),
-                      Divider(),
+                      const Divider(),
+
+                      ///offer
                       Expanded(
                         child: DrawerItems(
                           text: 'Offers',
@@ -111,11 +120,14 @@ class CustomDrawer extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Divider(),
+
+                      const Divider(),
+
+                      ///purchases
                       Expanded(
                         child: DrawerItems(
-                          text: 'Saved',
-                          screen: const Saved_screen(),
+                          text: 'Purchases',
+                          screen: const RecentPurchase_Screen(),
                           icon: FaIcon(
                             FontAwesomeIcons.heart,
                             size: 25.sp,
@@ -124,6 +136,44 @@ class CustomDrawer extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+              ),
+              SizedBox(
+                height: 40.h,
+              ),
+              GetBuilder<User_Controller>(
+                init: User_Controller(),
+                builder: (_) => Container(
+                  height: userController.isloggedin == true ? 10 : 100,
+                  child: userController.isloggedin == true
+                      ? Text('')
+                      : Column(
+                          children: [
+                            GetBuilder<User_Controller>(
+                              builder: (_) {
+                                return ElevatedButton(
+                                  onPressed: () => Get.to(() => Login_screen()),
+                                  child: Text('LogIn'),
+                                );
+                              },
+                              init: User_Controller(),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('No Account?'),
+                                TextButton(
+                                  onPressed: () => Get.to(() => SignUpScreen()),
+                                  child: Text(
+                                    'SignUp',
+                                    style: TextStyle(
+                                        decoration: TextDecoration.underline),
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                 ),
               )
             ],

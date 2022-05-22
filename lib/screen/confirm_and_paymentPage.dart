@@ -36,7 +36,8 @@ class PaymentPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 10),
+          padding:
+              EdgeInsets.only(left: 15.w, right: 15.w, top: 15.h, bottom: 10.h),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -469,7 +470,7 @@ class _adressBottomsheet_textfieldState
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
+      padding: EdgeInsets.only(left: 5.w, right: 5.w, top: 5.h, bottom: 5.h),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -484,9 +485,9 @@ class _adressBottomsheet_textfieldState
           SizedBox(
             width: 5.w,
           ),
-          Container(
+          SizedBox(
               height: adressBottomBar_height,
-              width: 220,
+              width: 220.w,
               child: GetBuilder<User_Controller>(
                 builder: (userController) {
                   return TextField(

@@ -9,6 +9,7 @@ import 'package:orgamart/decoration_const.dart';
 import 'package:badges/badges.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:orgamart/screen/cart_screen.dart';
+import 'package:orgamart/screen/mainAppScreen.dart';
 
 class Item_Screen extends StatelessWidget {
   String name;
@@ -47,6 +48,7 @@ class Item_Screen extends StatelessWidget {
         child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              ///items list
               Container(
                 padding: EdgeInsets.only(
                     bottom: 10.h, top: 10.h, left: 10.w, right: 10.w),
@@ -204,6 +206,29 @@ class Item_Screen extends StatelessWidget {
                     ],
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 50.h,
+              ),
+
+              ///go to cart button
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Get.to(() => const CartScreen());
+                      },
+                      child: Container(
+                        width: 125.w,
+                        child: Center(
+                          child: Text(
+                            'My Cart',
+                            style: checkoutScreenTextstyle,
+                          ),
+                        ),
+                      ))
+                ],
               ),
             ]),
       ),
