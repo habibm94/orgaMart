@@ -26,6 +26,7 @@ dependencies:
   animated_text_kit: ^4.2.1
   flutter_svg: ^1.0.3
   date_format: ^2.0.6
+  flutter_neumorphic: ^3.2.0
 
 
 dev_dependencies:

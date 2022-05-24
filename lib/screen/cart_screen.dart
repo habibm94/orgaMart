@@ -11,6 +11,8 @@ import 'package:badges/badges.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:orgamart/screen/mainAppScreen.dart';
 
+import 'logIn_screen.dart';
+
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
 
@@ -21,42 +23,91 @@ class CartScreen extends StatelessWidget {
     var cartItems = cartController.cartItems;
 
     return Scaffold(
-      appBar: NewGradientAppBar(
-        ///appbar
-        title: const Text('My Cart'),
-        gradient: LinearGradient(colors: [Colors.teal, Colors.green.shade200]),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 10.w, top: 10.h),
-            child: IconButton(
-              onPressed: () {
-                Get.back();
-              },
-              icon: Badge(
-                  badgeContent:
-                      Text(cartController.cartItems.length.toString()),
-                  child: const Icon(Icons.shopping_cart)),
-            ),
-          ),
-        ],
-      ),
-      body: Container(
-        height: 455.h,
-        color: backgroundContainerColor,
-        padding: EdgeInsets.only(top: 10.h),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ///cart item section
-            Product_ListView(
-                cartItems: cartItems, cartController: cartController),
+        appBar: NewGradientAppBar(
+          ///appbar
+          title: const Text('My Cart'),
+          gradient:
+              LinearGradient(colors: [Colors.teal, Colors.green.shade200]),
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(right: 10.w, top: 10.h),
 
-            ///price and delivery info section
-            const cartScreen_infoBody(),
+              ///appbar back button
+              child: IconButton(
+                onPressed: () {
+                  Get.back();
+                },
+
+                ///appbar cart icon
+                icon: Badge(
+                    badgeContent:
+                        Text(cartController.cartItems.length.toString()),
+                    child: const Icon(Icons.shopping_cart)),
+              ),
+            ),
           ],
         ),
-      ),
-    );
+        body: Column(
+          children: [
+            Container(
+              height: 420.h,
+              color: backgroundContainerColor,
+              padding: EdgeInsets.only(top: 10.h),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ///cart item section
+                  Product_ListView(
+                      cartItems: cartItems, cartController: cartController),
+
+                  ///price and delivery info section
+                  const cartScreen_infoBody(),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            SizedBox(
+                width: 150.w,
+                child: cartController.cartItems.isNotEmpty
+                    ? ElevatedButton(
+                        onPressed: () {
+                          if (userController.isloggedin == true) {
+                            userController.addCartItemsinCheckout(
+                                cartItems: cartController.cartItems);
+                            Get.to(() => const Checkout_screen());
+                          } else {
+                            Get.to(const Login_screen());
+                          }
+                        },
+                        child: Text(
+                          'Checkout',
+                          style: TextStyle(
+                              fontSize: 20.sp, fontWeight: FontWeight.w500),
+                        ),
+                      )
+                    : Text(
+                        'Please Add Some Items',
+                        style: TextStyle(fontSize: 18.sp),
+                      )),
+
+            ///homepage button
+            ElevatedButton(
+                onPressed: () {
+                  Get.to(() => const AppScreen());
+                },
+                child: SizedBox(
+                  width: 125.w,
+                  child: Center(
+                    child: Text(
+                      'Buy more',
+                      style: checkoutScreenTextstyle,
+                    ),
+                  ),
+                )),
+          ],
+        ));
   }
 }
 
@@ -71,8 +122,10 @@ class cartScreen_infoBody extends StatelessWidget {
     final userController = Get.find<User_Controller>();
     return Container(
         padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
-        color: containerColor,
-        height: 150.h,
+        height: 50.h,
+        decoration: BoxDecoration(
+            color: containerColor,
+            boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 6.r)]),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -101,38 +154,6 @@ class cartScreen_infoBody extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
-                width: 150.w,
-                child: cartController.cartItems.length != 0
-                    ? ElevatedButton(
-                        onPressed: () {
-                          userController.addCartItemsinCheckout(
-                              cartItems: cartController.cartItems);
-                          Get.to(const Checkout_screen());
-                        },
-                        child: Text(
-                          'Checkout',
-                          style: TextStyle(
-                              fontSize: 20.sp, fontWeight: FontWeight.w500),
-                        ),
-                      )
-                    : Text(
-                        'Please Add Some Items',
-                        style: TextStyle(fontSize: 18.sp),
-                      )),
-            ElevatedButton(
-                onPressed: () {
-                  Get.to(() => const AppScreen());
-                },
-                child: Container(
-                  width: 125.w,
-                  child: Center(
-                    child: Text(
-                      'Buy more',
-                      style: checkoutScreenTextstyle,
-                    ),
-                  ),
-                )),
           ],
         ));
   }
@@ -163,6 +184,7 @@ class Product_ListView extends StatelessWidget {
                 ///when cart is not empty
                 init: Cart_Controller(),
                 builder: (controller) => Container(
+                  height: 370.h,
                   padding: EdgeInsets.symmetric(horizontal: 10.w),
                   child: ListView.builder(
 

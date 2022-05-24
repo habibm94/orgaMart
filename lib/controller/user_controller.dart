@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:orgamart/model/item.dart';
@@ -12,6 +14,7 @@ class User_Controller extends GetxController {
   String? userimage = 'assets/images/user/user.jpg';
   String? username = 'Waifu';
   String? password = 'orgamart';
+  String? email = 'example@email.com';
   bool isloggedin = false;
 
   ///------------------delivery info variables-----------
@@ -98,18 +101,29 @@ class User_Controller extends GetxController {
     update();
   }
 
-  ///--------login, signup, reset section-----------
+  ///--------login, signup, reset section, username change, userimage change-----------
 
-  void login({username, password}) {
-    if (username == this.username && password == this.password) {
+  void login({email, password}) {
+    if (email == this.email && password == this.password) {
       isloggedin = true;
+
       update();
       print('user logged in succesfully');
     }
   }
 
+  void sign_up({email, password, username}) {
+    this.email = email;
+    this.password = password;
+    this.username = username;
+    isloggedin = true;
+
+    update();
+  }
+
   void signout() {
     isloggedin = false;
+
     update();
     print('user signed out  succesfully');
   }
@@ -123,6 +137,11 @@ class User_Controller extends GetxController {
     isCouponValid = true;
     checkoutcartItems = [];
     hasuserfilled_alldetails = true;
+    update();
+  }
+
+  void update_username({usernameinput}) {
+    this.username = usernameinput;
     update();
   }
 
@@ -189,11 +208,6 @@ class User_Controller extends GetxController {
 
   ///coupon text controller
   final couponEditing_TextController = TextEditingController();
-
-  ///auth text controller
-  final nameEditing_TextController = TextEditingController();
-  final emailEditing_TextController = TextEditingController();
-  final passwordEditing_TextController = TextEditingController();
 
   ///adress text controller
   final houseAdressEditing_TextController = TextEditingController();

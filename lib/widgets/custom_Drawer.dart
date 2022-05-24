@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:orgamart/controller/shopping_Controller.dart';
 import 'package:orgamart/controller/user_controller.dart';
 import 'package:orgamart/screen/logIn_screen.dart';
+import 'package:orgamart/screen/mainAppScreen.dart';
 import 'package:orgamart/screen/profile_screen.dart';
 import 'package:orgamart/screen/cart_screen.dart';
 
@@ -82,7 +83,7 @@ class CustomDrawer extends StatelessWidget {
                     );
                   }),
               SizedBox(
-                height: 40.h,
+                height: 30.h,
               ),
               Expanded(
                 child: Container(
@@ -144,9 +145,29 @@ class CustomDrawer extends StatelessWidget {
               GetBuilder<User_Controller>(
                 init: User_Controller(),
                 builder: (_) => Container(
-                  height: userController.isloggedin == true ? 10 : 100,
+                  height: userController.isloggedin == true ? 40 : 100,
                   child: userController.isloggedin == true
-                      ? Text('')
+                      ? Container(
+                          height: 50,
+                          child: GetBuilder<User_Controller>(
+                            builder: (_) {
+                              return ElevatedButton(
+                                onPressed: () {
+                                  cartController.resetCart();
+                                  userController.signout();
+
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              const AppScreen()));
+                                },
+                                child: Text('SignOut'),
+                              );
+                            },
+                            init: User_Controller(),
+                          ),
+                        )
                       : Column(
                           children: [
                             GetBuilder<User_Controller>(
@@ -161,17 +182,18 @@ class CustomDrawer extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('No Account?'),
+                                const Text('No Account?'),
                                 TextButton(
-                                  onPressed: () => Get.to(() => SignUpScreen()),
-                                  child: Text(
+                                  onPressed: () =>
+                                      Get.to(() => const Signup_Screen()),
+                                  child: const Text(
                                     'SignUp',
                                     style: TextStyle(
                                         decoration: TextDecoration.underline),
                                   ),
                                 )
                               ],
-                            )
+                            ),
                           ],
                         ),
                 ),
@@ -198,7 +220,7 @@ class DrawerItems extends StatelessWidget {
         leading: icon,
         title: Text(
           text,
-          style: TextStyle(fontSize: 18.sp),
+          style: TextStyle(fontSize: 16.sp),
         ),
         onTap: () =>
             Navigator.push(context, MaterialPageRoute(builder: (_) => screen)));
@@ -212,7 +234,7 @@ class DrawerItem_forCart extends StatelessWidget {
     return ListTile(
         leading: FaIcon(
           FontAwesomeIcons.shoppingCart,
-          size: 25.sp,
+          size: 20.sp,
         ),
         title: Badge(
           stackFit: StackFit.expand,
@@ -220,7 +242,7 @@ class DrawerItem_forCart extends StatelessWidget {
           badgeColor: bottomBar_badgeColor,
           child: Text(
             'Cart',
-            style: TextStyle(fontSize: 18.sp),
+            style: TextStyle(fontSize: 16.sp),
           ),
         ),
         trailing: SizedBox(
