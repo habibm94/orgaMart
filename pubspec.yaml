@@ -27,6 +27,7 @@ dependencies:
   flutter_svg: ^1.0.3
   date_format: ^2.0.6
   flutter_neumorphic: ^3.2.0
+  easy_splash_screen: ^1.0.3
 
 
 dev_dependencies:
@@ -53,6 +54,8 @@ flutter:
     - assets/images/products/vegetable/
     - assets/images/user/
     - assets/images/svg/
+    - assets/images/splashScreen/
+    - assets/images/successScreen/
 
 
 

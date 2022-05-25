@@ -34,72 +34,98 @@ class _CheckoutSuccessState extends State<CheckoutSuccess> {
     );
     return Scaffold(
         body: Container(
-      padding: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width * 0.10,
-          right: MediaQuery.of(context).size.width * 0.10,
-          top: 30.h,
-          bottom: 30.h),
+      color: Colors.white,
+      padding: EdgeInsets.only(top: 80.h, bottom: 30.h),
       height: MediaQuery.of(context).size.height,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
             padding: EdgeInsets.only(
-                left: 10.w, right: 10.w, top: 10.h, bottom: 10.w),
+              left: MediaQuery.of(context).size.width * 0.10,
+              right: MediaQuery.of(context).size.width * 0.10,
+            ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                AnimatedTextKit(
-                  animatedTexts: [
-                    ColorizeAnimatedText(
-                      'Purchase Completed  ',
-                      textStyle: TextStyle(
-                          fontSize: 45.sp,
-                          wordSpacing: 10.sp,
-                          fontWeight: FontWeight.bold),
-                      colors: colorizeColors,
-                    ),
-                  ],
-                  totalRepeatCount: 1,
-                  displayFullTextOnTap: true,
-                  stopPauseOnTap: true,
+                SizedBox(
+                  height: 250.h,
+                  child: const Image(
+                    image: AssetImage(
+                        'assets/images/successScreen/deliveryman.jpg'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                AnimatedTextKit(
-                  animatedTexts: [
-                    ColorizeAnimatedText(
-                      'Thank you for shopping with us  ',
-                      textStyle: TextStyle(
-                          fontSize: 25.sp,
-                          wordSpacing: 10.sp,
-                          fontStyle: FontStyle.italic),
-                      colors: colorizeColors,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 45.w,
+                    ),
+                    Expanded(
+                      child: AnimatedTextKit(
+                        animatedTexts: [
+                          ColorizeAnimatedText(
+                            'Purchase Completed  ',
+                            textStyle: TextStyle(
+                                fontSize: 45.sp,
+                                wordSpacing: 10.sp,
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.visible),
+                            colors: colorizeColors,
+                          ),
+                        ],
+                        totalRepeatCount: 1,
+                        displayFullTextOnTap: true,
+                        stopPauseOnTap: true,
+                      ),
                     ),
                   ],
-                  totalRepeatCount: 1,
-                  displayFullTextOnTap: true,
-                  stopPauseOnTap: true,
+                ),
+                SizedBox(
+                  height: 10.h,
                 ),
               ],
             ),
           ),
           SizedBox(
-            height: 50.h,
+            height: 40.h,
           ),
-          Center(
-            child: IconButton(
-              color: Colors.green,
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(context,
-                    MaterialPageRoute(builder: (BuildContext context) {
-                  return const AppScreen();
-                }), (route) => false);
-              },
-              icon: Icon(
-                Icons.home,
-                size: 80.sp,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue,
+                  shape: const CircleBorder(),
+                ),
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                    return const AppScreen();
+                  }), (route) => false);
+                },
+                child: Container(
+                  padding: EdgeInsets.all(10.sp),
+                  child: Icon(
+                    Icons.home,
+                    size: 60.sp,
+                  ),
+                ),
               ),
-            ),
-          )
+            ],
+          ),
+          SizedBox(
+            height: 5.h,
+          ),
+          Text(
+            'Home',
+            style: TextStyle(
+                fontSize: 18.sp,
+                color: Colors.blue,
+                fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     ));

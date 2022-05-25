@@ -1,5 +1,6 @@
 import 'package:orgamart/model/item.dart';
 import 'package:orgamart/model/category.dart';
+import 'package:orgamart/model/offer.dart';
 
 class Sample_DatabaseOfProducts {
   List<Category> allProducts = [
@@ -534,5 +535,23 @@ class Sample_DatabaseOfProducts {
       weightType: 'gm',
       imagePath: 'assets/images/products/spices/turmeric powder.jpg',
     ),
+  ];
+  List<Offer> offerList = [
+    Offer(
+        title: 'Amazing!!',
+        imagepath: 'assets/images/products/oil/coconut oil.jpg',
+        offerDetail: 'Get 20% dsicount on coconut oil'),
+    Offer(
+        title: 'Flat 30!',
+        imagepath: 'assets/images/products/vegetable/pumpkin.jpg',
+        offerDetail: ' Flat 30% discount on any pumpkin!'),
+    Offer(
+        title: 'Half price!!',
+        imagepath: 'assets/images/products/spices/ginger.jpg',
+        offerDetail: 'Get 50% discount on ginger'),
+    Offer(
+        title: 'Limited 20%',
+        imagepath: 'assets/images/products/spices/salt.jpg',
+        offerDetail: '20% discount on onions!!')
   ];
 }

@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:orgamart/controller/shopping_Controller.dart';
+
 import 'package:orgamart/controller/user_controller.dart';
 import 'package:orgamart/screen/logIn_screen.dart';
 import 'package:orgamart/screen/mainAppScreen.dart';
@@ -75,7 +75,10 @@ class CustomDrawer extends StatelessWidget {
                             Text(
                               controller.username.toString(),
                               style: TextStyle(
-                                  fontSize: 22.sp, wordSpacing: 10.sp),
+                                  fontSize: 25.sp,
+                                  wordSpacing: 10.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                             ),
                           ],
                         ),

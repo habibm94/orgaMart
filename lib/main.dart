@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:orgamart/getxBinding.dart';
 
 import 'package:orgamart/screen/mainAppScreen.dart';
+import 'package:easy_splash_screen/easy_splash_screen.dart';
 
 void main() {
   runApp(const OrgaMart());
@@ -21,7 +22,7 @@ class OrgaMart extends StatelessWidget {
     return ScreenUtilInit(
         designSize: const Size(360, 640),
         splitScreenMode: true,
-        child: const AppScreen(),
+        child: SplashPage(),
         builder: (BuildContext context, child) {
           return GetMaterialApp(
               initialBinding: GetxBinding(),
@@ -33,3 +34,41 @@ class OrgaMart extends StatelessWidget {
         });
   }
 }
+
+class SplashPage extends StatefulWidget {
+  SplashPage({Key? key}) : super(key: key);
+
+  @override
+  _SplashPageState createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+  @override
+  Widget build(BuildContext context) {
+    return EasySplashScreen(
+      logo: Image(
+        image: const AssetImage('assets/images/splashScreen/lady_sitting.png'),
+      ),
+      logoSize: 300.sp,
+      title: Text(
+        "Orgamart",
+        style: TextStyle(
+          fontSize: 35.sp,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      gradientBackground: LinearGradient(
+        colors: [
+          Colors.purple.shade50,
+          Colors.blue.shade100,
+          Colors.green.shade100
+        ],
+      ),
+      showLoader: true,
+      loaderColor: Colors.blue,
+      navigator: const AppScreen(),
+      durationInSeconds: 2,
+    );
+  }
+}
+// backgroundColor: Colors.white,

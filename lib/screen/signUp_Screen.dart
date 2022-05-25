@@ -23,7 +23,6 @@ class _Signup_ScreenState extends State<Signup_Screen> {
   final passwordEditing_TextController = TextEditingController();
   bool enteredall_textField = false;
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     emailEditing_TextController.dispose();
     passwordEditing_TextController.dispose();

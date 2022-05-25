@@ -495,7 +495,6 @@ class _adressBottomsheet_textfieldState
                     showCursor: true,
                     textDirection: TextDirection.ltr,
 
-                    ///todo- change this text controller
                     controller: widget.controller,
 
                     ///decoration

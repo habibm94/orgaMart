@@ -12,7 +12,7 @@ import 'package:date_format/date_format.dart';
 class User_Controller extends GetxController {
   ///-----------auth variable section---------------
   String? userimage = 'assets/images/user/user.jpg';
-  String? username = 'Waifu';
+  String? username = 'Jane Doe';
   String? password = 'orgamart';
   String? email = 'example@email.com';
   bool isloggedin = false;

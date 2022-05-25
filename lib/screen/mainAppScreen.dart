@@ -75,8 +75,6 @@ class AppScreen extends StatelessWidget {
           );
         },
       ),
-
-      ///todo- create a getbuilder here
       body: GetBuilder<Route_Controller>(
           init: Route_Controller(),
           builder: (controller) {

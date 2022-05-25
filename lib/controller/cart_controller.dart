@@ -40,7 +40,7 @@ class Cart_Controller extends GetxController {
     update();
   }
 
-  ///edit ordercount
+  ///edit ordercount in cart screen
   void edit_increaseorder({required int index}) {
     cartItems[index].totalItemcount += 1;
 
@@ -85,7 +85,8 @@ class Cart_Controller extends GetxController {
     update();
   }
 
-  ///activates upon clicking the product in main screen
+  ///activates upon clicking the product in main screen--alert dialouge
+
   void addtoUserClickedItem({required Item item}) {
     userClickedItem = item;
     productweight = item.weight;

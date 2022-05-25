@@ -12,7 +12,6 @@ import 'package:orgamart/model/item.dart';
 import 'package:orgamart/screen/cart_screen.dart';
 import 'package:orgamart/screen/mainAppScreen.dart';
 
-///todo- complete this screen and create a saved item list in user controller(create bool is saved in item model)
 class RecentPurchase_Screen extends StatelessWidget {
   const RecentPurchase_Screen({Key? key}) : super(key: key);
 
