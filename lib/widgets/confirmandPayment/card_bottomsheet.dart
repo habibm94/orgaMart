@@ -246,7 +246,7 @@ class _CardBottomSheetState extends State<CardBottomSheet> {
                     } else {
                       userController.paymentmethodName = dropDownvalue;
                       userController.selectedPaymentMethod = Creditcard(
-                          name: userController.username!,
+                          name: userController.username,
                           cvv: cvvtextController.text,
                           expiryDate: expiredateController.text,
                           cardType: dropDownvalue);

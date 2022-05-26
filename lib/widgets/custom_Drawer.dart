@@ -18,6 +18,7 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:badges/badges.dart';
 import 'package:orgamart/decoration_const.dart';
 import 'package:orgamart/screen/signUp_Screen.dart';
+import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 
 ///todo- optimise this shit
 class CustomDrawer extends StatelessWidget {
@@ -38,53 +39,57 @@ class CustomDrawer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ///top curved portion
-              GetBuilder<User_Controller>(
-                  init: User_Controller(),
-                  builder: (controller) {
-                    return ClipPath(
-                      clipper: WaveClipperTwo(reverse: false, flip: false),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [Colors.teal, Colors.green.shade200])),
-                        height: 250.h,
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              ///user image
-                              height: 120.h,
-                              width: 144.w,
-                              child: ClipOval(
-                                child: Image(
-                                  image: AssetImage(
-                                    controller.userimage.toString(),
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 8.h,
-                            ),
-
-                            ///user name
-                            Text(
-                              controller.username.toString(),
-                              style: TextStyle(
-                                  fontSize: 25.sp,
-                                  wordSpacing: 10.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                          ],
-                        ),
+              ClipPath(
+                clipper: WaveClipperTwo(reverse: false, flip: false),
+                child: Container(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [Colors.teal, Colors.green.shade200])),
+                  height: 250.h,
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GetBuilder<User_Controller>(
+                        builder: (_) {
+                          return SizedBox(
+                            ///user image
+                            height: 120.h,
+                            width: 144.w,
+                            child: userController.userimage == null
+                                ? ProfilePicture(
+                                    name: userController.username,
+                                    radius: 31,
+                                    fontsize: 21,
+                                    //count: 3,
+                                  )
+                                : Image.file(userController.userimage!),
+                          );
+                        },
                       ),
-                    );
-                  }),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+
+                      ///user name
+                      GetBuilder<User_Controller>(
+                        builder: (_) {
+                          return Text(
+                            userController.username.toString(),
+                            style: TextStyle(
+                                fontSize: 25.sp,
+                                wordSpacing: 10.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               SizedBox(
                 height: 30.h,
               ),
@@ -255,3 +260,13 @@ class DrawerItem_forCart extends StatelessWidget {
             context, MaterialPageRoute(builder: (_) => const CartScreen())));
   }
 }
+
+//
+// ClipOval(
+// child: Image(
+// ///todo- change image to image
+// image: AssetImage(
+// controller.userimage.toString()),
+// fit: BoxFit.cover,
+// ),
+// ),

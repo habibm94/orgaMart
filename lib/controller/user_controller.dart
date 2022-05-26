@@ -7,12 +7,13 @@ import 'package:orgamart/model/paymentMethod.dart';
 import 'package:orgamart/model/purchases.dart';
 import 'package:orgamart/model/adress.dart';
 import 'package:date_format/date_format.dart';
+import 'dart:io';
 
 ///todo- save name, points, image, const in get storage/hive
 class User_Controller extends GetxController {
   ///-----------auth variable section---------------
-  String? userimage = 'assets/images/user/user.jpg';
-  String? username = 'Jane Doe';
+  File? userimage;
+  String username = 'Jane Doe';
   String? password = 'orgamart';
   String? email = 'example@email.com';
   bool isloggedin = false;
@@ -142,6 +143,11 @@ class User_Controller extends GetxController {
 
   void update_username({usernameinput}) {
     this.username = usernameinput;
+    update();
+  }
+
+  void updateUSerImage(File image) {
+    userimage = image;
     update();
   }
 

@@ -28,6 +28,8 @@ dependencies:
   date_format: ^2.0.6
   flutter_neumorphic: ^3.2.0
   easy_splash_screen: ^1.0.3
+  flutter_profile_picture: ^2.0.0
+  image_picker: ^0.8.5+3
 
 
 dev_dependencies:
