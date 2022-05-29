@@ -76,49 +76,70 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: 170.h,
                           child: Column(
                             children: [
-                              Stack(
-                                fit: StackFit.loose,
-                                alignment: Alignment.bottomRight,
-                                children: [
-                                  ///image
-                                  GetBuilder<User_Controller>(
-                                    builder: (_) {
-                                      return SizedBox(
-                                        height: 100.h,
-                                        width: 120.w,
-                                        child: userController.userimage == null
-                                            ? ProfilePicture(
-                                                name: userController.username,
-                                                radius: 31,
-                                                fontsize: 21,
-                                                //count: 3,
-                                              )
-                                            : Image.file(
-                                                userController.userimage!),
-                                      );
-                                    },
-                                  ),
-
-                                  /// change user image button (camera icon)
-                                  Positioned(
-                                    child: GetBuilder<User_Controller>(
-                                      builder: (_) {
-                                        return IconButton(
-                                          icon: Icon(
-                                            Icons.camera_alt,
-                                            size: 30.sp,
-                                            color: Colors.blue,
-                                          ),
-                                          onPressed: () {
-                                            Get.bottomSheet(
-                                                const ChangeUSerImage_bottomSheet());
+                              userController.isloggedin == true
+                                  ? Stack(
+                                      fit: StackFit.loose,
+                                      alignment: Alignment.bottomRight,
+                                      children: [
+                                        ///image
+                                        GetBuilder<User_Controller>(
+                                          builder: (_) {
+                                            return SizedBox(
+                                              height: 100.h,
+                                              width: 120.w,
+                                              child: userController.userimage ==
+                                                      null
+                                                  ? ProfilePicture(
+                                                      name: userController
+                                                          .username,
+                                                      radius: 31,
+                                                      fontsize: 21,
+                                                      //count: 3,
+                                                    )
+                                                  : Image.file(userController
+                                                      .userimage!),
+                                            );
                                           },
+                                        ),
+
+                                        /// change user image button (camera icon)
+                                        Positioned(
+                                          child: GetBuilder<User_Controller>(
+                                            builder: (_) {
+                                              return IconButton(
+                                                icon: Icon(
+                                                  Icons.camera_alt,
+                                                  size: 30.sp,
+                                                  color: Colors.blue,
+                                                ),
+                                                onPressed: () {
+                                                  Get.bottomSheet(
+                                                      const ChangeUSerImage_bottomSheet());
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : GetBuilder<User_Controller>(
+                                      builder: (_) {
+                                        return SizedBox(
+                                          height: 100.h,
+                                          width: 120.w,
+                                          child: userController.userimage ==
+                                                  null
+                                              ? ProfilePicture(
+                                                  name: userController.username,
+                                                  radius: 31,
+                                                  fontsize: 21,
+                                                  //count: 3,
+                                                )
+                                              : Image.file(
+                                                  userController.userimage!),
                                         );
                                       },
                                     ),
-                                  ),
-                                ],
-                              ),
                               SizedBox(
                                 height: 8.h,
                               ),
