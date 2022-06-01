@@ -46,8 +46,8 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return EasySplashScreen(
-      logo: Image(
-        image: const AssetImage('assets/images/splashScreen/lady_sitting.png'),
+      logo: const Image(
+        image: AssetImage('assets/images/splashScreen/lady_sitting.png'),
       ),
       logoSize: 300.sp,
       title: Text(

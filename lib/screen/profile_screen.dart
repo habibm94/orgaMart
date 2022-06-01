@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:orgamart/model/item.dart';
@@ -162,7 +160,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ///level
                               Expanded(
                                 child: Text(
-                                  'Rising Star',
+                                  userController.isloggedin == false
+                                      ? 'Guest'
+                                      : 'Rising Star',
                                   style: TextStyle(
                                       fontSize: 18.sp, color: Colors.blue),
                                 ),
@@ -177,7 +177,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ///points
                         ListTile(
                           title: Text(
-                            'Points: 1700 points',
+                            userController.isloggedin == false
+                                ? 'Points: 0 points'
+                                : 'Points: 1700 points',
                             style: TextStyle(fontSize: 18.sp),
                           ),
                           leading: const FaIcon(FontAwesomeIcons.coins),
@@ -357,8 +359,16 @@ class _ChangeUSerImage_bottomSheetState
         if (image == null) return;
         final temporaryImage = File(image.path);
         userController.updateUSerImage(temporaryImage);
+        Future.delayed(const Duration(microseconds: 200));
+        Navigator.pop(context);
+        Get.snackbar('Completd', 'Image changed Successfully',
+            snackPosition: SnackPosition.BOTTOM);
       } catch (e) {
-        print('imgae pick from camera failed. error: $e');
+        print('imgae pick from gallery failed. error: $e');
+        Future.delayed(const Duration(microseconds: 200));
+        Navigator.pop(context);
+        Get.snackbar('Error', 'Can not access Gallery',
+            snackPosition: SnackPosition.BOTTOM);
       }
     }
 
@@ -369,17 +379,71 @@ class _ChangeUSerImage_bottomSheetState
         if (image == null) return;
         final temporaryImage = File(image.path);
         userController.updateUSerImage(temporaryImage);
+        Future.delayed(const Duration(microseconds: 200));
+        Navigator.pop(context);
+        Get.snackbar('Completd', 'Image changed Successfully',
+            snackPosition: SnackPosition.BOTTOM);
       } catch (e) {
         print('imgae pick from camera failed. error: $e');
+        Future.delayed(const Duration(microseconds: 200));
+        Navigator.pop(context);
+        Get.snackbar('Error', 'Can not access Camera',
+            snackPosition: SnackPosition.BOTTOM);
       }
     }
 
     return Container(
       padding:
-          EdgeInsets.only(left: 20.w, right: 20.w, top: 20.w, bottom: 20.w),
+          EdgeInsets.only(left: 25.w, right: 25.w, top: 30.w, bottom: 30.w),
       decoration: BoxDecoration(
-        color: Colors.red,
-        borderRadius: BorderRadius.all(Radius.circular(10.r)),
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10.r), topRight: Radius.circular(10.r)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+            ),
+            height: 120.h,
+            child: ElevatedButton(
+              onPressed: () {
+                pickimage_fromCamera();
+              },
+              child: Text(
+                'From Camera',
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+                overflow: TextOverflow.visible,
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+                shape: const CircleBorder(),
+              ),
+            ),
+          ),
+          Container(
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+            ),
+            height: 120.h,
+            child: ElevatedButton(
+              onPressed: () {
+                pickimage_fromGallery();
+              },
+              child: Text(
+                'From Gallery',
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+                overflow: TextOverflow.visible,
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.blue,
+                shape: const CircleBorder(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
