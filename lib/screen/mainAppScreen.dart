@@ -33,7 +33,6 @@ class AppScreen extends StatelessWidget {
             selectedItemColor: bottomBarIconColor,
             currentIndex: routecontroller.screenIndex,
             onTap: (index) {
-              print('$index got pressed');
               routecontroller.change_screenIndex(index);
             },
             items: [

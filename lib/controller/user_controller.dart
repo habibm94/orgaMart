@@ -13,6 +13,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 ///todo- save name, points, image, const in get storage/hive
 class User_Controller extends GetxController {
+  bool isUserUsingApp = false;
+
   ///-----------auth variable section---------------
   File? userimage;
   String username = 'Jane Doe';
@@ -109,9 +111,14 @@ class User_Controller extends GetxController {
   void login({email, password}) {
     if (email == this.email && password == this.password) {
       isloggedin = true;
-      addBoolToSF() async {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setBool('login', true);
+      try {
+        addBoolToSF() async {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setBool('login', true);
+          print('success to save login bool in sharedpref');
+        }
+      } catch (e) {
+        print('failed to save login bool in sharedpref: $e');
       }
 
       update();
@@ -235,7 +242,7 @@ class User_Controller extends GetxController {
       islogin == true ? isloggedin = true : isloggedin = false;
       print('gotcha');
     } catch (e) {
-      print('cannot log in in i=usercont init:$e');
+      print('cannot log in in usercount init:$e');
     }
     update();
     super.onInit();
@@ -244,6 +251,13 @@ class User_Controller extends GetxController {
   @override
   void onReady() {
     super.onReady();
+  }
+
+  @override
+  void dispose() {
+    isUserUsingApp = false;
+
+    super.dispose();
   }
 
   ///------------textcontroller section------------

@@ -333,7 +333,7 @@ class DrawerItems extends StatelessWidget {
         ),
         onTap: () =>
 
-            ///todo- changed this screen
+            ///todo- keep it un-named
             Get.to(() => screen));
   }
 }
@@ -385,7 +385,6 @@ class _ChangeUSerImage_bottomSheetState
         userController.updateUSerImage(temporaryImage);
         Future.delayed(const Duration(microseconds: 200));
 
-        ///todo- changed this navigation
         Get.back();
         Get.snackbar('Completd', 'Image changed Successfully',
             snackPosition: SnackPosition.BOTTOM);
@@ -393,7 +392,6 @@ class _ChangeUSerImage_bottomSheetState
         print('imgae pick from gallery failed. error: $e');
         Future.delayed(const Duration(microseconds: 200));
 
-        ///todo- changed this navigation
         Get.back();
         Get.snackbar('Error', 'Can not access Gallery',
             snackPosition: SnackPosition.BOTTOM);
@@ -409,7 +407,6 @@ class _ChangeUSerImage_bottomSheetState
         userController.updateUSerImage(temporaryImage);
         Future.delayed(const Duration(microseconds: 200));
 
-        ///todo- changed this navigation
         Get.back();
         Get.snackbar('Completd', 'Image changed Successfully',
             snackPosition: SnackPosition.BOTTOM);
@@ -417,7 +414,6 @@ class _ChangeUSerImage_bottomSheetState
         print('imgae pick from camera failed. error: $e');
         Future.delayed(const Duration(microseconds: 200));
 
-        ///todo- changed this navigation
         Get.back();
         Get.snackbar('Error', 'Can not access Camera',
             snackPosition: SnackPosition.BOTTOM);

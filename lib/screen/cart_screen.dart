@@ -42,7 +42,7 @@ class _CartScreenState extends State<CartScreen> {
               ///appbar back button
               child: IconButton(
                 onPressed: () {
-                  Get.back();
+                  routeController.screenIndex == 2 ? null : Get.back();
                 },
 
                 ///appbar cart icon

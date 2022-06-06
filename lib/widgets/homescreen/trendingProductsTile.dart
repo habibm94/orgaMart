@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:orgamart/decoration_const.dart';
 import 'package:orgamart/model/item.dart';
 
-///todo- add save icon on add to cart pop up
 class Trending_ProductsTile extends StatelessWidget {
   const Trending_ProductsTile({
     Key? key,

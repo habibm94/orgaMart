@@ -7,7 +7,6 @@ class Offer_Controller extends GetxController {
   @override
   void onInit() {
     fetchOfferProducts();
-    // TODO: implement onInit
     super.onInit();
   }
 

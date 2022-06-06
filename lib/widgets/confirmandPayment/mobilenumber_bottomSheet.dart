@@ -42,10 +42,7 @@ class _Mobilenumber_bottomSheetState extends State<Mobilenumber_bottomSheet> {
                         Icons.close,
                         size: 35.sp,
                       ),
-                      onPressed: () =>
-
-                          ///todo- changed this navigation
-                          Get.back(),
+                      onPressed: () => Get.back(),
                     ),
                   ],
                 ),
@@ -92,7 +89,6 @@ class _Mobilenumber_bottomSheetState extends State<Mobilenumber_bottomSheet> {
                                       showCursor: true,
                                       textDirection: TextDirection.ltr,
 
-                                      ///todo- change this text controller
                                       controller: userController
                                           .mobilenumberEditing_TextController,
 
@@ -175,7 +171,6 @@ class _Mobilenumber_bottomSheetState extends State<Mobilenumber_bottomSheet> {
                             hasUser_enteredmobilenumber = true;
                           });
 
-                          ///todo- changed this navigation
                           Get.back();
                         }
                         ;

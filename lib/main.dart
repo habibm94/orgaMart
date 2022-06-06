@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:orgamart/controller/user_controller.dart';
 import 'package:orgamart/getxBinding.dart';
+import 'package:orgamart/helper/routes.dart';
 import 'package:orgamart/screen/mainAppScreen.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:hive/hive.dart';
@@ -35,16 +37,16 @@ class _OrgaMartState extends State<OrgaMart> {
     return ScreenUtilInit(
         designSize: const Size(360, 640),
         splitScreenMode: true,
-        child: SplashPage(),
         builder: (BuildContext context, child) {
           return GetMaterialApp(
               initialBinding: GetxBinding(),
-              routes: {},
+              getPages: Approutes(),
+              initialRoute: '/',
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
                 primaryColor: Colors.green,
               ),
-              home: child);
+              home: SplashPage());
         });
   }
 }
@@ -59,6 +61,7 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
+    final userController = Get.find<User_Controller>();
     return EasySplashScreen(
       logo: const Image(
         image: AssetImage('assets/images/splashScreen/lady_sitting.png'),
@@ -81,8 +84,7 @@ class _SplashPageState extends State<SplashPage> {
       showLoader: true,
       loaderColor: Colors.blue,
       navigator: const AppScreen(),
-      durationInSeconds: 2,
+      durationInSeconds: userController.isUserUsingApp == true ? 0 : 2,
     );
   }
 }
-// backgroundColor: Colors.white,

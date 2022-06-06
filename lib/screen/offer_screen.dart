@@ -13,8 +13,6 @@ import 'package:orgamart/controller/offer_Controller.dart';
 import 'package:orgamart/screen/cart_screen.dart';
 import 'package:orgamart/decoration_const.dart';
 
-///Todo- create offer Model
-///todo- Create Offer Controller and put a offer list
 class Offer_Screen extends StatelessWidget {
   const Offer_Screen({Key? key}) : super(key: key);
 

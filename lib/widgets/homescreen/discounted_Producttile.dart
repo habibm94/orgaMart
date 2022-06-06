@@ -8,7 +8,6 @@ import 'package:orgamart/controller/shopping_Controller.dart';
 import 'package:orgamart/decoration_const.dart';
 import 'package:orgamart/model/item.dart';
 
-///todo- add save icon on add cart pop up
 class Discounted_ProductsTile extends StatelessWidget {
   const Discounted_ProductsTile({
     Key? key,
@@ -35,7 +34,6 @@ class Discounted_ProductsTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ///todo- make it textbutton
             Text(
               'Discounts',
               style: TextStyle(

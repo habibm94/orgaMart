@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:orgamart/controller/cart_controller.dart';
+import 'package:orgamart/controller/route_controller.dart';
 import 'package:orgamart/controller/user_controller.dart';
 import 'package:orgamart/controller/shopping_Controller.dart';
 import 'package:orgamart/model/item.dart';
@@ -12,13 +13,12 @@ import 'package:orgamart/screen/cart_screen.dart';
 import 'package:orgamart/screen/mainAppScreen.dart';
 
 class Item_Screen extends StatelessWidget {
-  String name;
-  List<Item> products;
-  Item_Screen({required this.name, required this.products});
-
   @override
   Widget build(BuildContext context) {
     final cartController = Get.find<Cart_Controller>();
+    var name = Get.arguments['name'];
+    var products = Get.arguments['products'];
+    final routeController = Get.find<Route_Controller>();
     return Scaffold(
       appBar: NewGradientAppBar(
         title: Text(name),
@@ -32,7 +32,8 @@ class Item_Screen extends StatelessWidget {
               builder: (_) {
                 return IconButton(
                   onPressed: () {
-                    Get.to(() => CartScreen());
+                    Get.to(const AppScreen());
+                    routeController.change_screenIndex(1);
                   },
                   icon: Badge(
                       badgeContent:

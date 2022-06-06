@@ -253,7 +253,6 @@ class _CardBottomSheetState extends State<CardBottomSheet> {
 
                       Future.delayed(const Duration(milliseconds: 1500));
 
-                      ///todo- changed this navigation
                       Get.back();
 
                       Get.snackbar(

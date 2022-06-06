@@ -79,7 +79,10 @@ class ProductsTile_products extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Get.to(Item_Screen(name: name, products: products));
+              Get.toNamed(
+                'items',
+                arguments: {'name': name, 'products': products},
+              );
             },
             child: Container(
               decoration: BoxDecoration(

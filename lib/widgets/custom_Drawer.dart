@@ -20,7 +20,7 @@ import 'package:orgamart/decoration_const.dart';
 import 'package:orgamart/screen/signUp_Screen.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 
-///todo- optimise this shit
+///todo- optimise this shit--gets overflowed
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({
     Key? key,
@@ -36,7 +36,7 @@ class CustomDrawer extends StatelessWidget {
             bottom: 20.h,
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ///top curved portion
               ClipPath(
@@ -164,7 +164,7 @@ class CustomDrawer extends StatelessWidget {
                                   cartController.resetCart();
                                   userController.signout();
 
-                                  ///todo- chnaged this navigation
+                                  ///todo- keep it as it is
                                   Get.off(() => const AppScreen());
                                 },
                                 child: Text('SignOut'),
@@ -229,7 +229,7 @@ class DrawerItems extends StatelessWidget {
         ),
         onTap: () =>
 
-            ///todo- changed this screen
+            ///todo- keep it as it is
             Get.to(() => screen));
   }
 }
@@ -255,18 +255,6 @@ class DrawerItem_forCart extends StatelessWidget {
         trailing: SizedBox(
           width: 100.w,
         ),
-
-        ///todo- make it named route
-        onTap: () => Get.to(() => const CartScreen()));
+        onTap: () => Get.toNamed('/cart'));
   }
 }
-
-//
-// ClipOval(
-// child: Image(
-// ///todo- change image to image
-// image: AssetImage(
-// controller.userimage.toString()),
-// fit: BoxFit.cover,
-// ),
-// ),

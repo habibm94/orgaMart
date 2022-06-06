@@ -281,8 +281,6 @@ class _Coupon_bottomSheetState extends State<Coupon_bottomSheet> {
                       Icons.close,
                       size: 30.sp,
                     ),
-
-                    ///todo- changed this navigation
                     onPressed: () => Get.back(),
                   )
                 ],
@@ -334,7 +332,6 @@ class _Coupon_bottomSheetState extends State<Coupon_bottomSheet> {
                       ? () {
                           sleep(const Duration(milliseconds: 500));
 
-                          ///todo- changed this navigationF
                           Get.back();
                         }
                       : null;

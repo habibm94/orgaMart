@@ -233,7 +233,7 @@ class _Login_screenState extends State<Login_screen> {
                               email: emailEditing_TextController.text,
                               password: passwordEditing_TextController.text);
 
-                          ///todo- make named + changed this navigation
+                          ///todo- keep it un-named
                           Get.off(() => const AppScreen());
                         } else if (emailEditing_TextController.text !=
                                 userController.email &&

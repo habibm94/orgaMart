@@ -121,7 +121,6 @@ class _Paypal_bottomSheetState extends State<Paypal_bottomSheet> {
                         showCursor: true,
                         textDirection: TextDirection.ltr,
 
-                        ///todo- change this text controller
                         controller: paypalnameTextController,
 
                         ///decoration
@@ -180,7 +179,6 @@ class _Paypal_bottomSheetState extends State<Paypal_bottomSheet> {
                   userController.paymentmethodName = 'Paypal';
                   Future.delayed(const Duration(milliseconds: 1500));
 
-                  ///todo- changed this navigation
                   Get.back();
 
                   Get.snackbar(
