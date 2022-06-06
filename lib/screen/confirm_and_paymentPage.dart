@@ -330,7 +330,9 @@ class _ChangeAdress_bottomSheet extends State<ChangeAdress_bottomSheet> {
                         Icons.close,
                         size: 35.sp,
                       ),
-                      onPressed: () => Navigator.pop(context),
+
+                      ///todo- changed this navigation
+                      onPressed: () => Get.back(),
                     ),
                     SizedBox(
                       width: 40.w,
@@ -436,7 +438,9 @@ class _ChangeAdress_bottomSheet extends State<ChangeAdress_bottomSheet> {
                           setState(() {
                             hasUser_enteredallfields = true;
                           });
-                          Navigator.pop(context);
+
+                          ///todo- changed this navigation
+                          Get.back();
                         }
                         ;
                       },

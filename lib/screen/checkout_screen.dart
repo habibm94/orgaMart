@@ -281,7 +281,9 @@ class _Coupon_bottomSheetState extends State<Coupon_bottomSheet> {
                       Icons.close,
                       size: 30.sp,
                     ),
-                    onPressed: () => Navigator.pop(context),
+
+                    ///todo- changed this navigation
+                    onPressed: () => Get.back(),
                   )
                 ],
               ),
@@ -331,7 +333,9 @@ class _Coupon_bottomSheetState extends State<Coupon_bottomSheet> {
                   userController.isCouponValid == true
                       ? () {
                           sleep(const Duration(milliseconds: 500));
-                          Navigator.pop(context);
+
+                          ///todo- changed this navigationF
+                          Get.back();
                         }
                       : null;
                   Get.back();

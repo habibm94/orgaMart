@@ -232,11 +232,9 @@ class _Login_screenState extends State<Login_screen> {
                           userController.login(
                               email: emailEditing_TextController.text,
                               password: passwordEditing_TextController.text);
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const AppScreen()));
+
+                          ///todo- make named + changed this navigation
+                          Get.off(() => const AppScreen());
                         } else if (emailEditing_TextController.text !=
                                 userController.email &&
                             passwordEditing_TextController.text !=

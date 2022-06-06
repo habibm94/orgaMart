@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:orgamart/controller/cart_controller.dart';
+import 'package:orgamart/controller/route_controller.dart';
 import 'package:orgamart/controller/user_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,15 +12,21 @@ import 'package:badges/badges.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:orgamart/screen/mainAppScreen.dart';
 
-import 'logIn_screen.dart';
+import 'package:orgamart/screen/logIn_screen.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
 
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cartController = Get.find<Cart_Controller>();
     final userController = Get.find<User_Controller>();
+    final routeController = Get.find<Route_Controller>();
     var cartItems = cartController.cartItems;
 
     return Scaffold(
@@ -68,34 +75,44 @@ class CartScreen extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            SizedBox(
-                width: 150.w,
-                child: cartController.cartItems.isNotEmpty
-                    ? ElevatedButton(
-                        onPressed: () {
-                          if (userController.isloggedin == true) {
-                            userController.addCartItemsinCheckout(
-                                cartItems: cartController.cartItems);
-                            Get.to(() => const Checkout_screen());
-                          } else {
-                            Get.to(const Login_screen());
-                          }
-                        },
-                        child: Text(
-                          'Checkout',
-                          style: TextStyle(
-                              fontSize: 20.sp, fontWeight: FontWeight.w500),
-                        ),
-                      )
-                    : Text(
-                        'Please Add Some Items',
-                        style: TextStyle(fontSize: 18.sp),
-                      )),
+            GetBuilder(
+              init: Cart_Controller(),
+              builder: (_) {
+                return SizedBox(
+                    width: 150.w,
+                    child: cartController.cartItems.isNotEmpty
+                        ? ElevatedButton(
+                            onPressed: () {
+                              if (userController.isloggedin == true) {
+                                userController.addCartItemsinCheckout(
+                                    cartItems: cartController.cartItems);
+                                Get.to(() => const Checkout_screen());
+                              } else {
+                                Get.to(const Login_screen());
+                              }
+                            },
+                            child: Text(
+                              'Checkout',
+                              style: TextStyle(
+                                  fontSize: 20.sp, fontWeight: FontWeight.w500),
+                            ),
+                          )
+                        : Text(
+                            'Please Add Some Items',
+                            style: TextStyle(fontSize: 18.sp),
+                          ));
+              },
+            ),
 
             ///homepage button
             ElevatedButton(
                 onPressed: () {
-                  Get.to(() => const AppScreen());
+                  if (routeController.screenIndex == 2) {
+                    routeController.change_screenIndex(1);
+                  } else {
+                    Get.to(const AppScreen());
+                    routeController.change_screenIndex(1);
+                  }
                 },
                 child: SizedBox(
                   width: 125.w,

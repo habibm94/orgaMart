@@ -42,7 +42,10 @@ class _Mobilenumber_bottomSheetState extends State<Mobilenumber_bottomSheet> {
                         Icons.close,
                         size: 35.sp,
                       ),
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () =>
+
+                          ///todo- changed this navigation
+                          Get.back(),
                     ),
                   ],
                 ),
@@ -171,7 +174,9 @@ class _Mobilenumber_bottomSheetState extends State<Mobilenumber_bottomSheet> {
                           setState(() {
                             hasUser_enteredmobilenumber = true;
                           });
-                          Navigator.pop(context);
+
+                          ///todo- changed this navigation
+                          Get.back();
                         }
                         ;
                       },

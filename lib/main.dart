@@ -1,22 +1,35 @@
+import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:orgamart/getxBinding.dart';
-
 import 'package:orgamart/screen/mainAppScreen.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final Directory appDocumentDirectory =
+      await getApplicationDocumentsDirectory();
+  Hive.init(appDocumentDirectory.path);
+
   runApp(const OrgaMart());
 }
 
-class OrgaMart extends StatelessWidget {
+class OrgaMart extends StatefulWidget {
   const OrgaMart({Key? key}) : super(key: key);
 
+  @override
+  State<OrgaMart> createState() => _OrgaMartState();
+}
+
+class _OrgaMartState extends State<OrgaMart> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -26,6 +39,7 @@ class OrgaMart extends StatelessWidget {
         builder: (BuildContext context, child) {
           return GetMaterialApp(
               initialBinding: GetxBinding(),
+              routes: {},
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
                 primaryColor: Colors.green,

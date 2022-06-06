@@ -9,6 +9,8 @@ import 'package:orgamart/model/adress.dart';
 import 'package:date_format/date_format.dart';
 import 'dart:io';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 ///todo- save name, points, image, const in get storage/hive
 class User_Controller extends GetxController {
   ///-----------auth variable section---------------
@@ -107,6 +109,10 @@ class User_Controller extends GetxController {
   void login({email, password}) {
     if (email == this.email && password == this.password) {
       isloggedin = true;
+      addBoolToSF() async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('login', true);
+      }
 
       update();
       print('user logged in succesfully');
@@ -124,9 +130,12 @@ class User_Controller extends GetxController {
 
   void signout() {
     isloggedin = false;
+    addBoolToSF() async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool('login', false);
+    }
 
     update();
-    print('user signed out  succesfully');
   }
 
   void resetCheckout() {
@@ -143,6 +152,8 @@ class User_Controller extends GetxController {
 
   void update_username({usernameinput}) {
     this.username = usernameinput;
+    changename(usernameinput);
+
     update();
   }
 
@@ -210,6 +221,31 @@ class User_Controller extends GetxController {
     super.onClose();
   }
 
+  @override
+  void onInit() {
+    try {
+      getBoolValuesSF() async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        //Return bool
+        bool? boolValue = prefs.getBool('login');
+        return boolValue;
+      }
+
+      var islogin = getBoolValuesSF();
+      islogin == true ? isloggedin = true : isloggedin = false;
+      print('gotcha');
+    } catch (e) {
+      print('cannot log in in i=usercont init:$e');
+    }
+    update();
+    super.onInit();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+  }
+
   ///------------textcontroller section------------
 
   ///coupon text controller
@@ -224,4 +260,20 @@ class User_Controller extends GetxController {
 
   ///mobile number editing controller
   final mobilenumberEditing_TextController = TextEditingController();
+  Future<void> changename(username) async {
+    final Future<SharedPreferences> _nameprefs =
+        SharedPreferences.getInstance();
+    final SharedPreferences nameprefs = await _nameprefs;
+    nameprefs.setString('username', username);
+    print('name saved successfully');
+  }
+
+  Future<String?> getname() async {
+    final Future<SharedPreferences> _nameprefs =
+        SharedPreferences.getInstance();
+    final SharedPreferences nameprefs = await _nameprefs;
+    var username = nameprefs.getString('username');
+    print('name saved successfully');
+    return username;
+  }
 }

@@ -278,11 +278,7 @@ class _Signup_ScreenState extends State<Signup_Screen> {
                               email: emailEditing_TextController.text,
                               password: passwordEditing_TextController.text,
                               username: usernameEditing_TextController.text);
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const AppScreen()));
+                          Get.off(() => const AppScreen());
                         }
                       },
                       style: NeumorphicStyle(

@@ -62,7 +62,9 @@ class _CashonDelivery_BottomSheetState
                 userController.selectedPaymentMethod = CashOnDelivery();
                 userController.paymentmethodName = 'Cash on Delivery';
                 Future.delayed(const Duration(milliseconds: 1500));
-                Navigator.pop(context);
+
+                ///todo- changed this navigation
+                Get.back();
 
                 Get.snackbar(
                   "Success!",

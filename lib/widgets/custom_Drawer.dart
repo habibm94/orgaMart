@@ -97,7 +97,7 @@ class CustomDrawer extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.only(left: 20.w, right: 25.w),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       ///account
                       Expanded(
@@ -164,11 +164,8 @@ class CustomDrawer extends StatelessWidget {
                                   cartController.resetCart();
                                   userController.signout();
 
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              const AppScreen()));
+                                  ///todo- chnaged this navigation
+                                  Get.off(() => const AppScreen());
                                 },
                                 child: Text('SignOut'),
                               );
@@ -231,7 +228,9 @@ class DrawerItems extends StatelessWidget {
           style: TextStyle(fontSize: 16.sp),
         ),
         onTap: () =>
-            Navigator.push(context, MaterialPageRoute(builder: (_) => screen)));
+
+            ///todo- changed this screen
+            Get.to(() => screen));
   }
 }
 
@@ -256,8 +255,9 @@ class DrawerItem_forCart extends StatelessWidget {
         trailing: SizedBox(
           width: 100.w,
         ),
-        onTap: () => Navigator.push(
-            context, MaterialPageRoute(builder: (_) => const CartScreen())));
+
+        ///todo- make it named route
+        onTap: () => Get.to(() => const CartScreen()));
   }
 }
 

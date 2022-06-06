@@ -68,8 +68,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       vertical: 25.h,
                     ),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        ///user image nad name and level
+                        ///user image and name and level
                         SizedBox(
                           height: 170.h,
                           child: Column(
@@ -144,16 +145,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                               ///name
                               Expanded(
-                                child: GetBuilder<User_Controller>(
-                                  builder: (_) {
-                                    return Text(
-                                      userController.username.toString(),
-                                      style: TextStyle(
-                                          fontSize: 20.sp,
-                                          wordSpacing: 10.sp,
-                                          fontWeight: FontWeight.bold),
-                                    );
-                                  },
+                                child: Container(
+                                  height: 40,
+                                  width: 130,
+                                  child: GetBuilder<User_Controller>(
+                                    builder: (_) {
+                                      return Stack(
+                                        // alignment: Alignment.topLeft,
+                                        fit: StackFit.expand,
+                                        children: [
+                                          Positioned(
+                                            child: IconButton(
+                                              onPressed: () {},
+                                              icon: Icon(
+                                                Icons.edit,
+                                                size: 18.sp,
+                                              ),
+                                            ),
+                                            right: 1,
+                                            bottom: 10,
+                                          ),
+                                          Text(
+                                            userController.username.toString(),
+                                            style: TextStyle(
+                                                fontSize: 20.sp,
+                                                wordSpacing: 10.sp,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
 
@@ -310,7 +332,9 @@ class DrawerItems extends StatelessWidget {
           style: TextStyle(fontSize: 18.sp),
         ),
         onTap: () =>
-            Navigator.push(context, MaterialPageRoute(builder: (_) => screen)));
+
+            ///todo- changed this screen
+            Get.to(() => screen));
   }
 }
 
@@ -360,13 +384,17 @@ class _ChangeUSerImage_bottomSheetState
         final temporaryImage = File(image.path);
         userController.updateUSerImage(temporaryImage);
         Future.delayed(const Duration(microseconds: 200));
-        Navigator.pop(context);
+
+        ///todo- changed this navigation
+        Get.back();
         Get.snackbar('Completd', 'Image changed Successfully',
             snackPosition: SnackPosition.BOTTOM);
       } catch (e) {
         print('imgae pick from gallery failed. error: $e');
         Future.delayed(const Duration(microseconds: 200));
-        Navigator.pop(context);
+
+        ///todo- changed this navigation
+        Get.back();
         Get.snackbar('Error', 'Can not access Gallery',
             snackPosition: SnackPosition.BOTTOM);
       }
@@ -380,13 +408,17 @@ class _ChangeUSerImage_bottomSheetState
         final temporaryImage = File(image.path);
         userController.updateUSerImage(temporaryImage);
         Future.delayed(const Duration(microseconds: 200));
-        Navigator.pop(context);
+
+        ///todo- changed this navigation
+        Get.back();
         Get.snackbar('Completd', 'Image changed Successfully',
             snackPosition: SnackPosition.BOTTOM);
       } catch (e) {
         print('imgae pick from camera failed. error: $e');
         Future.delayed(const Duration(microseconds: 200));
-        Navigator.pop(context);
+
+        ///todo- changed this navigation
+        Get.back();
         Get.snackbar('Error', 'Can not access Camera',
             snackPosition: SnackPosition.BOTTOM);
       }

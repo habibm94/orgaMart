@@ -179,7 +179,9 @@ class _Paypal_bottomSheetState extends State<Paypal_bottomSheet> {
                       email: emailTextController.text);
                   userController.paymentmethodName = 'Paypal';
                   Future.delayed(const Duration(milliseconds: 1500));
-                  Navigator.pop(context);
+
+                  ///todo- changed this navigation
+                  Get.back();
 
                   Get.snackbar(
                     "Success!",

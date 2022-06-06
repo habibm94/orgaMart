@@ -252,7 +252,9 @@ class _CardBottomSheetState extends State<CardBottomSheet> {
                           cardType: dropDownvalue);
 
                       Future.delayed(const Duration(milliseconds: 1500));
-                      Navigator.pop(context);
+
+                      ///todo- changed this navigation
+                      Get.back();
 
                       Get.snackbar(
                         "Success!",

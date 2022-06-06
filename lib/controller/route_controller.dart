@@ -29,7 +29,6 @@ class Route_Controller extends GetxController {
   void onInit() {
     screenIndex = 1;
     screen = Route_screenList[screenIndex];
-    print('$screenIndex in init ');
     super.onInit();
   }
 

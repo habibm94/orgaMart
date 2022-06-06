@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:orgamart/controller/route_controller.dart';
 import 'package:orgamart/screen/homeScreen.dart';
 import 'package:orgamart/main.dart';
 import 'package:get/get.dart';
@@ -32,6 +33,7 @@ class _CheckoutSuccessState extends State<CheckoutSuccess> {
       fontSize: 50.0,
       fontFamily: 'Horizon',
     );
+    final routeController = Get.find<Route_Controller>();
     return Scaffold(
         body: Container(
       color: Colors.white,
@@ -95,24 +97,28 @@ class _CheckoutSuccessState extends State<CheckoutSuccess> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue,
-                  shape: const CircleBorder(),
-                ),
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(context,
-                      MaterialPageRoute(builder: (BuildContext context) {
-                    return const AppScreen();
-                  }), (route) => false);
+              GetBuilder<Route_Controller>(
+                builder: (_) {
+                  return ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue,
+                      shape: const CircleBorder(),
+                    ),
+                    onPressed: () {
+                      routeController.change_screenIndex(1);
+                      Get.offAll(
+                        const AppScreen(),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(10.sp),
+                      child: Icon(
+                        Icons.home,
+                        size: 60.sp,
+                      ),
+                    ),
+                  );
                 },
-                child: Container(
-                  padding: EdgeInsets.all(10.sp),
-                  child: Icon(
-                    Icons.home,
-                    size: 60.sp,
-                  ),
-                ),
               ),
             ],
           ),
