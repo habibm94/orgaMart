@@ -1,14 +1,30 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'package:get/get.dart';
 import 'package:orgamart/model/item.dart';
-import 'package:collection/collection.dart';
 
 class Cart_Controller extends GetxController {
   List<Item> cartItems = [];
+  var totalPrice = 0.0;
+
+  ///coupon section---
+  double appliedCoupon = 0.0;
+  String couponCode = '';
+  bool couponapplied = false;
+  var deliveryfee = 10.0;
+  var amounttoPay_final = 0.0;
+  var totalpriceAfterCoupon = 0.0;
+  bool isCouponValid = true;
+  Map<String, double> coupons = {
+    '20%': 20.0,
+    'welcome': 30.0,
+    'champion30': 30
+  };
+
   double cartItemPrice = 0.0;
   late Item? userClickedItem;
   var orderoftimes = 1;
-  var totalPrice = 0.0;
+
   var price_aftercheckingDiscount = 0.0;
   var productweight;
   var totalweight = 0;
@@ -75,6 +91,7 @@ class Cart_Controller extends GetxController {
       cartsum += e;
     });
     total_priceofCartItems = cartsum;
+    amounttoPay_final = total_priceofCartItems + deliveryfee;
 
     update();
   }
@@ -117,7 +134,7 @@ class Cart_Controller extends GetxController {
     update();
   }
 
-  ///reset the cart temporaily after pop up closes
+  ///reset the cart of temporary items after pop up closes
   void reset_temp_CartValues() {
     Future.delayed(Duration(milliseconds: 500), () {
       orderoftimes = 1;
@@ -136,6 +153,50 @@ class Cart_Controller extends GetxController {
   void resetCart() {
     total_priceofCartItems = 0;
     cartItems = [];
+    couponapplied = false;
+    couponCode = '';
+    amounttoPay_final = 0.0;
+    totalPrice = 0.0;
+    totalpriceAfterCoupon = 0.0;
+    isCouponValid = true;
+    couponEditing_TextController.text = '';
     update();
   }
+
+  void calculate_amounttopay() {
+    amounttoPay_final = totalpriceAfterCoupon + deliveryfee;
+    update();
+  }
+
+  void checkCoupon_fromUser() {
+    var couponcode = couponEditing_TextController.text;
+    if (coupons.containsKey(couponcode)) {
+      appliedCoupon = coupons[couponcode]!;
+      couponapplied = true;
+      couponCode = couponcode;
+      updateTotalPrice_bycoupon();
+      isCouponValid = true;
+      coupons.remove(couponcode);
+      update();
+    } else {
+      isCouponValid = false;
+      update();
+    }
+  }
+
+  void updateTotalPrice_bycoupon() {
+    var price = total_priceofCartItems;
+    var updatedPrice = price - ((price / 100) * appliedCoupon);
+    totalpriceAfterCoupon = updatedPrice;
+    calculate_amounttopay();
+    update();
+  }
+
+  void onClose() {
+    isCouponValid = true;
+
+    super.onClose();
+  }
+
+  final couponEditing_TextController = TextEditingController();
 }

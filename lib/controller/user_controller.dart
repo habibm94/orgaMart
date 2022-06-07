@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:orgamart/model/item.dart';
@@ -14,6 +12,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 ///todo- save name, points, image, const in get storage/hive
 class User_Controller extends GetxController {
   bool isUserUsingApp = false;
+  var totalPrice = 0.0;
+  var recentPurchases = [];
 
   ///-----------auth variable section---------------
   File? userimage;
@@ -30,81 +30,84 @@ class User_Controller extends GetxController {
   bool hasuserfilled_alldetails = false;
 
   ///----------------checkout variables-----------
-  var recentPurchases = [];
-  double appliedCoupon = 0.0;
-  String couponCode = '';
-  bool couponapplied = false;
-  var totalPrice = 0.0;
-  var deliveryfee = 10.0;
-  var amounttoPay = 0.0;
+
+  // double appliedCoupon = 0.0;
+  // String couponCode = '';
+  // bool couponapplied = false;
+  // var totalPrice = 0.0;
+  // var deliveryfee = 10.0;
+  // var amounttoPay = 0.0;
   List<Item> checkoutcartItems = [];
 
   ///-------------coupon section---------------
-  bool isCouponValid = true;
-
-  ///map of coupons
-  Map<String, double> coupons = {
-    '20%': 20.0,
-    'welcome': 30.0,
-    'champion30': 30
-  };
+  // bool isCouponValid = true;
+  //
+  // ///map of coupons
+  // Map<String, double> coupons = {
+  //   '20%': 20.0,
+  //   'welcome': 30.0,
+  //   'champion30': 30
+  // };
 
   ///---------------cart methods----------
 
+  ///todo- make it only for finishing
   ///takes all products from cart item
-  void addCartItemsinCheckout({required List<Item> cartItems}) {
+  void addCartItemsinCheckout(
+      {required List<Item> cartItems, required double price}) {
     checkoutcartItems.addAll(cartItems);
-    calculateTotalCartPrice();
+    totalPrice = price;
+
     update();
   }
 
   ///calculates total price of cart
-  void calculateTotalCartPrice() {
-    List pricevalues =
-        checkoutcartItems.map((item) => item.totalPrice).toList();
-
-    var cartsum = 0.0;
-    pricevalues.forEach((e) {
-      cartsum += e;
-    });
-    totalPrice = cartsum;
-    calculate_amounttopay();
-    update();
-  }
+  // void calculateTotalCartPrice() {
+  //   List pricevalues =
+  //       checkoutcartItems.map((item) => item.totalPrice).toList();
+  //
+  //   var cartsum = 0.0;
+  //   pricevalues.forEach((e) {
+  //     cartsum += e;
+  //   });
+  //   totalPrice = cartsum;
+  //   calculate_amounttopay();
+  //   update();
+  // }
 
   ///calculates total amount to pay
-  void calculate_amounttopay() {
-    amounttoPay = totalPrice + deliveryfee;
-    update();
-  }
+  // void calculate_amounttopay() {
+  //   amounttoPay = totalPrice + deliveryfee;
+  //   update();
+  // }
 
   ///---------coupon methods------------
-
+  ///todo- make it unnecessary
   ///to verify coupon
-  void checkCoupon_fromUser([value]) {
-    var couponcode = couponEditing_TextController.text;
-    if (coupons.containsKey(couponcode)) {
-      appliedCoupon = coupons[couponcode]!;
-      couponapplied = true;
-      couponCode = couponcode;
-      updateTotalPrice_bycoupon();
-      isCouponValid = true;
-      coupons.remove(couponcode);
-      update();
-    } else {
-      isCouponValid = false;
-      update();
-    }
-  }
+  // void checkCoupon_fromUser([value]) {
+  //   var couponcode = couponEditing_TextController.text;
+  //   if (coupons.containsKey(couponcode)) {
+  //     appliedCoupon = coupons[couponcode]!;
+  //     couponapplied = true;
+  //     couponCode = couponcode;
+  //     updateTotalPrice_bycoupon();
+  //     isCouponValid = true;
+  //     coupons.remove(couponcode);
+  //     update();
+  //   } else {
+  //     isCouponValid = false;
+  //     update();
+  //   }
+  // }
 
   ///update total price by coupon
-  void updateTotalPrice_bycoupon() {
-    var price = totalPrice;
-    var updatedPrice = (price / 100) * appliedCoupon;
-    totalPrice = updatedPrice;
-    calculate_amounttopay();
-    update();
-  }
+  // void updateTotalPrice_bycoupon() {
+  //   var price = totalPrice;
+  //   var updatedPrice = (price / 100) * appliedCoupon;
+  //   totalPrice = updatedPrice;
+  //   calculate_amounttopay();
+  //   update();
+  // }
 
   ///--------login, signup, reset section, username change, userimage change-----------
 
@@ -122,7 +125,6 @@ class User_Controller extends GetxController {
       }
 
       update();
-      print('user logged in succesfully');
     }
   }
 
@@ -145,13 +147,7 @@ class User_Controller extends GetxController {
     update();
   }
 
-  void resetCheckout() {
-    couponapplied = false;
-    totalPrice = 0.0;
-    appliedCoupon = 0.0;
-    amounttoPay = 0.0;
-    couponCode = '';
-    isCouponValid = true;
+  void resetCheckout_user() {
     checkoutcartItems = [];
     hasuserfilled_alldetails = true;
     update();
@@ -188,7 +184,7 @@ class User_Controller extends GetxController {
       paymentmentmethodname: paymentmethodName!,
     );
     recentPurchases.add(liveItems);
-    resetCheckout();
+    resetCheckout_user();
     update();
   }
 
@@ -209,7 +205,6 @@ class User_Controller extends GetxController {
       userAdress?.road = roadAdressEditing_TextController.text;
       userAdress?.house = houseAdressEditing_TextController.text;
     }
-    ;
 
     update();
   }
@@ -222,12 +217,6 @@ class User_Controller extends GetxController {
   ///------------oninit, onclose methods------------
 
   @override
-  void onClose() {
-    isCouponValid = true;
-    print('usercontroller got closed');
-    super.onClose();
-  }
-
   @override
   void onInit() {
     try {
@@ -249,11 +238,6 @@ class User_Controller extends GetxController {
   }
 
   @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
   void dispose() {
     isUserUsingApp = false;
 
@@ -262,6 +246,7 @@ class User_Controller extends GetxController {
 
   ///------------textcontroller section------------
 
+  ///todo- make it unnecessary
   ///coupon text controller
   final couponEditing_TextController = TextEditingController();
 

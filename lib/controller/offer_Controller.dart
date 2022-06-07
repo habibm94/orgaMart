@@ -13,7 +13,7 @@ class Offer_Controller extends GetxController {
   void fetchOfferProducts() {
     var offerproductsList_fromDB = Sample_DatabaseOfProducts().offerList;
     offerProductsList = offerproductsList_fromDB;
-    print('got offer products');
+
     update();
   }
 }

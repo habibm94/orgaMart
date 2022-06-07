@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:orgamart/controller/route_controller.dart';
 import 'package:orgamart/decoration_const.dart';
 import 'package:orgamart/controller/user_controller.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
@@ -19,6 +20,7 @@ class RecentPurchase_Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartController = Get.find<Cart_Controller>();
     final userController = Get.find<User_Controller>();
+    final routeController = Get.find<Route_Controller>();
     return Scaffold(
       appBar: NewGradientAppBar(
         ///appbar
@@ -140,7 +142,10 @@ class RecentPurchase_Screen extends StatelessWidget {
                         size: 60.sp,
                         color: Colors.green,
                       ),
-                      onPressed: () => Get.to(() => const AppScreen()),
+                      onPressed: () {
+                        Get.toNamed('/appScreen');
+                        routeController.change_screenIndex(1);
+                      },
                     ),
                     SizedBox(
                       height: 10.h,

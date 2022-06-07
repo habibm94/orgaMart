@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:orgamart/controller/cart_controller.dart';
 import 'package:orgamart/controller/user_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:orgamart/decoration_const.dart';
@@ -30,6 +31,7 @@ class _Paypal_bottomSheetState extends State<Paypal_bottomSheet> {
   @override
   Widget build(BuildContext context) {
     final userController = Get.find<User_Controller>();
+    final cartController = Get.find<Cart_Controller>();
     final emailTextController = TextEditingController();
     final paypalnameTextController = TextEditingController();
     return Container(
@@ -183,7 +185,7 @@ class _Paypal_bottomSheetState extends State<Paypal_bottomSheet> {
 
                   Get.snackbar(
                     "Success!",
-                    " ${userController.amounttoPay.toStringAsFixed(2)} \$ Charged from your paypal account ",
+                    " ${cartController.amounttoPay_final.toStringAsFixed(2)} \$ Charged from your paypal account ",
                     icon: Icon(Icons.check_circle, color: Colors.white),
                     snackPosition: SnackPosition.BOTTOM,
                     backgroundColor: Colors.green,

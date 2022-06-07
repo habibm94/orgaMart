@@ -5,6 +5,7 @@ import 'package:orgamart/screen/homeScreen.dart';
 import 'package:orgamart/widgets/custom_Drawer.dart';
 
 class Route_Controller extends GetxController {
+  bool isuserincartscrren = false;
   List<Widget> Route_screenList = <Widget>[
     const CustomDrawer(),
     const HomeScreen(),

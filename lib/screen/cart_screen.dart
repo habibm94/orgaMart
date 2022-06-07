@@ -84,11 +84,10 @@ class _CartScreenState extends State<CartScreen> {
                         ? ElevatedButton(
                             onPressed: () {
                               if (userController.isloggedin == true) {
-                                userController.addCartItemsinCheckout(
-                                    cartItems: cartController.cartItems);
                                 Get.to(() => const Checkout_screen());
                               } else {
                                 Get.to(const Login_screen());
+                                routeController.isuserincartscrren = true;
                               }
                             },
                             child: Text(
@@ -110,7 +109,7 @@ class _CartScreenState extends State<CartScreen> {
                   if (routeController.screenIndex == 2) {
                     routeController.change_screenIndex(1);
                   } else {
-                    Get.to(const AppScreen());
+                    Get.toNamed('/appScreen');
                     routeController.change_screenIndex(1);
                   }
                 },

@@ -19,6 +19,16 @@ class Item_Screen extends StatelessWidget {
     var name = Get.arguments['name'];
     var products = Get.arguments['products'];
     final routeController = Get.find<Route_Controller>();
+    double setheightofPrductSection(int count) {
+      if (count > 3 && count % 3 != 0) {
+        return (count / 3.round() * 260.h);
+      } else if (count > 3 && count % 3 != 1) {
+        return (count / 3.round() * 240.h);
+      } else {
+        return 320.h;
+      }
+    }
+
     return Scaffold(
       appBar: NewGradientAppBar(
         title: Text(name),
@@ -32,7 +42,7 @@ class Item_Screen extends StatelessWidget {
               builder: (_) {
                 return IconButton(
                   onPressed: () {
-                    Get.to(const AppScreen());
+                    Get.toNamed('/cart');
                     routeController.change_screenIndex(1);
                   },
                   icon: Badge(
@@ -53,9 +63,7 @@ class Item_Screen extends StatelessWidget {
               Container(
                 padding: EdgeInsets.only(
                     bottom: 10.h, top: 10.h, left: 10.w, right: 10.w),
-                height: products.length % 3 != 0
-                    ? products.length / 3.round() * 240.h
-                    : products.length / 3.round() * 240.h,
+                height: setheightofPrductSection(products.length),
                 decoration: BoxDecoration(
                   color: backgroundContainerColor,
                 ),

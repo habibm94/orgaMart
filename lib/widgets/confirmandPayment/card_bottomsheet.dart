@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:orgamart/controller/cart_controller.dart';
 import 'package:orgamart/controller/user_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:orgamart/model/paymentMethod.dart';
@@ -31,6 +32,7 @@ class _CardBottomSheetState extends State<CardBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final userController = Get.find<User_Controller>();
+    final cartController = Get.find<Cart_Controller>();
     return SingleChildScrollView(
       child: Container(
         height: 350.h,
@@ -257,7 +259,7 @@ class _CardBottomSheetState extends State<CardBottomSheet> {
 
                       Get.snackbar(
                         "Success!",
-                        " ${userController.amounttoPay.toStringAsFixed(2)} \$ Charged from your $dropDownvalue account ",
+                        " ${cartController.amounttoPay_final.toStringAsFixed(2)} \$ Charged from your $dropDownvalue account ",
                         icon: Icon(Icons.check_circle, color: Colors.white),
                         snackPosition: SnackPosition.BOTTOM,
                         backgroundColor: Colors.green,

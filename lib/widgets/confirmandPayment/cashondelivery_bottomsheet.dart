@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:orgamart/controller/cart_controller.dart';
 import 'package:orgamart/controller/user_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:orgamart/decoration_const.dart';
@@ -20,6 +21,7 @@ class _CashonDelivery_BottomSheetState
   @override
   Widget build(BuildContext context) {
     final userController = Get.find<User_Controller>();
+    final cartController = Get.find<Cart_Controller>();
     return Container(
       height: 150.h,
       decoration: BoxDecoration(
@@ -45,7 +47,10 @@ class _CashonDelivery_BottomSheetState
             children: [
               Text('Amount to pay: ',
                   style: cashonDelivery_bottomSheet_Textstyle),
-              Text(userController.amounttoPay.toStringAsFixed(2) + ' ' + '\$',
+              Text(
+                  cartController.amounttoPay_final.toStringAsFixed(2) +
+                      ' ' +
+                      '\$',
                   style: TextStyle(
                       fontSize: 20.sp,
                       wordSpacing: 10.sp,
@@ -67,7 +72,7 @@ class _CashonDelivery_BottomSheetState
 
                 Get.snackbar(
                   "Success!",
-                  "just pay ${userController.amounttoPay.toStringAsFixed(2)} \$ to delivery",
+                  "just pay ${cartController.amounttoPay_final.toStringAsFixed(2)} \$ to delivery",
                   icon: const Icon(Icons.check_circle, color: Colors.white),
                   snackPosition: SnackPosition.BOTTOM,
                   backgroundColor: Colors.green,

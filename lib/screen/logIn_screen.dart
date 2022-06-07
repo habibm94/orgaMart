@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:orgamart/controller/route_controller.dart';
 import 'package:orgamart/controller/user_controller.dart';
 import 'package:orgamart/screen/mainAppScreen.dart';
 import 'package:orgamart/screen/signUp_Screen.dart';
@@ -31,7 +32,7 @@ class _Login_screenState extends State<Login_screen> {
   @override
   Widget build(BuildContext context) {
     var userController = Get.find<User_Controller>();
-
+    final routeController = Get.find<Route_Controller>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Neumorphic(
@@ -72,7 +73,7 @@ class _Login_screenState extends State<Login_screen> {
                 ),
                 Text(
                   wronginfo == true ? '* wrong email or password' : '',
-                  style: const TextStyle(color: Colors.red),
+                  style: TextStyle(color: Colors.red, fontSize: 16.sp),
                 ),
                 SizedBox(
                   height: 10.h,
@@ -234,7 +235,12 @@ class _Login_screenState extends State<Login_screen> {
                               password: passwordEditing_TextController.text);
 
                           ///todo- keep it un-named
-                          Get.off(() => const AppScreen());
+                          if (routeController.isuserincartscrren == true) {
+                            Get.offNamed('/cart');
+                          } else {
+                            Get.off(() => const AppScreen());
+                            routeController.screenIndex = 1;
+                          }
                         } else if (emailEditing_TextController.text !=
                                 userController.email &&
                             passwordEditing_TextController.text !=
