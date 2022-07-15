@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:orgamart/controller/user_controller.dart';
@@ -13,6 +14,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,19 +36,37 @@ class OrgaMart extends StatefulWidget {
 class _OrgaMartState extends State<OrgaMart> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return ScreenUtilInit(
-        designSize: const Size(360, 640),
+        designSize: const Size(360, 736),
         splitScreenMode: true,
         builder: (BuildContext context, child) {
           return GetMaterialApp(
-              initialBinding: GetxBinding(),
-              getPages: Approutes(),
-              initialRoute: '/',
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                primaryColor: Colors.green,
-              ),
-              home: SplashPage());
+            initialBinding: GetxBinding(),
+            getPages: Approutes(),
+            initialRoute: '/',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primaryColor: Colors.green,
+            ),
+            home: SplashPage(),
+            builder: (context, child) => ResponsiveWrapper.builder(
+              BouncingScrollWrapper.builder(context, child!),
+              maxWidth: 1200,
+              minWidth: 360,
+              defaultScale: false,
+              breakpoints: [
+                const ResponsiveBreakpoint.resize(360, name: MOBILE),
+                const ResponsiveBreakpoint.autoScale(800, name: TABLET),
+                const ResponsiveBreakpoint.autoScale(1000, name: TABLET),
+                const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
+                const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
+              ],
+            ),
+          );
         });
   }
 }
@@ -62,6 +82,10 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     final userController = Get.find<User_Controller>();
+    var h = MediaQuery.of(context).size.height;
+    var w = MediaQuery.of(context).size.width;
+    print(h);
+    print(w);
     return EasySplashScreen(
       logo: const Image(
         image: AssetImage('assets/images/splashScreen/lady_sitting.png'),
